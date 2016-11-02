@@ -157,4 +157,25 @@ public class Bfck {
         return true;
     }
 
+    public boolean bound(int i, int j) {
+        int compteur = 1;
+        int distance = 0;
+
+        for (int a = i; a < j; a++) {
+            distance++;
+
+            if (instructions.get(i).getShortcut() == InstructionEnum.JUMP.getShortcut()) {
+                compteur++;
+            }
+
+            if (instructions.get(i).getShortcut() == InstructionEnum.BACK.getShortcut()) {
+                compteur--;
+            }
+
+            if ((compteur == 0)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
