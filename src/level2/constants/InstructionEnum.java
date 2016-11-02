@@ -77,15 +77,33 @@ public enum InstructionEnum {
     JUMP('[', new Color(0xff7f00)) {
         @Override
         public void exec(Bfck bfck) {
-            //TODO
-            bfck.addToInstruction(1);
+            int i = bfck.getInstruction();
+            if (bfck.getCell() != - MASK.get()) {
+                bfck.addToInstruction(1);
+            } else {
+                for (int j = i; j < bfck.getInstructions().size(); j++) {
+                    if (bfck.bound(i, j, true)) {
+                        bfck.addToInstruction(j - i + 1);
+                        break;
+                    }
+                }
+            }
+
         }
     },
     BACK(']', new Color(0xff0000)) {
         @Override
         public void exec(Bfck bfck) {
-            //TODO
-            bfck.addToInstruction(1);
+            int i = bfck.getInstruction();
+            if (bfck.getCell() ==  - MASK.get()) {
+                bfck.addToInstruction(1);
+            } else {
+                for (int j = i; j > 0; j--)
+                    if (bfck.bound(j, i, false)) {
+                        bfck.addToInstruction(j - i + 1);
+                        break;
+                    }
+            }
         }
     };
 

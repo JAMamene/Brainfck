@@ -1,8 +1,10 @@
 package level2.interpreter;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import level2.constants.InstructionEnum;
 import level2.exceptions.SyntaxException;
 
+import javax.swing.text.StyledEditorKit;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
@@ -157,19 +159,19 @@ public class Bfck {
         return true;
     }
 
-    public boolean bound(int i, int j) {
+    public boolean bound(int i, int j, Boolean up) {
         int compteur = 1;
-        int distance = 0;
 
         for (int a = i; a < j; a++) {
-            distance++;
 
             if (instructions.get(i).getShortcut() == InstructionEnum.JUMP.getShortcut()) {
-                compteur++;
+                if (up) compteur++;
+                else compteur--;
             }
 
             if (instructions.get(i).getShortcut() == InstructionEnum.BACK.getShortcut()) {
-                compteur--;
+                if (up) compteur--;
+                else compteur++;
             }
 
             if ((compteur == 0)) {
