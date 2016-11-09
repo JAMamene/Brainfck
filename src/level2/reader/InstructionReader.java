@@ -36,14 +36,15 @@ public class InstructionReader implements BfReader {
             FileReader fr = new FileReader(fileName);
             BufferedReader br = new BufferedReader(fr);
             while ((str = br.readLine()) != null) {
+                str = str.replaceAll("\\s+","");
                 // if we read a long instruction
                 if (Stream.of(InstructionEnum.values())
                         .map(InstructionEnum::name)
-                        .collect(Collectors.toList()).contains(str.split(" ")[0])) {
+                        .collect(Collectors.toList()).contains(str.split("#")[0].trim())) {
                     // Better than a switch statement
                     // Get all information from enum Instruction
                     for (InstructionEnum i : InstructionEnum.values()) {
-                        if (str.equals(i.name())) instructions.add(i);
+                        if (str.split("#")[0].trim().equals(i.name())) instructions.add(i);
                     }
                     charId++;
                 } else { // if we read a shortcut
@@ -63,8 +64,8 @@ public class InstructionReader implements BfReader {
                         if (c == '#') { // Comment block
                             break;
                         }
-                        if (!found) throw new SyntaxException("unknown-char", c, charId);
                         charId++;
+                        if (!found) throw new SyntaxException("unknown-char", c, charId);
                     }
                 }
             }

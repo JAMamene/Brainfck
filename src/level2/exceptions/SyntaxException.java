@@ -18,7 +18,7 @@ public class SyntaxException extends RuntimeException {
     public SyntaxException(String type, char c, int charId) {
         switch (type) {
             case "unknown-char":
-                System.err.println("Error : Syntax error at charId " + ++charId + ", char: " + c);
+                System.err.println("Error : Syntax error at charId " + charId + ", char: " + c);
                 break;
             case "bracket-missmatch":
                 System.err.println("Error : Unexpected bracket at charId " + charId + ", char: " + c);

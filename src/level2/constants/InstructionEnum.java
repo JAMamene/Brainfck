@@ -90,7 +90,6 @@ public enum InstructionEnum {
                     }
                 }
             }
-
         }
     },
     BACK(']', new Color(0xff0000)) {
