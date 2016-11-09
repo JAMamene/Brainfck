@@ -36,23 +36,36 @@ public class Metrics {
         PROG_SIZE = progSize;
     }
 
-    public void incrExecMove(){
+    public static void incrExecMove(){
         EXEC_MOVE++;
     }
 
-    public void incrDataMove(){
+    public static void incrDataMove(){
         DATA_MOVE++;
     }
 
-    public void incrDataWrite(){
+    public static void incrDataWrite(){
         DATA_WRITE++;
     }
 
-    public void incrDataRead(){
+    public static void incrDataRead(){
         DATA_READ++;
     }
 
-    public void setExecTime(){
+    public static void beginExecTime(){
+        EXEC_TIME = System.currentTimeMillis();
+    }
+
+    public static void endExecTime(){
         EXEC_TIME = System.currentTimeMillis() - EXEC_TIME;
+    }
+
+    public static void print(){
+        System.out.println("PROG SIZE: "+PROG_SIZE);
+        System.out.println("EXEC TIME: "+EXEC_TIME);
+        System.out.println("EXEC MOVE: "+EXEC_MOVE);
+        System.out.println("DATA MOVE: "+DATA_MOVE);
+        System.out.println("DATA WRITE: "+DATA_WRITE);
+        System.out.println("DATA READ: "+DATA_READ);
     }
 }

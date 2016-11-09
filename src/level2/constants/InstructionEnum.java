@@ -20,6 +20,7 @@ public enum InstructionEnum {
                 throw new ExecuteException("cell-overflow", bfck.getPointer(), bfck.getInstruction());
             bfck.setCase((byte) (bfck.getCell() + 1));
             bfck.addToInstruction(1);
+            Metrics.incrDataWrite();
         }
     },
     DECR('-', new Color(0x4b0082)) {
@@ -29,6 +30,7 @@ public enum InstructionEnum {
                 throw new ExecuteException("cell-underflow", bfck.getPointer(), bfck.getInstruction());
             bfck.setCase((byte) (bfck.getCell() - 1));
             bfck.addToInstruction(1);
+            Metrics.incrDataWrite();
         }
     },
     LEFT('<', new Color(0x9400D3)) {
@@ -38,6 +40,7 @@ public enum InstructionEnum {
                 throw new ExecuteException("memory-underflow", bfck.getPointer(), bfck.getInstruction());
             bfck.addToPointer(-1);
             bfck.addToInstruction(1);
+            Metrics.incrDataMove();
         }
     },
     RIGHT('>', new Color(0x0000ff)) {
@@ -47,6 +50,7 @@ public enum InstructionEnum {
                 throw new ExecuteException("memory-overflow", bfck.getPointer(), bfck.getInstruction());
             bfck.addToPointer(1);
             bfck.addToInstruction(1);
+            Metrics.incrDataMove();
         }
     },
     OUT('.', new Color(0x00ff00)) {
@@ -54,6 +58,7 @@ public enum InstructionEnum {
         public void exec(Bfck bfck) {
             System.out.println(bfck.printableCell(bfck.getPointer()));
             bfck.addToInstruction(1);
+            Metrics.incrDataRead();
         }
     },
     IN(',', new Color(0xffff00)) {
@@ -72,6 +77,7 @@ public enum InstructionEnum {
                 throw new ExecuteException("invalid-input", in, bfck.getInstruction());
             bfck.setCase((byte) (in - MASK.get()));
             bfck.addToInstruction(1);
+            Metrics.incrDataWrite();
         }
     },
     JUMP('[', new Color(0xff7f00)) {
@@ -88,6 +94,7 @@ public enum InstructionEnum {
                     }
                 }
             }
+            Metrics.incrDataRead();
         }
     },
     BACK(']', new Color(0xff0000)) {
@@ -103,6 +110,7 @@ public enum InstructionEnum {
                         break;
                     }
             }
+            Metrics.incrDataRead();
         }
     };
 

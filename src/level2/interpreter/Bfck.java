@@ -1,6 +1,7 @@
 package level2.interpreter;
 
 import level2.constants.InstructionEnum;
+import level2.constants.Metrics;
 import level2.exceptions.SyntaxException;
 
 import java.util.Arrays;
@@ -39,6 +40,7 @@ public class Bfck {
         instruction = 0;
         pointer = 0;
         readId = 0;
+        Metrics.setProgSize(instructions.size());
     }
 
     public int getReadId() {
@@ -127,6 +129,7 @@ public class Bfck {
     public void handle() {
         while (instruction < instructions.size()) {
             instructions.get(instruction).exec(this);
+            Metrics.incrExecMove();
         }
     }
 
