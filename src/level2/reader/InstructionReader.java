@@ -33,13 +33,6 @@ public class InstructionReader implements BfReader {
             int charId = 0;
             List<InstructionEnum> instructions = new ArrayList<>();
             Macro macro = new Macro();
-            macro.add("MINUS_5",new ArrayList<InstructionEnum>(){{
-                add(InstructionEnum.DECR);
-                add(InstructionEnum.DECR);
-                add(InstructionEnum.DECR);
-                add(InstructionEnum.DECR);
-                add(InstructionEnum.DECR);
-            }});
             String str;
             Character c;
             FileReader fr = new FileReader(fileName);
