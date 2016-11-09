@@ -2,8 +2,7 @@
 S12 - S13 : En theorie rien de special, rajouter methodes a Bfck et nouvelle methode pour les
 commands puis rajouter aussi la methode trace a Bfck.
 
-S14 : Relou, il va falloir changer la methode de lecture des fichiers texte, essayer d'eviter
-tous les if ou else
+S14 : Ez
 
 S15 : Trouver syntaxe simple, au debut seulement? Stocker dans instruction avec une map pour
 lier a la liste d'instruction.

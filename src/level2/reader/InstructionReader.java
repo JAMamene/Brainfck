@@ -36,11 +36,11 @@ public class InstructionReader implements BfReader {
             FileReader fr = new FileReader(fileName);
             BufferedReader br = new BufferedReader(fr);
             while ((str = br.readLine()) != null) {
-                str = str.replaceAll("\\s+","");
+                str = str.replaceAll("\\s+",""); // trim spaces
                 // if we read a long instruction
                 if (Stream.of(InstructionEnum.values())
                         .map(InstructionEnum::name)
-                        .collect(Collectors.toList()).contains(str.split("#")[0])) {
+                        .collect(Collectors.toList()).contains(str.split("#")[0])) { // Handle comments
                     // Better than a switch statement
                     // Get all information from enum Instruction
                     for (InstructionEnum i : InstructionEnum.values()) {
