@@ -40,11 +40,11 @@ public class InstructionReader implements BfReader {
                 // if we read a long instruction
                 if (Stream.of(InstructionEnum.values())
                         .map(InstructionEnum::name)
-                        .collect(Collectors.toList()).contains(str.split("#")[0].trim())) {
+                        .collect(Collectors.toList()).contains(str.split("#")[0])) {
                     // Better than a switch statement
                     // Get all information from enum Instruction
                     for (InstructionEnum i : InstructionEnum.values()) {
-                        if (str.split("#")[0].trim().equals(i.name())) instructions.add(i);
+                        if (str.split("#")[0].equals(i.name())) instructions.add(i);
                     }
                     charId++;
                 } else { // if we read a shortcut
