@@ -39,15 +39,14 @@ public class InstructionReader implements BfReader {
                 // if we read a long instruction
                 if (Stream.of(InstructionEnum.values())
                         .map(InstructionEnum::name)
-                        .collect(Collectors.toList()).contains(str)) {
+                        .collect(Collectors.toList()).contains(str.split(" ")[0])) {
                     // Better than a switch statement
                     // Get all information from enum Instruction
                     for (InstructionEnum i : InstructionEnum.values()) {
                         if (str.equals(i.name())) instructions.add(i);
                     }
                     charId++;
-                } else // if we read a shortcut
-                {
+                } else { // if we read a shortcut
                     for (int j = 0; j < str.length(); j++) {
                         c = str.charAt(j);
                         // Better than a switch statement
@@ -61,6 +60,9 @@ public class InstructionReader implements BfReader {
                                 break;
                             }
                         }
+                        if (c == '#') { // Comment block
+                            break;
+                        }
                         if (!found) throw new SyntaxException("unknown-char", c, charId);
                         charId++;
                     }
@@ -69,7 +71,7 @@ public class InstructionReader implements BfReader {
             return instructions;
         } catch (FileNotFoundException e) {
             throw new WrongFile("missing-file");
-        } catch (IOException | SyntaxException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return null;

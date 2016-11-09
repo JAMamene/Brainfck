@@ -5,6 +5,8 @@ import level2.exceptions.WrongFile;
 import level2.interpreter.Bfck;
 
 import java.awt.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.Scanner;
 
 import static level2.constants.Sizes.*;

@@ -1,0 +1,13 @@
+
+S12 - S13 : En theorie rien de special, rajouter methodes a Bfck et nouvelle methode pour les
+commands puis rajouter aussi la methode trace a Bfck.
+
+S14 : Relou, il va falloir changer la methode de lecture des fichiers texte, essayer d'eviter
+tous les if ou else
+
+S15 : Trouver syntaxe simple, au debut seulement? Stocker dans instruction avec une map pour
+lier a la liste d'instruction.
+
+S16 : Il faut que le modele de S15 soit valable avec la recursion ( pas map du coup ) ?
+
+S17 : Assez basique
