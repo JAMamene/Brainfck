@@ -1,10 +1,8 @@
 package level2.interpreter;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import level2.constants.InstructionEnum;
 import level2.exceptions.SyntaxException;
 
-import javax.swing.text.StyledEditorKit;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;

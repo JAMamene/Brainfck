@@ -5,8 +5,6 @@ import level2.exceptions.WrongFile;
 import level2.interpreter.Bfck;
 
 import java.awt.*;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.Scanner;
 
 import static level2.constants.Sizes.*;
@@ -80,7 +78,7 @@ public enum InstructionEnum {
         @Override
         public void exec(Bfck bfck) {
             int i = bfck.getInstruction();
-            if (bfck.getCell() != - MASK.get()) {
+            if (bfck.getCell() != -MASK.get()) {
                 bfck.addToInstruction(1);
             } else {
                 for (int j = i; j < bfck.getInstructions().size(); j++) {
@@ -96,7 +94,7 @@ public enum InstructionEnum {
         @Override
         public void exec(Bfck bfck) {
             int i = bfck.getInstruction();
-            if (bfck.getCell() ==  - MASK.get()) {
+            if (bfck.getCell() == -MASK.get()) {
                 bfck.addToInstruction(1);
             } else {
                 for (int j = i; j > 0; j--)
