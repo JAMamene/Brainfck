@@ -4,6 +4,7 @@ package level2.reader;
 import level2.constants.InstructionEnum;
 import level2.exceptions.SyntaxException;
 import level2.exceptions.WrongFile;
+import level2.macro.Macro;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -31,12 +32,20 @@ public class InstructionReader implements BfReader {
         try {
             int charId = 0;
             List<InstructionEnum> instructions = new ArrayList<>();
+            Macro macro = new Macro();
+            macro.add("MINUS_5",new ArrayList<InstructionEnum>(){{
+                add(InstructionEnum.DECR);
+                add(InstructionEnum.DECR);
+                add(InstructionEnum.DECR);
+                add(InstructionEnum.DECR);
+                add(InstructionEnum.DECR);
+            }});
             String str;
             Character c;
             FileReader fr = new FileReader(fileName);
             BufferedReader br = new BufferedReader(fr);
             while ((str = br.readLine()) != null) {
-                str = str.replaceAll("\\s+",""); // trim spaces
+                str = str.replaceAll("\\s+", ""); // trim spaces
                 // if we read a long instruction
                 if (Stream.of(InstructionEnum.values())
                         .map(InstructionEnum::name)
@@ -47,7 +56,11 @@ public class InstructionReader implements BfReader {
                         if (str.split("#")[0].equals(i.name())) instructions.add(i);
                     }
                     charId++;
-                } else { // if we read a shortcut
+                }
+                else if (macro.contains(str)) {
+                    instructions.addAll(macro.getMacro(str));
+                }
+                else { // if we read a shortcut
                     for (int j = 0; j < str.length(); j++) {
                         c = str.charAt(j);
                         // Better than a switch statement

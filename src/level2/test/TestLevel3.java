@@ -1,7 +1,6 @@
 package level2.test;
 
 import level2.command.CommandPerform;
-import level2.constants.InstructionEnum;
 import level2.interpreter.Bfck;
 import org.junit.contrib.java.lang.system.ExpectedSystemExit;
 import org.junit.rules.ExpectedException;
