@@ -1,5 +1,6 @@
 package level2.command;
 
+import level2.constants.Metrics;
 import level2.interpreter.Bfck;
 import level2.reader.BfReader;
 import level2.reader.ImageReader;
@@ -12,10 +13,11 @@ public class CommandPerform {
     /**
      * process a list of argument to set up the bfck and get the list of the actions
      *
-     * @param args
+     * @param args program's args
      */
 
     public CommandPerform(String[] args) {
+        Metrics.beginExecTime();
         arg = new ArgsCheck(args);
         // reader instantiation depends on the given file extension (texte file or image file)
         BfReader reader;
@@ -36,7 +38,7 @@ public class CommandPerform {
         return bfck;
     }
 
-    public void perform(Command cmd) {
+    private void perform(Command cmd) {
         cmd.execute(bfck);
     }
 
@@ -62,5 +64,6 @@ public class CommandPerform {
         //performing the file interpretation
         perform(new HandleCommand());
         perform(new PrintCommand());
+        Metrics.endExecTime();
     }
 }

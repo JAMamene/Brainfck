@@ -1,6 +1,7 @@
 package level2.test;
 
 import level2.command.CommandPerform;
+import level2.constants.Metrics;
 import level2.interpreter.Bfck;
 import org.junit.contrib.java.lang.system.ExpectedSystemExit;
 import org.junit.rules.ExpectedException;
@@ -19,8 +20,32 @@ public class TestLevel3 {
     private ByteArrayOutputStream baos;
 
     @org.junit.Rule
-    public final ExpectedSystemExit exit = ExpectedSystemExit.none(); //Cutom library 'system rule'
+    public final ExpectedSystemExit exit = ExpectedSystemExit.none(); //Custom library 'system rule'
     public final ExpectedException exception = ExpectedException.none();
+
+    @org.junit.Test
+    public void tests12_1(){
+        String[] args = {"-p", "Test1"}; //test des metrics sur un programme sans boucles
+        perf = new CommandPerform((args));
+        perf.performAll();
+        assertEquals(Metrics.getProgSize(),18);
+        assertEquals(Metrics.getExecMove(),18);
+        assertEquals(Metrics.getDataMove(),4);
+        assertEquals(Metrics.getDataWrite(),14);
+        assertEquals(Metrics.getDataRead(),0);
+    }
+
+    @org.junit.Test
+    public void tests12_2() {
+        String[] args = {"-p", "TestJB"}; //test metrics avec boucles
+        perf = new CommandPerform((args));
+        perf.performAll();
+        assertEquals(Metrics.getProgSize(), 18);
+        assertEquals(Metrics.getExecMove(), 39);
+        assertEquals(Metrics.getDataMove(), 9);
+        assertEquals(Metrics.getDataWrite(), 17);
+        assertEquals(Metrics.getDataRead(), 13);
+    }
 
     @org.junit.Test
     public void tests14_1() {
