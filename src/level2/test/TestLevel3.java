@@ -6,8 +6,6 @@ import level2.interpreter.Bfck;
 import org.junit.contrib.java.lang.system.ExpectedSystemExit;
 import org.junit.rules.ExpectedException;
 
-import java.io.ByteArrayOutputStream;
-
 import static level2.constants.Sizes.MASK;
 import static org.junit.Assert.assertEquals;
 
@@ -17,34 +15,31 @@ import static org.junit.Assert.assertEquals;
 public class TestLevel3 {
     private CommandPerform perf;
     private Bfck bfck;
-    private ByteArrayOutputStream baos;
-
-    @org.junit.Rule
-    public final ExpectedSystemExit exit = ExpectedSystemExit.none(); //Custom library 'system rule'
-    public final ExpectedException exception = ExpectedException.none();
 
     @org.junit.Test
-    public void tests12_1(){
-        String[] args = {"-p", "Test1"}; //test des metrics sur un programme sans boucles
+    public void tests12_1() {
+        Metrics.reset(); //reset metrics just to be sure
+        String[] args = {"-p", "Test1"}; //test metrics without loops
         perf = new CommandPerform((args));
         perf.performAll();
-        assertEquals(Metrics.getProgSize(),18);
-        assertEquals(Metrics.getExecMove(),18);
-        assertEquals(Metrics.getDataMove(),4);
-        assertEquals(Metrics.getDataWrite(),14);
-        assertEquals(Metrics.getDataRead(),0);
+        assertEquals(18, Metrics.getProgSize());
+        assertEquals(18, Metrics.getExecMove());
+        assertEquals(4, Metrics.getDataMove());
+        assertEquals(14, Metrics.getDataWrite());
+        assertEquals(0, Metrics.getDataRead());
     }
 
     @org.junit.Test
     public void tests12_2() {
-        String[] args = {"-p", "TestJB"}; //test metrics avec boucles
+        Metrics.reset();
+        String[] args = {"-p", "TestJB"}; //test metrics with loops
         perf = new CommandPerform((args));
         perf.performAll();
-        assertEquals(Metrics.getProgSize(), 18);
-        assertEquals(Metrics.getExecMove(), 39);
-        assertEquals(Metrics.getDataMove(), 9);
-        assertEquals(Metrics.getDataWrite(), 17);
-        assertEquals(Metrics.getDataRead(), 13);
+        assertEquals(18, Metrics.getProgSize());
+        assertEquals(39, Metrics.getExecMove());
+        assertEquals(9, Metrics.getDataMove());
+        assertEquals(17, Metrics.getDataWrite());
+        assertEquals(13, Metrics.getDataRead());
     }
 
     @org.junit.Test

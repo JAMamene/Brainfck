@@ -36,36 +36,45 @@ public class Metrics {
         PROG_SIZE = progSize;
     }
 
-    public static void incrExecMove(){
+    public static void incrExecMove() {
         EXEC_MOVE++;
     }
 
-    public static void incrDataMove(){
+    public static void incrDataMove() {
         DATA_MOVE++;
     }
 
-    public static void incrDataWrite(){
+    public static void incrDataWrite() {
         DATA_WRITE++;
     }
 
-    public static void incrDataRead(){
+    public static void incrDataRead() {
         DATA_READ++;
     }
 
-    public static void beginExecTime(){
+    public static void beginExecTime() {
         EXEC_TIME = System.currentTimeMillis();
     }
 
-    public static void endExecTime(){
+    public static void endExecTime() {
         EXEC_TIME = System.currentTimeMillis() - EXEC_TIME;
     }
 
-    public static void print(){
-        System.out.println("PROG SIZE: "+PROG_SIZE);
-        System.out.println("EXEC TIME: "+EXEC_TIME);
-        System.out.println("EXEC MOVE: "+EXEC_MOVE);
-        System.out.println("DATA MOVE: "+DATA_MOVE);
-        System.out.println("DATA WRITE: "+DATA_WRITE);
-        System.out.println("DATA READ: "+DATA_READ);
+    public static void reset() {
+        PROG_SIZE = 0;
+        EXEC_TIME = System.currentTimeMillis();
+        EXEC_MOVE = 0;
+        DATA_MOVE = 0;
+        DATA_WRITE = 0;
+        DATA_READ = 0;
+    } // For testing
+
+    public static void print() {
+        System.out.println("PROG SIZE: " + PROG_SIZE);
+        System.out.println("EXEC TIME: " + EXEC_TIME);
+        System.out.println("EXEC MOVE: " + EXEC_MOVE);
+        System.out.println("DATA MOVE: " + DATA_MOVE);
+        System.out.println("DATA WRITE: " + DATA_WRITE);
+        System.out.println("DATA READ: " + DATA_READ);
     }
 }
