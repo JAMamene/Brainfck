@@ -32,6 +32,10 @@ public class Metrics {
         return DATA_READ;
     }
 
+    /**
+     * set the program size
+     * @param progSize size of the program
+     */
     public static void setProgSize(long progSize) {
         PROG_SIZE = progSize;
     }
@@ -52,10 +56,16 @@ public class Metrics {
         DATA_READ++;
     }
 
+    /**
+     * launch the execution time
+     */
     public static void beginExecTime() {
         EXEC_TIME = System.currentTimeMillis();
     }
 
+    /**
+     * end the execution timer
+     */
     public static void endExecTime() {
         EXEC_TIME = System.currentTimeMillis() - EXEC_TIME;
     }
@@ -69,6 +79,9 @@ public class Metrics {
         DATA_READ = 0;
     } // For testing
 
+    /**
+     * print all the data
+     */
     public static void print() {
         System.out.println("PROG SIZE: " + PROG_SIZE);
         System.out.println("EXEC TIME: " + EXEC_TIME);

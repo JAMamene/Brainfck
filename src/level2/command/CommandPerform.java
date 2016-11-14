@@ -63,7 +63,8 @@ public class CommandPerform {
         performAction();
         //performing the file interpretation
         perform(new HandleCommand());
-        perform(new PrintCommand());
         Metrics.endExecTime();
+        perform(new PrintCommand());
+        if(arg.getMetrics()) perform(new MetricsCommand());
     }
 }

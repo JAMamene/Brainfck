@@ -12,6 +12,7 @@ public class ArgsCheck {
     private String fileExtension;
     private String in;
     private String out;
+    private boolean metrics = false;
     private List<Command> actions;
 
     /**
@@ -46,6 +47,9 @@ public class ArgsCheck {
                     actions.add(new CheckCommand());
                     break;
 
+                case "--showMetrics":
+                    metrics = true;
+                    break;
                 case "-i":
                     if (i + 1 >= args.length) {
                         throw new WrongFile("missing-file");
@@ -105,6 +109,8 @@ public class ArgsCheck {
         return out;
     }
 
+    public boolean getMetrics(){return metrics;}
+
     public boolean hasActions() {
         return !actions.isEmpty();
     }
@@ -122,6 +128,7 @@ public class ArgsCheck {
                 "-o + the output file you want to use for out, \n" +
                 "--rewrite to print to the standard output your program in short syntax,\n" +
                 "--translate to get an image representation of you program, \n" +
-                "--check to only check if the program is well formed");
+                "--check to only check if the program is well formed \n" +
+                "--showMetrics to print metrics of the program");
     }
 }
