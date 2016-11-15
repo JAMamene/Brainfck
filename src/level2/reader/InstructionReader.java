@@ -5,12 +5,14 @@ import level2.constants.InstructionEnum;
 import level2.exceptions.SyntaxException;
 import level2.exceptions.WrongFile;
 import level2.macro.Macro;
+import level2.macro.Prototype;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -33,6 +35,7 @@ public class InstructionReader implements BfReader {
             int charId = 0;
             List<InstructionEnum> instructions = new ArrayList<>();
             Macro macro = new Macro();
+            macro.add(new Prototype("DECR_3", 3), Arrays.asList(InstructionEnum.DECR)); // Test cause we can't declare macros yet.
             String str;
             Character c;
             FileReader fr = new FileReader(fileName);
