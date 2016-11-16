@@ -26,6 +26,12 @@ public class SyntaxException extends RuntimeException {
             case "missing-bracket":
                 System.err.println("Error : Closing brackets missing at " + charId + ", char: " + c);
                 break;
+            case "macro-syntax":
+                System.err.println("Error : Invalid macro syntax " + charId + ", char: " + c + " macro syntax is :\n" +
+                        "{ MACRO_ID [PARAM]\n" +
+                        "INSTRUCTIONS IN EITHER SYNTAX\n" +
+                        "}");
+                break;
         }
         System.exit(4);
     }

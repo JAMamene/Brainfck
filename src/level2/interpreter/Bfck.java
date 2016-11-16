@@ -127,6 +127,7 @@ public class Bfck {
      * Main method of the interpreter, reads all the instructions and uses the private methods accordingly.
      */
     public void handle() {
+        System.out.println(instructions);
         while (instruction < instructions.size()) {
             instructions.get(instruction).exec(this);
             Metrics.incrExecMove();

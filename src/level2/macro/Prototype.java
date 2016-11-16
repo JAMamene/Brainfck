@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Prototype {
     private String name;
-    private int argument;
+    private Integer argument;
 
     public Prototype(String name) {
         this.name = name;
@@ -17,7 +17,9 @@ public class Prototype {
 
     public Prototype(String name, Integer argument) {
         this.name = name;
-        this.argument = argument;
+        if (argument != null) {
+            this.argument = argument;
+        }
     }
 
     public String getName() {
@@ -25,7 +27,7 @@ public class Prototype {
     }
 
     public List<InstructionEnum> build(List<InstructionEnum> instructions) {
-        if (argument <= 0) {
+        if (argument == null) {
             return instructions;
         } else {
             List<InstructionEnum> finalInstructions = new ArrayList<>();

@@ -147,11 +147,29 @@ public class TestExceptions {
     }
 
     @org.junit.Test
-    public void tests9_5() {
+    public void testsNotEnoughChar() {
         String[] args = {"-p", "TestMultiInput", "-i", "ITestInput"}; //Doesn't contain enough char
         perf = new CommandPerform(args); //will perform the actions needed
         exception.expect(WrongFile.class); //Should throw wrongfile exception
         exit.expectSystemExitWithStatus(3); // should terminate the program with exit code 3
+        perf.performAll();
+    }
+
+    @org.junit.Test
+    public void testInvalidMacro() {
+        String[] args = {"-p", "TestMacroError"}; // Wrong syntax for macro
+        exception.expect(SyntaxException.class); //Should throw wrongfile exception
+        exit.expectSystemExitWithStatus(4); // should terminate the program with exit code 4
+        perf = new CommandPerform(args); //will perform the actions needed
+        perf.performAll();
+    }
+
+    @org.junit.Test
+    public void testInvalidMacroArg() {
+        String[] args = {"-p", "TestMacroInvalidArg"}; // Wrong syntax for macro
+        exception.expect(SyntaxException.class); //Should throw wrongfile exception
+        exit.expectSystemExitWithStatus(4); // should terminate the program with exit code 4
+        perf = new CommandPerform(args); //will perform the actions needed
         perf.performAll();
     }
 

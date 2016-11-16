@@ -1,0 +1,10 @@
+{ MACRO_1
+INCR
+}
+{ MACRO_3
+MACRO_1 # Reuse stuff from before
+MACRO_1
+MACRO_1
+}
+>>
+MACRO_3
