@@ -120,4 +120,17 @@ public class TestLevel3 {
         perf.performAction(); // no need for other commands
         assertEquals(">>+++\r\n", baos.toString()); // is translated at execution
     }
+
+    @org.junit.Test
+    public void tests16_4() {
+        String[] args = {"-p", "TestToDigit"}; // test with the example of the subject
+        String str = "1";  // Set input to 1 (code 48) but will be reduced to 1
+        perf = new CommandPerform(args);
+        bfck = perf.getBfck();
+        bfck.setIn(str);
+        perf.performAll();
+        bfck = perf.getBfck();
+        assertEquals(1 - MASK.get(), bfck.getMemoryAt((short) 0)); // assert if the memory state is as expected
+        assertEquals(0 - MASK.get(), bfck.getMemoryAt((short) 1));
+    }
 }
