@@ -96,7 +96,7 @@ public class TestLevel3 {
         perf.performAll();
         bfck = perf.getBfck();
         assertEquals(0 - MASK.get(), bfck.getMemoryAt((short) 0)); // checks if memory matches expected output
-        assertEquals(4 - MASK.get(), bfck.getMemoryAt((short) 1));
+        assertEquals(10 - MASK.get(), bfck.getMemoryAt((short) 1));
     }
 
     @org.junit.Test

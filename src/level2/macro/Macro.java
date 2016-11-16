@@ -8,34 +8,37 @@ import java.util.List;
 import java.util.Map;
 
 public class Macro {
-    private Map<Prototype, List<InstructionEnum>> macros = new HashMap<>();
+    private Map<String, List<InstructionEnum>> macros = new HashMap<>();
 
-    public void add(Prototype key, List<InstructionEnum> val) {
+    public void add(String key, List<InstructionEnum> val) {
         if (getMacro(key).isEmpty()) {
             macros.put(key, val);
-        }
-        else {
+        } else {
             getMacro(key).addAll(val);
         }
     }
 
-    public void define(Prototype key) {
+    public List<InstructionEnum> getMacro(String name, Integer param) {
+        if (param == null) {
+            return macros.get(name);
+        } else {
+            List<InstructionEnum> finalInstructions = new ArrayList<>();
+            for (int i = 0; i < param; i++) {
+                finalInstructions.addAll(macros.get(name));
+            }
+            return finalInstructions;
+        }
+    }
+
+    public void define(String key) {
         macros.put(key, new ArrayList<>());
     }
 
-    public List<InstructionEnum> getMacro(Prototype proto) {
-        return proto.build(macros.get(proto));
-    }
-
-    public List<InstructionEnum> getMacro(String name) {
-        return getPrototype(name).build(macros.get(getPrototype(name)));
-    }
-
-    private Prototype getPrototype(String name) {
-        return macros.keySet().stream().filter(prototype -> prototype.getName().equals(name)).findFirst().orElse(null);
+    private List<InstructionEnum> getMacro(String name) {
+        return macros.get(name);
     }
 
     public boolean contains(String name) {
-        return macros.containsKey(getPrototype(name));
+        return macros.containsKey(name);
     }
 }

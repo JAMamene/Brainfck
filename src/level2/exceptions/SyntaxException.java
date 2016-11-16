@@ -28,9 +28,11 @@ public class SyntaxException extends RuntimeException {
                 break;
             case "macro-syntax":
                 System.err.println("Error : Invalid macro syntax " + charId + ", char: " + c + " macro syntax is :\n" +
-                        "{ MACRO_ID [PARAM]\n" +
+                        "{ MACRO_ID \n" +
                         "INSTRUCTIONS IN EITHER SYNTAX\n" +
-                        "}");
+                        "}" +
+                        "..." +
+                        "MACRO_ID[%PARAM]");
                 break;
         }
         System.exit(4);

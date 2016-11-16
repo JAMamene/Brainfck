@@ -5,7 +5,6 @@ import level2.constants.InstructionEnum;
 import level2.exceptions.SyntaxException;
 import level2.exceptions.WrongFile;
 import level2.macro.Macro;
-import level2.macro.Prototype;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -24,7 +23,7 @@ public class InstructionReader implements BfReader {
 
     private int charId = 0;
     private Macro macro;
-    private Prototype currentMacro;
+    private String currentMacro;
 
     /**
      * A function that reads a file that contains either syntaxes of brainfuck (or both)
@@ -51,7 +50,6 @@ public class InstructionReader implements BfReader {
                 }
                 if (currentMacro != null) {
                     macro.add(currentMacro, writeInstructions(str));
-                    System.out.println(macro.getMacro(currentMacro));
                 } else instructions.addAll(writeInstructions(str));
             }
             return instructions;
@@ -63,26 +61,17 @@ public class InstructionReader implements BfReader {
         return null;
     }
 
-    private Prototype defineMacro(String str) {
+    private String defineMacro(String str) {
         String name;
-        Integer parameter = null;
         String[] args = str.split(" ");
         if (args.length == 2) {
             name = args[1];
-        } else if (args.length == 3) {
-            name = args[1];
-            try {
-                parameter = Integer.parseInt(args[2]);
-            } catch (NumberFormatException e) {
-                throw new SyntaxException("macro-syntax", args[2].charAt(0), charId + 2);
-            }
         } else {
             throw new SyntaxException("macro-syntax", args[0].charAt(0), charId);
         }
         charId += args.length;
-        Prototype proto = new Prototype(name,parameter);
-        macro.define(proto);
-        return proto;
+        macro.define(name);
+        return name;
     }
 
     private List<InstructionEnum> writeInstructions(String str) {
@@ -99,8 +88,19 @@ public class InstructionReader implements BfReader {
                 if (str.split("#")[0].equals(i.name())) instructions.add(i);
             }
             charId++;
-        } else if (macro.contains(str.split("#")[0])) {
-            instructions.addAll(macro.getMacro(str.split("#")[0]));
+        } else if (macro.contains(str.split("#")[0].split("%")[0])) {
+            String macroArg = str.split("#")[0];
+            Integer param = null;
+            String[] split = macroArg.split("%");
+            if (split.length == 2) {
+                try {
+                    param = Integer.parseInt(split[1]);
+                } catch (NumberFormatException e) {
+                    throw new SyntaxException("macro-syntax", split[0].charAt(0), charId);
+                }
+            }
+            charId += split.length;
+            instructions.addAll(macro.getMacro(str.split("#")[0].split("%")[0], param));
         } else { // if we read a shortcut
             for (int j = 0; j < str.length(); j++) {
                 c = str.charAt(j);
