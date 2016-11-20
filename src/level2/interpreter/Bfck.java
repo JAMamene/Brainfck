@@ -2,6 +2,7 @@ package level2.interpreter;
 
 import level2.constants.InstructionEnum;
 import level2.constants.Metrics;
+import level2.constants.Trace;
 import level2.exceptions.SyntaxException;
 
 import java.util.Arrays;
@@ -19,6 +20,7 @@ public class Bfck {
     private String filenameIn;
     private String in;
     private int readId;
+    private boolean trace = false;
 
     private byte[] memory;
     private List<InstructionEnum> instructions;
@@ -103,6 +105,8 @@ public class Bfck {
         return instructions;
     }
 
+    public void activeTrace(){trace = true;}
+
     /**
      * Displays all the cells that are not zero
      *
@@ -131,7 +135,11 @@ public class Bfck {
         while (instruction < instructions.size()) {
             instructions.get(instruction).exec(this);
             Metrics.incrExecMove();
+
+            if(trace) Trace.saveState(instruction,pointer);
+
         }
+        if(trace) Trace.end();
     }
 
     /**

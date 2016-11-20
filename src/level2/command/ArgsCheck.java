@@ -47,6 +47,10 @@ public class ArgsCheck {
                     actions.add(new CheckCommand());
                     break;
 
+                case "--trace":
+                    actions.add(new TraceCommand());
+                    break;
+
                 case "--showMetrics":
                     metrics = true;
                     break;
