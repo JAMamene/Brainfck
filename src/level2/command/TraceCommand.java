@@ -16,6 +16,7 @@ public class TraceCommand implements Command {
      * @param bfck
      */
     public void execute(Bfck bfck){
+        bfck.setTrace();
         Trace.init();
     }
 }

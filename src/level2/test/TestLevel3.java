@@ -26,7 +26,7 @@ public class TestLevel3 {
     @org.junit.Test
     public void tests12_1() {
         Metrics.reset(); //reset metrics just to be sure
-        String[] args = {"-p", "Test1"}; //test metrics without loops
+        String[] args = {"-p", "Test1","--showMetrics"}; //test metrics without loops
         perf = new CommandPerform((args));
         perf.performAll();
         assertEquals(18, Metrics.getProgSize());
@@ -39,7 +39,7 @@ public class TestLevel3 {
     @org.junit.Test
     public void tests12_2() {
         Metrics.reset();
-        String[] args = {"-p", "TestJB"}; //test metrics with loops
+        String[] args = {"-p", "TestJB","--showMetrics"}; //test metrics with loops
         perf = new CommandPerform((args));
         perf.performAll();
         assertEquals(18, Metrics.getProgSize());

@@ -60,6 +60,7 @@ public class CommandPerform {
     public void performAll() {
         perform(new SetInCommand());
         perform(new SetOutCommand());
+        if(arg.getTrace()) perform(new TraceCommand());
         performAction();
         //performing the file interpretation
         perform(new HandleCommand());

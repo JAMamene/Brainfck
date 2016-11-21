@@ -93,6 +93,10 @@ public class Bfck {
         memory[pointer] = val;
     }
 
+    public void setTrace() {
+        this.trace = true;
+    }
+
     public void addToInstruction(int val) {
         instruction += val;
     }
@@ -135,9 +139,9 @@ public class Bfck {
         while (instruction < instructions.size()) {
             instructions.get(instruction).exec(this);
             Metrics.incrExecMove();
-
-            if(trace) Trace.saveState(instruction,pointer);
-
+            if(trace){
+                Trace.saveState(instruction,pointer);
+            }
         }
         if(trace) Trace.end();
     }

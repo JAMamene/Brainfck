@@ -12,6 +12,7 @@ public class ArgsCheck {
     private String fileExtension;
     private String in;
     private String out;
+    private Boolean trace=false;
     private boolean metrics = false;
     private List<Command> actions;
 
@@ -48,7 +49,7 @@ public class ArgsCheck {
                     break;
 
                 case "--trace":
-                    actions.add(new TraceCommand());
+                    trace = true;
                     break;
 
                 case "--showMetrics":
@@ -123,6 +124,10 @@ public class ArgsCheck {
         Command action = actions.get(0);
         actions.remove(action);
         return action;
+    }
+
+    public Boolean getTrace() {
+            return trace;
     }
 
     private void printHelp(String[] args) {
