@@ -12,6 +12,7 @@ public class Trace {
 
     public static void saveState(int execPtr, int dataPtr){
         try {
+            writer.newLine();
             writer.write(step + " | " + execPtr + " | " + dataPtr + " | ");
             writer.flush();
         }
