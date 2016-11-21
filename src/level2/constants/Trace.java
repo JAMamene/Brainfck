@@ -11,7 +11,6 @@ public class Trace {
     static BufferedWriter writer;
 
     public static void saveState(int execPtr, int dataPtr){
-        System.out.println("ecriture");
         try {
             writer.write(step + " | " + execPtr + " | " + dataPtr + " | ");
             writer.flush();
