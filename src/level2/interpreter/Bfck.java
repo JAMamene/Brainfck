@@ -5,9 +5,7 @@ import level2.constants.Metrics;
 import level2.constants.Trace;
 import level2.exceptions.SyntaxException;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 import static level2.constants.Sizes.*;
 
@@ -21,7 +19,7 @@ public class Bfck {
     private String in;
     private int readId;
     private boolean trace = false;
-
+    private Map<Integer,Integer> jumpTable;
     private byte[] memory;
     private List<InstructionEnum> instructions;
     private int instruction;
@@ -42,6 +40,8 @@ public class Bfck {
         instruction = 0;
         pointer = 0;
         readId = 0;
+        jumpTable = new HashMap<>();
+        fillJumpTable();
         Metrics.setProgSize(instructions.size());
     }
 
@@ -97,8 +97,8 @@ public class Bfck {
         this.trace = true;
     }
 
-    public void addToInstruction(int val) {
-        instruction += val;
+    public void incrementInstructions() {
+        instruction += 1;
     }
 
     public void addToPointer(int val) {
@@ -109,7 +109,17 @@ public class Bfck {
         return instructions;
     }
 
-    public void activeTrace(){trace = true;}
+    public void setInstruction ( int val) {
+        instruction = val;
+    }
+
+    public Map<Integer,Integer> getJumpTable() {
+        return jumpTable;
+    }
+
+    public void activeTrace() {
+        trace = true;
+    }
 
     /**
      * Displays all the cells that are not zero
@@ -139,11 +149,11 @@ public class Bfck {
         while (instruction < instructions.size()) {
             instructions.get(instruction).exec(this);
             Metrics.incrExecMove();
-            if(trace){
-                Trace.saveState(instruction,pointer);
+            if (trace) {
+                Trace.saveState(instruction, pointer);
             }
         }
-        if(trace) Trace.end();
+        if (trace) Trace.end();
     }
 
     /**
@@ -173,25 +183,40 @@ public class Bfck {
         return true;
     }
 
-    public boolean bound(int i, int j, Boolean up) {
+    public boolean bound(int i, int j) {
         int compteur = 1;
 
-        for (int a = i; a < j; a++) {
+        for (int a = i + 1; a < j + 1; a++) {
+
+            if (instructions.get(a).getShortcut() == InstructionEnum.JUMP.getShortcut()) {
+                compteur++;
+            }
+
+            if (instructions.get(a).getShortcut() == InstructionEnum.BACK.getShortcut()) {
+                compteur--;
+            }
+
+        }
+        return instructions.get(j).getShortcut() == InstructionEnum.BACK.getShortcut() && compteur == 0;
+    }
+
+
+    public void fillJumpTable() {
+        for (int i = 0; i < instructions.size(); i++) {
 
             if (instructions.get(i).getShortcut() == InstructionEnum.JUMP.getShortcut()) {
-                if (up) compteur++;
-                else compteur--;
-            }
 
-            if (instructions.get(i).getShortcut() == InstructionEnum.BACK.getShortcut()) {
-                if (up) compteur--;
-                else compteur++;
-            }
+                for (int j = i; j < instructions.size(); j++) {
 
-            if ((compteur == 0)) {
-                return true;
+                    if (bound(i, j)) {
+                        jumpTable.put(i, j);
+                        jumpTable.put(j, i);
+                        break;
+                    }
+                }
             }
         }
-        return false;
+        System.out.println("jumptable");
+        System.out.println(jumpTable);
     }
 }
