@@ -53,12 +53,12 @@ public class Bfck {
         readId++;
     }
 
-    public void setIn(String in) {
-        this.in = in;
-    }
-
     public String getIn() {
         return in;
+    }
+
+    public void setIn(String in) {
+        this.in = in;
     }
 
     public String getFilenameOut() {
@@ -79,6 +79,10 @@ public class Bfck {
 
     public int getInstruction() {
         return instruction;
+    }
+
+    public void setInstruction(int val) {
+        instruction = val;
     }
 
     public short getMemoryAt(short index) {
@@ -107,10 +111,6 @@ public class Bfck {
 
     public List<InstructionEnum> getInstructions() {
         return instructions;
-    }
-
-    public void setInstruction ( int val) {
-        instruction = val;
     }
 
     public Map<Integer,Integer> getJumpTable() {
@@ -145,7 +145,6 @@ public class Bfck {
      * Main method of the interpreter, reads all the instructions and uses the private methods accordingly.
      */
     public void handle() {
-        System.out.println(instructions);
         while (instruction < instructions.size()) {
             instructions.get(instruction).exec(this);
             Metrics.incrExecMove();
@@ -216,7 +215,5 @@ public class Bfck {
                 }
             }
         }
-        System.out.println("jumptable");
-        System.out.println(jumpTable);
     }
 }

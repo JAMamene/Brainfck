@@ -16,12 +16,11 @@ import static org.junit.Assert.assertEquals;
  * Tests for the slices of level 2
  */
 public class TestLevel3 {
-    private CommandPerform perf;
-    private Bfck bfck;
-
     @org.junit.Rule
     public final ExpectedSystemExit exit = ExpectedSystemExit.none(); //Cutom library 'system rule'
     public final ExpectedException exception = ExpectedException.none();
+    private CommandPerform perf;
+    private Bfck bfck;
 
     @org.junit.Test
     public void tests12_1() {
@@ -39,14 +38,14 @@ public class TestLevel3 {
     @org.junit.Test
     public void tests12_2() {
         Metrics.reset();
-        String[] args = {"-p", "TestJB","--showMetrics"}; //test metrics with loops
+        String[] args = {"-p", "TestAddition", "--showMetrics"}; //test metrics with loops
         perf = new CommandPerform((args));
         perf.performAll();
-        assertEquals(18, Metrics.getProgSize());
-        assertEquals(39, Metrics.getExecMove());
-        assertEquals(9, Metrics.getDataMove());
-        assertEquals(17, Metrics.getDataWrite());
-        assertEquals(13, Metrics.getDataRead());
+        assertEquals(17, Metrics.getProgSize());
+        assertEquals(35, Metrics.getExecMove());
+        assertEquals(12, Metrics.getDataMove());
+        assertEquals(15, Metrics.getDataWrite());
+        assertEquals(8, Metrics.getDataRead());
     }
 
     @org.junit.Test
