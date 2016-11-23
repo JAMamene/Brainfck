@@ -137,6 +137,18 @@ public class Bfck {
         return rtrn.toString();
     }
 
+    public String toDebugString() {
+        StringBuilder rtrn = new StringBuilder("MEMORY : [");
+        for (byte aMemory : memory) {
+            if (aMemory != MINDATASIZE.get()) {
+                rtrn.append(aMemory + MASK.get());
+                rtrn.append(", ");
+            }
+        }
+        rtrn.append("]");
+        return rtrn.toString();
+    }
+
     public String printableCell(short i) {
         return "C" + i + "=" + (memory[i] + MASK.get()) + " / " + (char) (memory[i] + MASK.get()) + "\n";
     }
@@ -149,7 +161,7 @@ public class Bfck {
             instructions.get(instruction).exec(this);
             Metrics.incrExecMove();
             if (trace) {
-                Trace.saveState(instruction, pointer);
+                Trace.saveState(this);
             }
         }
         if (trace) Trace.end();

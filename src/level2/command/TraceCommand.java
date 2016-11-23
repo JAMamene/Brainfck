@@ -17,6 +17,6 @@ public class TraceCommand implements Command {
      */
     public void execute(Bfck bfck){
         bfck.setTrace();
-        Trace.init();
+        Trace.init(bfck.getFilename());
     }
 }
