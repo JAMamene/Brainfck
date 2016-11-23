@@ -198,7 +198,7 @@ public class Bfck {
         return true;
     }
 
-    public boolean bound(int i, int j) {
+    private boolean bound(int i, int j) {
         int compteur = 1;
         for (int a = i + 1; a < j + 1; a++) {
             if (instructions.get(a).getShortcut() == InstructionEnum.JUMP.getShortcut()) {
@@ -212,14 +212,16 @@ public class Bfck {
     }
 
 
-    public void fillJumpTable() {
-        for (int i = 0; i < instructions.size(); i++) {
-            if (instructions.get(i).getShortcut() == InstructionEnum.JUMP.getShortcut()) {
-                for (int j = i; j < instructions.size(); j++) {
-                    if (bound(i, j)) {
-                        jumpTable.put(i, j);
-                        jumpTable.put(j, i);
-                        break;
+    private void fillJumpTable() {
+        if (check()) {
+            for (int i = 0; i < instructions.size(); i++) {
+                if (instructions.get(i).getShortcut() == InstructionEnum.JUMP.getShortcut()) {
+                    for (int j = i; j < instructions.size(); j++) {
+                        if (bound(i, j)) {
+                            jumpTable.put(i, j);
+                            jumpTable.put(j, i);
+                            break;
+                        }
                     }
                 }
             }

@@ -197,10 +197,10 @@ public class TestLevel2 {
 
     @org.junit.Test
     public void tests10_2() {
-        String[] args = {"-p", "TestCheck2", "--check"}; //to many closing brackets
-        perf = new CommandPerform(args); // should terminate the program with exit code 4
-        exception.expect(SyntaxException.class);
+        String[] args = {"-p", "TestCheck2", "--check"}; //too many closing brackets
         exit.expectSystemExitWithStatus(4); // check should raise exception
+        exception.expect(SyntaxException.class);
+        perf = new CommandPerform(args); // should terminate the program with exit code 4
         perf.performAction();
     }
 
