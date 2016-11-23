@@ -19,7 +19,7 @@ public class Bfck {
     private String in;
     private int readId;
     private boolean trace = false;
-    private Map<Integer,Integer> jumpTable;
+    private Map<Integer, Integer> jumpTable;
     private byte[] memory;
     private List<InstructionEnum> instructions;
     private int instruction;
@@ -113,7 +113,7 @@ public class Bfck {
         return instructions;
     }
 
-    public Map<Integer,Integer> getJumpTable() {
+    public Map<Integer, Integer> getJumpTable() {
         return jumpTable;
     }
 
@@ -138,18 +138,22 @@ public class Bfck {
     }
 
     public String toDebugString() {
-        StringBuilder rtrn = new StringBuilder("MEMORY : [");
+        StringBuilder rtrn = new StringBuilder("[");
+        Boolean notFound = true;
         for (byte aMemory : memory) {
-            if (aMemory != MINDATASIZE.get()) {
+            if (aMemory != MINDATASIZE.get() || notFound) {
+                if (aMemory != MINDATASIZE.get()) notFound = false;
                 rtrn.append(aMemory + MASK.get());
-                rtrn.append(", ");
+                rtrn.append(",");
             }
         }
+        if (notFound) return ("[]");
+        rtrn.setLength(rtrn.length() - 1);
         rtrn.append("]");
         return rtrn.toString();
     }
 
-    public String printableCell(short i) {
+    private String printableCell(short i) {
         return "C" + i + "=" + (memory[i] + MASK.get()) + " / " + (char) (memory[i] + MASK.get()) + "\n";
     }
 
@@ -196,17 +200,13 @@ public class Bfck {
 
     public boolean bound(int i, int j) {
         int compteur = 1;
-
         for (int a = i + 1; a < j + 1; a++) {
-
             if (instructions.get(a).getShortcut() == InstructionEnum.JUMP.getShortcut()) {
                 compteur++;
             }
-
             if (instructions.get(a).getShortcut() == InstructionEnum.BACK.getShortcut()) {
                 compteur--;
             }
-
         }
         return instructions.get(j).getShortcut() == InstructionEnum.BACK.getShortcut() && compteur == 0;
     }
@@ -214,11 +214,8 @@ public class Bfck {
 
     public void fillJumpTable() {
         for (int i = 0; i < instructions.size(); i++) {
-
             if (instructions.get(i).getShortcut() == InstructionEnum.JUMP.getShortcut()) {
-
                 for (int j = i; j < instructions.size(); j++) {
-
                     if (bound(i, j)) {
                         jumpTable.put(i, j);
                         jumpTable.put(j, i);
