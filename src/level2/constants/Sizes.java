@@ -13,7 +13,7 @@ public enum Sizes {
     MAXDATASIZE(127),
 
     // The square size that represents one instruction on images
-    SQUARE_SIZE(3); // here, each instruction is represented by a 3*3 square
+    SQUARE_SIZE(20); // here, each instruction is represented by a 3*3 square
 
 
     private int val;
