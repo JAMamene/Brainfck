@@ -1,5 +1,7 @@
 package level2.constants;
 
+import level2.interpreter.Bfck;
+
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -7,43 +9,49 @@ import java.util.Calendar;
 public class Trace {
 
     static Calendar cal;
-    static int step =1;
-    static BufferedWriter writer;
+    private static int step = 1;
+    private static BufferedWriter writer;
 
-    public static void saveState(int execPtr, int dataPtr){
-        try {
-            writer.newLine();
-            writer.write(step + " | " + execPtr + " | " + dataPtr + " | ");
-            writer.flush();
-        }
-        catch (IOException e) {
-            // do something
-        }
-        step++;
-
-    }
     /**
      * print all the data into a log file and save the file
      */
-    public static void init() {
-
+    public static void init(String fileName) {
         try{
-            File file = new File("p.log");
+            // checks if the file has an extension, if it has one, remove it
+            if ((fileName.lastIndexOf('.')) != -1) {
+                fileName = fileName.substring(0, fileName.lastIndexOf('.'));
+            }
+            //put the new extension at the end of the filename
+            File file = new File(fileName + ".log");
             file.createNewFile();
 
             writer = new BufferedWriter(new FileWriter(file));
             writer.write("Brainf*ck interpreter launched at "+getCurrentTime());
             writer.newLine();
             writer.newLine();
-            writer.write("Step | Exec pointer | Data pointer | Data snapshot");
-            writer.newLine();
-            writer.write("-----|--------------|--------------|--------------");
             writer.flush();
 
-        } catch (Exception e) {
-            // do something
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+    }
 
+    public static void saveState(Bfck bfck) {
+        try {
+            writer.write("step : " + step);
+            writer.newLine();
+            writer.write("execPtr : " + bfck.getInstruction());
+            writer.newLine();
+            writer.write("dataPtr : " + bfck.getPointer());
+            writer.newLine();
+            writer.write("memoryState : " + bfck.toDebugString());
+            writer.newLine();
+            writer.newLine();
+            writer.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        step++;
     }
 
     private static String getCurrentTime(){
@@ -55,9 +63,8 @@ public class Trace {
     public static void end(){
         try{
             writer.close();
-        }
-        catch (Exception e) {
-        // do something
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

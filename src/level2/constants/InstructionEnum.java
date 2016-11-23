@@ -19,7 +19,7 @@ public enum InstructionEnum {
             if (bfck.getCell() == MAXDATASIZE.get())
                 throw new ExecuteException("cell-overflow", bfck.getPointer(), bfck.getInstruction());
             bfck.setCase((byte) (bfck.getCell() + 1));
-            bfck.addToInstruction(1);
+            bfck.incrementInstructions();
             Metrics.incrDataWrite();
         }
     },
@@ -29,7 +29,7 @@ public enum InstructionEnum {
             if (bfck.getCell() == MINDATASIZE.get())
                 throw new ExecuteException("cell-underflow", bfck.getPointer(), bfck.getInstruction());
             bfck.setCase((byte) (bfck.getCell() - 1));
-            bfck.addToInstruction(1);
+            bfck.incrementInstructions();
             Metrics.incrDataWrite();
         }
     },
@@ -39,7 +39,7 @@ public enum InstructionEnum {
             if (bfck.getPointer() == MINMEMORYSIZE.get())
                 throw new ExecuteException("memory-underflow", bfck.getPointer(), bfck.getInstruction());
             bfck.addToPointer(-1);
-            bfck.addToInstruction(1);
+            bfck.incrementInstructions();
             Metrics.incrDataMove();
         }
     },
@@ -49,15 +49,15 @@ public enum InstructionEnum {
             if (bfck.getPointer() == MAXMEMORYSIZE.get())
                 throw new ExecuteException("memory-overflow", bfck.getPointer(), bfck.getInstruction());
             bfck.addToPointer(1);
-            bfck.addToInstruction(1);
+            bfck.incrementInstructions();
             Metrics.incrDataMove();
         }
     },
     OUT('.', new Color(0x00ff00)) {
         @Override
         public void exec(Bfck bfck) {
-            System.out.println(bfck.printableCell(bfck.getPointer()));
-            bfck.addToInstruction(1);
+            System.out.print((char) (bfck.getMemoryAt(bfck.getPointer()) + MASK.get()));
+            bfck.incrementInstructions();
             Metrics.incrDataRead();
         }
     },
@@ -76,7 +76,7 @@ public enum InstructionEnum {
             if (in < MINDATASIZE.get() + MASK.get() || in > MAXDATASIZE.get() + MASK.get())
                 throw new ExecuteException("invalid-input", in, bfck.getInstruction());
             bfck.setCase((byte) (in - MASK.get()));
-            bfck.addToInstruction(1);
+            bfck.incrementInstructions();
             Metrics.incrDataWrite();
         }
     },
@@ -85,14 +85,9 @@ public enum InstructionEnum {
         public void exec(Bfck bfck) {
             int i = bfck.getInstruction();
             if (bfck.getCell() != -MASK.get()) {
-                bfck.addToInstruction(1);
+                bfck.incrementInstructions();
             } else {
-                for (int j = i; j < bfck.getInstructions().size(); j++) {
-                    if (bfck.bound(i, j, true)) {
-                        bfck.addToInstruction(j - i + 1);
-                        break;
-                    }
-                }
+                bfck.setInstruction(bfck.getJumpTable().get(bfck.getInstruction()));
             }
             Metrics.incrDataRead();
         }
@@ -102,13 +97,9 @@ public enum InstructionEnum {
         public void exec(Bfck bfck) {
             int i = bfck.getInstruction();
             if (bfck.getCell() == -MASK.get()) {
-                bfck.addToInstruction(1);
+                bfck.incrementInstructions();
             } else {
-                for (int j = i; j > 0; j--)
-                    if (bfck.bound(j, i, false)) {
-                        bfck.addToInstruction(j - i + 1);
-                        break;
-                    }
+                bfck.setInstruction(bfck.getJumpTable().get(bfck.getInstruction()));
             }
             Metrics.incrDataRead();
         }

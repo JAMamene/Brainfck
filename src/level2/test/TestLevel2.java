@@ -17,13 +17,12 @@ import static org.junit.Assert.assertEquals;
  * Tests for the slices of level 2
  */
 public class TestLevel2 {
-    private CommandPerform perf;
-    private Bfck bfck;
-    private ByteArrayOutputStream baos;
-
     @org.junit.Rule
     public final ExpectedSystemExit exit = ExpectedSystemExit.none(); //Cutom library 'system rule'
     public final ExpectedException exception = ExpectedException.none();
+    private CommandPerform perf;
+    private Bfck bfck;
+    private ByteArrayOutputStream baos;
 
     @org.junit.Test
     public void tests5_1() {
@@ -221,5 +220,25 @@ public class TestLevel2 {
         exit.expectSystemExitWithStatus(0); // check should raise exception
         perf = new CommandPerform(args); // should terminate the program with exit code 4
         perf.performAction();
+    }
+
+    @org.junit.Test
+    public void tests11_1() {
+        String[] args = {"-p", "TestAddition"}; //3 + 4
+        perf = new CommandPerform(args); //will perform the actions needed
+        perf.performAll();
+        bfck = perf.getBfck();
+        assertEquals(7 - MASK.get(), bfck.getMemoryAt((short) 0)); // assert if the memory state is as expected
+        assertEquals(0 - MASK.get(), bfck.getMemoryAt((short) 1));
+    }
+
+    @org.junit.Test
+    public void tests11_2() {
+        String[] args = {"-p", "TestMultiplication"}; //8 * 7
+        perf = new CommandPerform(args); //will perform the actions needed
+        perf.performAll();
+        bfck = perf.getBfck();
+        assertEquals(56 - MASK.get(), bfck.getMemoryAt((short) 0)); // assert if the memory state is as expected
+        assertEquals(0 - MASK.get(), bfck.getMemoryAt((short) 1));
     }
 }

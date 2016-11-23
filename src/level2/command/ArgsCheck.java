@@ -131,7 +131,7 @@ public class ArgsCheck {
     }
 
     private void printHelp(String[] args) {
-        System.out.println("Invalid arguments : " + Arrays.toString(args) + ", use these :\n" +
+        System.err.println("Invalid arguments : " + Arrays.toString(args) + ", use these :\n" +
                 "-p + the brainfuck file you want to interpret, \n" +
                 "-i + the input file you want to use for in, \n" +
                 "-o + the output file you want to use for out, \n" +
