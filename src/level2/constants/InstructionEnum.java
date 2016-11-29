@@ -20,7 +20,7 @@ public enum InstructionEnum {
                 throw new ExecuteException("cell-overflow", bfck.getPointer(), bfck.getInstruction());
             bfck.setCase((byte) (bfck.getCell() + 1));
             bfck.incrementInstructions();
-            Metrics.incrDataWrite();
+            if(Metrics.isOn())Metrics.incrDataWrite();
         }
     },
     DECR('-', new Color(0x4b0082)) {
@@ -30,7 +30,7 @@ public enum InstructionEnum {
                 throw new ExecuteException("cell-underflow", bfck.getPointer(), bfck.getInstruction());
             bfck.setCase((byte) (bfck.getCell() - 1));
             bfck.incrementInstructions();
-            Metrics.incrDataWrite();
+            if(Metrics.isOn())Metrics.incrDataWrite();
         }
     },
     LEFT('<', new Color(0x9400D3)) {
@@ -40,7 +40,7 @@ public enum InstructionEnum {
                 throw new ExecuteException("memory-underflow", bfck.getPointer(), bfck.getInstruction());
             bfck.addToPointer(-1);
             bfck.incrementInstructions();
-            Metrics.incrDataMove();
+            if(Metrics.isOn())Metrics.incrDataMove();
         }
     },
     RIGHT('>', new Color(0x0000ff)) {
@@ -50,7 +50,7 @@ public enum InstructionEnum {
                 throw new ExecuteException("memory-overflow", bfck.getPointer(), bfck.getInstruction());
             bfck.addToPointer(1);
             bfck.incrementInstructions();
-            Metrics.incrDataMove();
+            if(Metrics.isOn())Metrics.incrDataMove();
         }
     },
     OUT('.', new Color(0x00ff00)) {
@@ -58,7 +58,7 @@ public enum InstructionEnum {
         public void exec(Bfck bfck) {
             System.out.print((char) (bfck.getMemoryAt(bfck.getPointer()) + MASK.get()));
             bfck.incrementInstructions();
-            Metrics.incrDataRead();
+            if(Metrics.isOn())Metrics.incrDataRead();
         }
     },
     IN(',', new Color(0xffff00)) {
@@ -77,7 +77,7 @@ public enum InstructionEnum {
                 throw new ExecuteException("invalid-input", in, bfck.getInstruction());
             bfck.setCase((byte) (in - MASK.get()));
             bfck.incrementInstructions();
-            Metrics.incrDataWrite();
+            if(Metrics.isOn())Metrics.incrDataWrite();
         }
     },
     JUMP('[', new Color(0xff7f00)) {
@@ -89,7 +89,7 @@ public enum InstructionEnum {
             } else {
                 bfck.setInstruction(bfck.getJumpTable().get(bfck.getInstruction()));
             }
-            Metrics.incrDataRead();
+            if(Metrics.isOn())Metrics.incrDataRead();
         }
     },
     BACK(']', new Color(0xff0000)) {
@@ -101,7 +101,7 @@ public enum InstructionEnum {
             } else {
                 bfck.setInstruction(bfck.getJumpTable().get(bfck.getInstruction()));
             }
-            Metrics.incrDataRead();
+            if(Metrics.isOn())Metrics.incrDataRead();
         }
     };
 

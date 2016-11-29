@@ -31,7 +31,7 @@ public class Bfck {
      * @param instructions an array of Instruction that contains all the instructions of the brainfck program
      */
     public Bfck(List<InstructionEnum> instructions, String filename, String filenameIn, String filenameOut) {
-        memory = new byte[MAXMEMORYSIZE.get()];
+        memory = new byte[MAXMEMORYSIZE.get()+1];
         Arrays.fill(memory, (byte) MINDATASIZE.get());
         this.instructions = instructions;
         this.filename = filename;
@@ -42,7 +42,6 @@ public class Bfck {
         readId = 0;
         jumpTable = new HashMap<>();
         fillJumpTable();
-        Metrics.setProgSize(instructions.size());
     }
 
     public int getReadId() {
@@ -161,9 +160,10 @@ public class Bfck {
      * Main method of the interpreter, reads all the instructions and uses the private methods accordingly.
      */
     public void handle() {
+        if(Metrics.isOn())Metrics.setProgSize(instructions.size());
         while (instruction < instructions.size()) {
             instructions.get(instruction).exec(this);
-            Metrics.incrExecMove();
+            if(Metrics.isOn())Metrics.incrExecMove();
             if (trace) {
                 Trace.saveState(this);
             }
