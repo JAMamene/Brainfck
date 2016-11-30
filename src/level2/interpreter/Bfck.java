@@ -1,5 +1,6 @@
 package level2.interpreter;
 
+import level2.constants.Executable;
 import level2.constants.InstructionEnum;
 import level2.constants.Metrics;
 import level2.constants.Trace;
@@ -21,7 +22,7 @@ public class Bfck {
     private boolean trace = false;
     private Map<Integer, Integer> jumpTable;
     private byte[] memory;
-    private List<InstructionEnum> instructions;
+    private List<Executable> instructions;
     private int instruction;
     private short pointer;
 
@@ -30,7 +31,7 @@ public class Bfck {
      *
      * @param instructions an array of Instruction that contains all the instructions of the brainfck program
      */
-    public Bfck(List<InstructionEnum> instructions, String filename, String filenameIn, String filenameOut) {
+    public Bfck(List<Executable> instructions, String filename, String filenameIn, String filenameOut) {
         memory = new byte[MAXMEMORYSIZE.get()];
         Arrays.fill(memory, (byte) MINDATASIZE.get());
         this.instructions = instructions;
@@ -109,7 +110,7 @@ public class Bfck {
         pointer += val;
     }
 
-    public List<InstructionEnum> getInstructions() {
+    public List<Executable> getInstructions() {
         return instructions;
     }
 
@@ -180,7 +181,7 @@ public class Bfck {
     public boolean check() {
         Stack<Character> check = new Stack<>();
         int charId = 0;
-        for (InstructionEnum i : instructions) {
+        for (Executable i : instructions) {
             charId++;
             char c = i.getShortcut();
             if (c == InstructionEnum.JUMP.getShortcut()) {

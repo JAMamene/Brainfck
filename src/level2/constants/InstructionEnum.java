@@ -12,7 +12,7 @@ import static level2.constants.Sizes.*;
 /**
  * enum for the correspondence between the different way of writing instructions
  */
-public enum InstructionEnum {
+public enum InstructionEnum implements Executable {
     INCR('+', new Color(0xffffff)) {
         @Override
         public void exec(Bfck bfck) {
@@ -104,8 +104,6 @@ public enum InstructionEnum {
             Metrics.incrDataRead();
         }
     };
-
-    public abstract void exec(Bfck bfck);
 
     private char shortcut;
     private Color color;
