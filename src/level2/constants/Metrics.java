@@ -7,9 +7,19 @@ public class Metrics {
     private static long DATA_MOVE = 0;
     private static long DATA_WRITE = 0;
     private static long DATA_READ = 0;
+    private static boolean ON = false;
 
     public static long getProgSize() {
         return PROG_SIZE;
+    }
+
+    /**
+     * set the program size
+     *
+     * @param progSize size of the program
+     */
+    public static void setProgSize(long progSize) {
+        PROG_SIZE = progSize;
     }
 
     public static long getExecMove() {
@@ -30,14 +40,6 @@ public class Metrics {
 
     public static long getDataRead() {
         return DATA_READ;
-    }
-
-    /**
-     * set the program size
-     * @param progSize size of the program
-     */
-    public static void setProgSize(long progSize) {
-        PROG_SIZE = progSize;
     }
 
     public static void incrExecMove() {
@@ -78,6 +80,14 @@ public class Metrics {
         DATA_WRITE = 0;
         DATA_READ = 0;
     } // For testing
+
+    public static void turnOn() {
+        ON = true;
+    }
+
+    public static boolean isOn() {
+        return ON;
+    }
 
     /**
      * print all the data

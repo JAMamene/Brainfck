@@ -1,5 +1,6 @@
 package level2.interpreter;
 
+import level2.constants.Executable;
 import level2.constants.InstructionEnum;
 import level2.constants.Metrics;
 import level2.constants.Trace;
@@ -19,9 +20,11 @@ public class Bfck {
     private String in;
     private int readId;
     private boolean trace = false;
+
+    private List<Executable> instructions;
     private Map<Integer, Integer> jumpTable;
+
     private byte[] memory;
-    private List<InstructionEnum> instructions;
     private int instruction;
     private short pointer;
 
@@ -30,8 +33,8 @@ public class Bfck {
      *
      * @param instructions an array of Instruction that contains all the instructions of the brainfck program
      */
-    public Bfck(List<InstructionEnum> instructions, String filename, String filenameIn, String filenameOut) {
-        memory = new byte[MAXMEMORYSIZE.get()];
+    public Bfck(List<Executable> instructions, String filename, String filenameIn, String filenameOut) {
+        memory = new byte[MAXMEMORYSIZE.get() + 1];
         Arrays.fill(memory, (byte) MINDATASIZE.get());
         this.instructions = instructions;
         this.filename = filename;
@@ -109,16 +112,12 @@ public class Bfck {
         pointer += val;
     }
 
-    public List<InstructionEnum> getInstructions() {
+    public List<Executable> getInstructions() {
         return instructions;
     }
 
     public Map<Integer, Integer> getJumpTable() {
         return jumpTable;
-    }
-
-    public void activeTrace() {
-        trace = true;
     }
 
     /**
@@ -161,9 +160,10 @@ public class Bfck {
      * Main method of the interpreter, reads all the instructions and uses the private methods accordingly.
      */
     public void handle() {
+        if (Metrics.isOn()) Metrics.setProgSize(instructions.size());
         while (instruction < instructions.size()) {
             instructions.get(instruction).exec(this);
-            Metrics.incrExecMove();
+            if (Metrics.isOn()) Metrics.incrExecMove();
             if (trace) {
                 Trace.saveState(this);
             }
@@ -180,7 +180,7 @@ public class Bfck {
     public boolean check() {
         Stack<Character> check = new Stack<>();
         int charId = 0;
-        for (InstructionEnum i : instructions) {
+        for (Executable i : instructions) {
             charId++;
             char c = i.getShortcut();
             if (c == InstructionEnum.JUMP.getShortcut()) {
@@ -198,7 +198,7 @@ public class Bfck {
         return true;
     }
 
-    public boolean bound(int i, int j) {
+    private boolean bound(int i, int j) {
         int compteur = 1;
         for (int a = i + 1; a < j + 1; a++) {
             if (instructions.get(a).getShortcut() == InstructionEnum.JUMP.getShortcut()) {
@@ -212,14 +212,16 @@ public class Bfck {
     }
 
 
-    public void fillJumpTable() {
-        for (int i = 0; i < instructions.size(); i++) {
-            if (instructions.get(i).getShortcut() == InstructionEnum.JUMP.getShortcut()) {
-                for (int j = i; j < instructions.size(); j++) {
-                    if (bound(i, j)) {
-                        jumpTable.put(i, j);
-                        jumpTable.put(j, i);
-                        break;
+    private void fillJumpTable() {
+        if (check()) {
+            for (int i = 0; i < instructions.size(); i++) {
+                if (instructions.get(i).getShortcut() == InstructionEnum.JUMP.getShortcut()) {
+                    for (int j = i; j < instructions.size(); j++) {
+                        if (bound(i, j)) {
+                            jumpTable.put(i, j);
+                            jumpTable.put(j, i);
+                            break;
+                        }
                     }
                 }
             }

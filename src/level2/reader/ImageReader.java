@@ -1,5 +1,6 @@
 package level2.reader;
 
+import level2.constants.Executable;
 import level2.constants.InstructionEnum;
 import level2.exceptions.SyntaxException;
 import level2.exceptions.WrongFile;
@@ -26,10 +27,10 @@ public class ImageReader implements BfReader {
      * A method that reads from an image
      */
     @Override
-    public List<InstructionEnum> ReadFile(String fileName) throws WrongFile {
+    public List<Executable> readFile(String fileName) throws WrongFile {
         BufferedImage img;
 
-        List<InstructionEnum> instructions = new ArrayList<>();
+        List<Executable> instructions = new ArrayList<>();
 
         try {
             // load the image in memory

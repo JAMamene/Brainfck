@@ -10,6 +10,6 @@ public class MetricsCommand implements Command {
      */
     @Override
     public void execute(Bfck bfck){
-        Metrics.print();
+        Metrics.turnOn();
     }
 }

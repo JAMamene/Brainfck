@@ -1,5 +1,6 @@
 package level2.macro;
 
+import level2.constants.Executable;
 import level2.constants.InstructionEnum;
 
 import java.util.ArrayList;
@@ -8,9 +9,9 @@ import java.util.List;
 import java.util.Map;
 
 public class Macro {
-    private Map<String, List<InstructionEnum>> macros = new HashMap<>();
+    private Map<String, List<Executable>> macros = new HashMap<>();
 
-    public void add(String key, List<InstructionEnum> val) {
+    public void add(String key, List<Executable> val) {
         if (getMacro(key).isEmpty()) {
             macros.put(key, val);
         } else {
@@ -18,11 +19,11 @@ public class Macro {
         }
     }
 
-    public List<InstructionEnum> getMacro(String name, Integer param) {
+    public List<Executable> getMacro(String name, Integer param) {
         if (param == null) {
             return macros.get(name);
         } else {
-            List<InstructionEnum> finalInstructions = new ArrayList<>();
+            List<Executable> finalInstructions = new ArrayList<>();
             for (int i = 0; i < param; i++) {
                 finalInstructions.addAll(macros.get(name));
             }
@@ -34,7 +35,7 @@ public class Macro {
         macros.put(key, new ArrayList<>());
     }
 
-    private List<InstructionEnum> getMacro(String name) {
+    private List<Executable> getMacro(String name) {
         return macros.get(name);
     }
 

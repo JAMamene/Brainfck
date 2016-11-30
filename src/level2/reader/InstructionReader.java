@@ -1,6 +1,7 @@
 package level2.reader;
 
 
+import level2.constants.Executable;
 import level2.constants.InstructionEnum;
 import level2.exceptions.SyntaxException;
 import level2.exceptions.WrongFile;
@@ -20,7 +21,6 @@ import java.util.stream.Stream;
  */
 public class InstructionReader implements BfReader {
 
-
     private int charId = 0;
     private Macro macro;
     private String currentMacro;
@@ -32,9 +32,9 @@ public class InstructionReader implements BfReader {
      * @return a String containing all the instructions in short format
      */
     @Override
-    public List<InstructionEnum> ReadFile(String fileName) {
+    public List<Executable> readFile(String fileName) {
         try {
-            List<InstructionEnum> instructions = new ArrayList<>();
+            List<Executable> instructions = new ArrayList<>();
             macro = new Macro();
             String str;
             FileReader fr = new FileReader(fileName);
@@ -74,9 +74,9 @@ public class InstructionReader implements BfReader {
         return name;
     }
 
-    private List<InstructionEnum> writeInstructions(String str) {
+    private List<Executable> writeInstructions(String str) {
         Character c;
-        List<InstructionEnum> instructions = new ArrayList<>();
+        List<Executable> instructions = new ArrayList<>();
         str = str.replaceAll("\\s+", ""); // trim spaces
         // if we read a long instruction
         if (Stream.of(InstructionEnum.values())

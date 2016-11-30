@@ -1,5 +1,6 @@
 package level2.writer;
 
+import level2.constants.Executable;
 import level2.constants.InstructionEnum;
 
 import javax.imageio.ImageIO;
@@ -27,7 +28,7 @@ public class ImageWriter implements BfWriter {
      *
      * @param instructions List of shortcut instructions
      */
-    public void WriteFile(List<InstructionEnum> instructions, String fileName) {
+    public void WriteFile(List<Executable> instructions, String fileName) {
 
         // get the number of instructions
         int nbInstruct = instructions.size();
@@ -46,7 +47,7 @@ public class ImageWriter implements BfWriter {
         int y = 0;
 
         // for each instruction ...
-        for (InstructionEnum i : instructions) {
+        for (Executable i : instructions) {
 
             // if i am out of image bounds : carriage return
             if (x > imgWidth - SQUARE_SIZE.get()) {
