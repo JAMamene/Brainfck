@@ -138,6 +138,7 @@ public class ArgsCheck {
                 "--rewrite to print to the standard output your program in short syntax,\n" +
                 "--translate to get an image representation of you program, \n" +
                 "--check to only check if the program is well formed \n" +
-                "--showMetrics to print metrics of the program");
+                "--showMetrics to print metrics of the program \n" +
+                "--trace to create log");
     }
 }
