@@ -88,6 +88,14 @@ public class testReader {
     }
 
     @org.junit.Test
+    public void testComment2() {
+        instructions = testInstructionReader("" +
+                "INCR\n" +
+                "   DECR ## This is a comment INCR ##\n");
+        assertEquals(Arrays.asList(INCR, DECR), instructions); // assert if the instructions are as expected
+    }
+
+    @org.junit.Test
     public void testMacro() {
         instructions = testInstructionReader("" +
                 "{ MULTI_INCR \n" +

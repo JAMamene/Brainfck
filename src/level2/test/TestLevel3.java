@@ -2,15 +2,16 @@ package level2.test;
 
 import level2.command.CommandPerform;
 import level2.constants.Metrics;
+import level2.constants.Trace;
 import level2.interpreter.Bfck;
 import org.junit.contrib.java.lang.system.ExpectedSystemExit;
 import org.junit.rules.ExpectedException;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
+import java.io.*;
 
 import static level2.constants.Sizes.MASK;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the slices of level 2
@@ -132,4 +133,6 @@ public class TestLevel3 {
         assertEquals(1 - MASK.get(), bfck.getMemoryAt((short) 0)); // assert if the memory state is as expected
         assertEquals(0 - MASK.get(), bfck.getMemoryAt((short) 1));
     }
+
+
 }

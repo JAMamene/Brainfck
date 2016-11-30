@@ -1,14 +1,18 @@
 package level2.test;
 
 import level2.command.CommandPerform;
+import level2.constants.Executable;
 import level2.exceptions.SyntaxException;
 import level2.interpreter.Bfck;
+import level2.reader.ImageReader;
 import org.junit.contrib.java.lang.system.ExpectedSystemExit;
 import org.junit.rules.ExpectedException;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
 import java.io.PrintStream;
+import java.util.List;
 
 import static level2.constants.Sizes.MASK;
 import static org.junit.Assert.assertEquals;
@@ -241,4 +245,5 @@ public class TestLevel2 {
         assertEquals(56 - MASK.get(), bfck.getMemoryAt((short) 0)); // assert if the memory state is as expected
         assertEquals(0 - MASK.get(), bfck.getMemoryAt((short) 1));
     }
+
 }
