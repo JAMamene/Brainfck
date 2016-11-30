@@ -27,7 +27,7 @@ public class ImageReader implements BfReader {
      * A method that reads from an image
      */
     @Override
-    public List<Executable> ReadFile(String fileName) throws WrongFile {
+    public List<Executable> readFile(String fileName) throws WrongFile {
         BufferedImage img;
 
         List<Executable> instructions = new ArrayList<>();

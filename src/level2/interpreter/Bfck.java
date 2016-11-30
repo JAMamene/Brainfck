@@ -20,9 +20,11 @@ public class Bfck {
     private String in;
     private int readId;
     private boolean trace = false;
-    private Map<Integer, Integer> jumpTable;
-    private byte[] memory;
+
     private List<Executable> instructions;
+    private Map<Integer, Integer> jumpTable;
+
+    private byte[] memory;
     private int instruction;
     private short pointer;
 
@@ -32,7 +34,7 @@ public class Bfck {
      * @param instructions an array of Instruction that contains all the instructions of the brainfck program
      */
     public Bfck(List<Executable> instructions, String filename, String filenameIn, String filenameOut) {
-        memory = new byte[MAXMEMORYSIZE.get()];
+        memory = new byte[MAXMEMORYSIZE.get() + 1];
         Arrays.fill(memory, (byte) MINDATASIZE.get());
         this.instructions = instructions;
         this.filename = filename;
@@ -118,10 +120,6 @@ public class Bfck {
         return jumpTable;
     }
 
-    public void activeTrace() {
-        trace = true;
-    }
-
     /**
      * Displays all the cells that are not zero
      *
@@ -162,9 +160,10 @@ public class Bfck {
      * Main method of the interpreter, reads all the instructions and uses the private methods accordingly.
      */
     public void handle() {
+        if (Metrics.isOn()) Metrics.setProgSize(instructions.size());
         while (instruction < instructions.size()) {
             instructions.get(instruction).exec(this);
-            Metrics.incrExecMove();
+            if (Metrics.isOn()) Metrics.incrExecMove();
             if (trace) {
                 Trace.saveState(this);
             }

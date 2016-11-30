@@ -6,7 +6,7 @@ import level2.interpreter.Bfck;
 public class PrintMetricsCommand implements Command {
 
     @Override
-    public void execute(Bfck bfck){
+    public void execute(Bfck bfck) {
         Metrics.print();
     }
 }

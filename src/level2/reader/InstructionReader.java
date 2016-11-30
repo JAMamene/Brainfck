@@ -21,7 +21,6 @@ import java.util.stream.Stream;
  */
 public class InstructionReader implements BfReader {
 
-
     private int charId = 0;
     private Macro macro;
     private String currentMacro;
@@ -33,7 +32,7 @@ public class InstructionReader implements BfReader {
      * @return a String containing all the instructions in short format
      */
     @Override
-    public List<Executable> ReadFile(String fileName) {
+    public List<Executable> readFile(String fileName) {
         try {
             List<Executable> instructions = new ArrayList<>();
             macro = new Macro();
