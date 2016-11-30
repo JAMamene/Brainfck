@@ -39,7 +39,7 @@ public class TestLevel2 {
 
     @org.junit.Test
     public void tests5_2() {
-        String[] args = {"-p", "Test1"}; // same as above but with mixed syntax
+        String[] args = {"-p", "Test1,5"}; // same as above but with mixed syntax
         perf = new CommandPerform(args); //will perform the actions needed
         perf.performAll();
         bfck = perf.getBfck();
