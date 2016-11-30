@@ -17,7 +17,7 @@ public class CommandPerform {
      */
 
     public CommandPerform(String[] args) {
-        Metrics.beginExecTime();
+        if(Metrics.isOn())Metrics.beginExecTime();
         arg = new ArgsCheck(args);
         // reader instantiation depends on the given file extension (texte file or image file)
         BfReader reader;
@@ -60,12 +60,13 @@ public class CommandPerform {
     public void performAll() {
         perform(new SetInCommand());
         perform(new SetOutCommand());
+        if(arg.getMetrics()) perform(new MetricsCommand());
         if(arg.getTrace()) perform(new TraceCommand());
         performAction();
         //performing the file interpretation
         perform(new HandleCommand());
-        Metrics.endExecTime();
+        if(Metrics.isOn())Metrics.endExecTime();
         perform(new PrintCommand());
-        if(arg.getMetrics()) perform(new MetricsCommand());
+        if(Metrics.isOn())perform(new PrintMetricsCommand());
     }
 }

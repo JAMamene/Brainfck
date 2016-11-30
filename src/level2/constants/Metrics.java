@@ -7,6 +7,7 @@ public class Metrics {
     private static long DATA_MOVE = 0;
     private static long DATA_WRITE = 0;
     private static long DATA_READ = 0;
+    private static boolean ON = false ;
 
     public static long getProgSize() {
         return PROG_SIZE;
@@ -79,6 +80,13 @@ public class Metrics {
         DATA_READ = 0;
     } // For testing
 
+    public static void turnOn(){
+        ON = true;
+    }
+
+    public static boolean isOn(){
+        return ON;
+    }
     /**
      * print all the data
      */
