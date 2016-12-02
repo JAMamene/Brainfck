@@ -5,7 +5,7 @@ import level2.interpreter.Bfck;
 import java.awt.*;
 
 
-public interface Executable {
+public interface Executable extends Visualisable {
 
     void exec(Bfck bfck);
 

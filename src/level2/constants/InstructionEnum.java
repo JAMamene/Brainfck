@@ -15,6 +15,16 @@ import static level2.constants.Sizes.*;
 public enum InstructionEnum implements Executable {
     INCR('+', new Color(0xffffff)) {
         @Override
+        public String getJava() {
+            return "++mem[i];\n";
+        }
+
+        @Override
+        public String getC() {
+            return "++*mem;\n";
+        }
+
+        @Override
         public void exec(Bfck bfck) {
             if (bfck.getCell() == MAXDATASIZE.get())
                 throw new ExecuteException("cell-overflow", bfck.getPointer(), bfck.getInstruction());
@@ -23,7 +33,18 @@ public enum InstructionEnum implements Executable {
             if (Metrics.isOn()) Metrics.incrDataWrite();
         }
     },
+
     DECR('-', new Color(0x4b0082)) {
+        @Override
+        public String getJava() {
+            return "--mem[i];\n";
+        }
+
+        @Override
+        public String getC() {
+            return "--*mem;\n";
+        }
+
         @Override
         public void exec(Bfck bfck) {
             if (bfck.getCell() == MINDATASIZE.get())
@@ -33,7 +54,17 @@ public enum InstructionEnum implements Executable {
             if (Metrics.isOn()) Metrics.incrDataWrite();
         }
     },
+
     LEFT('<', new Color(0x9400D3)) {
+        @Override
+        public String getJava() {
+            return "--i;\n";
+        }
+
+        @Override
+        public String getC() {
+            return "--mem;\n";
+        }
         @Override
         public void exec(Bfck bfck) {
             if (bfck.getPointer() == MINMEMORYSIZE.get())
@@ -43,7 +74,17 @@ public enum InstructionEnum implements Executable {
             if (Metrics.isOn()) Metrics.incrDataMove();
         }
     },
+
     RIGHT('>', new Color(0x0000ff)) {
+        @Override
+        public String getJava() {
+            return "++i;\n";
+        }
+
+        @Override
+        public String getC() {
+            return "++mem;\n";
+        }
         @Override
         public void exec(Bfck bfck) {
             if (bfck.getPointer() == MAXMEMORYSIZE.get())
@@ -53,7 +94,17 @@ public enum InstructionEnum implements Executable {
             if (Metrics.isOn()) Metrics.incrDataMove();
         }
     },
+
     OUT('.', new Color(0x00ff00)) {
+        @Override
+        public String getJava() {
+            return "System.out.print(mem[i]);\n";
+        }
+
+        @Override
+        public String getC() {
+            return "printf(%c,*mem);\n";
+        }
         @Override
         public void exec(Bfck bfck) {
             System.out.print((char) (bfck.getMemoryAt(bfck.getPointer()) + MASK.get()));
@@ -61,7 +112,17 @@ public enum InstructionEnum implements Executable {
             if (Metrics.isOn()) Metrics.incrDataRead();
         }
     },
+
     IN(',', new Color(0xffff00)) {
+        @Override
+        public String getJava() {
+            return "mem[i] = reader.next().charAt(0);\n";
+        }
+
+        @Override
+        public String getC() {
+            return "scanf(%c,mem);\n";
+        }
         @Override
         public void exec(Bfck bfck) {
             Byte in;
@@ -80,7 +141,17 @@ public enum InstructionEnum implements Executable {
             if (Metrics.isOn()) Metrics.incrDataWrite();
         }
     },
+
     JUMP('[', new Color(0xff7f00)) {
+        @Override
+        public String getJava() {
+            return "while (meme[i] != 0) {\n";
+        }
+
+        @Override
+        public String getC() {
+            return "while (*mem) {\n";
+        }
         @Override
         public void exec(Bfck bfck) {
             int i = bfck.getInstruction();
@@ -92,7 +163,18 @@ public enum InstructionEnum implements Executable {
             if (Metrics.isOn()) Metrics.incrDataRead();
         }
     },
+
     BACK(']', new Color(0xff0000)) {
+        @Override
+        public String getJava() {
+            return "}";
+        }
+
+        @Override
+        public String getC() {
+            return "}";
+        }
+
         @Override
         public void exec(Bfck bfck) {
             int i = bfck.getInstruction();
