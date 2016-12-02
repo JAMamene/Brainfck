@@ -19,13 +19,13 @@ public class Bfck {
     private String filenameIn;
     private String in;
     private int readId;
-    private boolean trace = false;
+    protected boolean trace = false;
 
-    private List<Executable> instructions;
+    protected List<Executable> instructions;
     private Map<Integer, Integer> jumpTable;
 
     private byte[] memory;
-    private int instruction;
+    protected int instruction;
     private short pointer;
 
     /**
@@ -45,7 +45,6 @@ public class Bfck {
         readId = 0;
         jumpTable = new HashMap<>();
         fillJumpTable();
-        Metrics.setProgSize(instructions.size());
     }
 
     public int getReadId() {
@@ -78,6 +77,18 @@ public class Bfck {
 
     public byte getCell() {
         return memory[pointer];
+    }
+
+    public byte getCellCheck(){
+        return memory[pointer];
+    }
+
+    public void incrCell(){
+        memory[pointer]++;
+    }
+
+    public void decrCell(){
+        memory[pointer]--;
     }
 
     public int getInstruction() {
@@ -160,10 +171,8 @@ public class Bfck {
      * Main method of the interpreter, reads all the instructions and uses the private methods accordingly.
      */
     public void handle() {
-        if (Metrics.isOn()) Metrics.setProgSize(instructions.size());
         while (instruction < instructions.size()) {
             instructions.get(instruction).exec(this);
-            if (Metrics.isOn()) Metrics.incrExecMove();
             if (trace) {
                 Trace.saveState(this);
             }

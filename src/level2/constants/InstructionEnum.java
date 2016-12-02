@@ -26,11 +26,10 @@ public enum InstructionEnum implements Executable {
 
         @Override
         public void exec(Bfck bfck) {
-            if (bfck.getCell() == MAXDATASIZE.get())
+            if (bfck.getCellCheck() == MAXDATASIZE.get())
                 throw new ExecuteException("cell-overflow", bfck.getPointer(), bfck.getInstruction());
-            bfck.setCase((byte) (bfck.getCell() + 1));
+            bfck.incrCell();
             bfck.incrementInstructions();
-            if (Metrics.isOn()) Metrics.incrDataWrite();
         }
     },
 
@@ -47,11 +46,10 @@ public enum InstructionEnum implements Executable {
 
         @Override
         public void exec(Bfck bfck) {
-            if (bfck.getCell() == MINDATASIZE.get())
+            if (bfck.getCellCheck() == MINDATASIZE.get())
                 throw new ExecuteException("cell-underflow", bfck.getPointer(), bfck.getInstruction());
-            bfck.setCase((byte) (bfck.getCell() - 1));
+            bfck.decrCell();
             bfck.incrementInstructions();
-            if (Metrics.isOn()) Metrics.incrDataWrite();
         }
     },
 
@@ -71,7 +69,6 @@ public enum InstructionEnum implements Executable {
                 throw new ExecuteException("memory-underflow", bfck.getPointer(), bfck.getInstruction());
             bfck.addToPointer(-1);
             bfck.incrementInstructions();
-            if (Metrics.isOn()) Metrics.incrDataMove();
         }
     },
 
@@ -91,7 +88,6 @@ public enum InstructionEnum implements Executable {
                 throw new ExecuteException("memory-overflow", bfck.getPointer(), bfck.getInstruction());
             bfck.addToPointer(1);
             bfck.incrementInstructions();
-            if (Metrics.isOn()) Metrics.incrDataMove();
         }
     },
 
@@ -107,9 +103,8 @@ public enum InstructionEnum implements Executable {
         }
         @Override
         public void exec(Bfck bfck) {
-            System.out.print((char) (bfck.getMemoryAt(bfck.getPointer()) + MASK.get()));
+            System.out.print((char) (bfck.getCell() + MASK.get()));
             bfck.incrementInstructions();
-            if (Metrics.isOn()) Metrics.incrDataRead();
         }
     },
 
@@ -138,7 +133,6 @@ public enum InstructionEnum implements Executable {
                 throw new ExecuteException("invalid-input", in, bfck.getInstruction());
             bfck.setCase((byte) (in - MASK.get()));
             bfck.incrementInstructions();
-            if (Metrics.isOn()) Metrics.incrDataWrite();
         }
     },
 
@@ -160,7 +154,6 @@ public enum InstructionEnum implements Executable {
             } else {
                 bfck.setInstruction(bfck.getJumpTable().get(bfck.getInstruction()));
             }
-            if (Metrics.isOn()) Metrics.incrDataRead();
         }
     },
 
@@ -183,7 +176,6 @@ public enum InstructionEnum implements Executable {
             } else {
                 bfck.setInstruction(bfck.getJumpTable().get(bfck.getInstruction()));
             }
-            if (Metrics.isOn()) Metrics.incrDataRead();
         }
     };
 

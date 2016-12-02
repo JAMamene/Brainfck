@@ -29,6 +29,7 @@ public class TestLevel3 {
         String[] args = {"-p", "Test1","--showMetrics"}; //test metrics without loops
         perf = new CommandPerform((args));
         perf.performAll();
+        assertTrue(Metrics.getExecTime()>0);
         assertEquals(18, Metrics.getProgSize());
         assertEquals(18, Metrics.getExecMove());
         assertEquals(4, Metrics.getDataMove());
@@ -42,6 +43,7 @@ public class TestLevel3 {
         String[] args = {"-p", "TestAddition", "--showMetrics"}; //test metrics with loops
         perf = new CommandPerform((args));
         perf.performAll();
+        //assertTrue(Metrics.getExecTime()>0);
         assertEquals(17, Metrics.getProgSize());
         assertEquals(35, Metrics.getExecMove());
         assertEquals(12, Metrics.getDataMove());
