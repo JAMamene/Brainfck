@@ -7,7 +7,6 @@ public class Metrics {
     private static long DATA_MOVE = 0;
     private static long DATA_WRITE = 0;
     private static long DATA_READ = 0;
-    private static boolean ON = false;
 
     public static long getProgSize() {
         return PROG_SIZE;
@@ -81,23 +80,17 @@ public class Metrics {
         DATA_READ = 0;
     } // For testing
 
-    public static void turnOn() {
-        ON = true;
-    }
-
-    public static boolean isOn() {
-        return ON;
-    }
-
     /**
      * print all the data
      */
-    public static void print() {
-        System.out.println("PROG SIZE: " + PROG_SIZE);
-        System.out.println("EXEC TIME: " + EXEC_TIME);
-        System.out.println("EXEC MOVE: " + EXEC_MOVE);
-        System.out.println("DATA MOVE: " + DATA_MOVE);
-        System.out.println("DATA WRITE: " + DATA_WRITE);
-        System.out.println("DATA READ: " + DATA_READ);
+    public static String print() {
+        StringBuilder res = new StringBuilder();
+        res.append("PROG SIZE: " + PROG_SIZE+"\n");
+        res.append("EXEC TIME: " + EXEC_TIME+"\n");
+        res.append("EXEC MOVE: " + EXEC_MOVE+"\n");
+        res.append("DATA MOVE: " + DATA_MOVE+"\n");
+        res.append("DATA WRITE: " + DATA_WRITE+"\n");
+        res.append("DATA READ: " + DATA_READ+"\n");
+        return res.toString();
     }
 }

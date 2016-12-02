@@ -2,6 +2,7 @@ package level2.command;
 
 import level2.constants.Metrics;
 import level2.interpreter.Bfck;
+import level2.interpreter.BfckMetrics;
 import level2.reader.BfReader;
 import level2.reader.ImageReader;
 import level2.reader.InstructionReader;
@@ -17,7 +18,7 @@ public class CommandPerform {
      */
 
     public CommandPerform(String[] args) {
-        if (Metrics.isOn()) Metrics.beginExecTime();
+        Metrics.beginExecTime();
         arg = new ArgsCheck(args);
         // reader instantiation depends on the given file extension (texte file or image file)
         BfReader reader;
@@ -26,7 +27,8 @@ public class CommandPerform {
         } else {
             reader = new InstructionReader();
         }
-        bfck = new Bfck(reader.readFile(arg.getFileName()), arg.getFileName(), arg.getIn(), arg.getOut());
+        if(!arg.getMetrics()) bfck = new Bfck(reader.readFile(arg.getFileName()), arg.getFileName(), arg.getIn(), arg.getOut());
+        else bfck = new BfckMetrics(reader.readFile(arg.getFileName()), arg.getFileName(), arg.getIn(), arg.getOut());
     }
 
     /**
@@ -62,11 +64,12 @@ public class CommandPerform {
         perform(new SetOutCommand());
         if (arg.getMetrics()) perform(new MetricsCommand());
         if(arg.getTrace()) perform(new TraceCommand());
+
         performAction();
+
         //performing the file interpretation
         perform(new HandleCommand());
-        if (Metrics.isOn()) Metrics.endExecTime();
+        Metrics.endExecTime();
         perform(new PrintCommand());
-        if (Metrics.isOn()) perform(new PrintMetricsCommand());
     }
 }
