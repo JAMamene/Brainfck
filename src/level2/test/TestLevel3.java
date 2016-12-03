@@ -4,6 +4,7 @@ import level2.command.CommandPerform;
 import level2.constants.Metrics;
 import level2.constants.Trace;
 import level2.interpreter.Bfck;
+import org.junit.Test;
 import org.junit.contrib.java.lang.system.ExpectedSystemExit;
 import org.junit.rules.ExpectedException;
 
@@ -29,7 +30,6 @@ public class TestLevel3 {
         String[] args = {"-p", "Test1","--showMetrics"}; //test metrics without loops
         perf = new CommandPerform((args));
         perf.performAll();
-        assertTrue(Metrics.getExecTime()>0);
         assertEquals(18, Metrics.getProgSize());
         assertEquals(18, Metrics.getExecMove());
         assertEquals(4, Metrics.getDataMove());
@@ -112,14 +112,14 @@ public class TestLevel3 {
         assertEquals(3 - MASK.get(), bfck.getMemoryAt((short) 2));
     }
 
-    @org.junit.Test
+    @Test
     public void tests16_3() {
         exit.expectSystemExit();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         String[] args = {"-p", "TestMacroRec", "--rewrite"}; // parametrized macro
         perf = new CommandPerform(args); //will perform the actions needed
         System.setOut(new PrintStream(baos));
-        perf.performAction(); // no need for other commands
+        perf.performStoppingAction(); // no need for other commands
         assertEquals(">>+++\r\n", baos.toString()); // is translated at execution
     }
 

@@ -11,6 +11,5 @@ public class MetricsCommand implements Command {
      */
     @Override
     public void execute(Bfck bfck){
-        bfck = new BfckMetrics(bfck.getInstructions(),bfck.getFilename(),bfck.getFilenameIn(),bfck.getFilenameOut());
     }
 }

@@ -13,6 +13,9 @@ public class BfckMetrics extends Bfck {
         Metrics.setProgSize(instructions.size());
     }
 
+    public BfckMetrics(Bfck bfck){
+        super(bfck);
+    }
     @Override
     public void setCase(byte val){
 

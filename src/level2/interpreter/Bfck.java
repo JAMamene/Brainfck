@@ -47,6 +47,26 @@ public class Bfck {
         fillJumpTable();
     }
 
+    public Bfck(Bfck bfck){
+        memory = bfck.getMemory();
+        instruction = bfck.getInstruction();
+        filename = bfck.getFilename();
+        filenameIn = bfck.getFilenameIn();
+        filenameOut = bfck.getFilenameOut();
+        jumpTable = bfck.getJumpTable();
+        instruction = 0;
+        pointer = 0;
+        readId = 0;
+        trace = bfck.getTrace();
+    }
+
+    public byte[] getMemory() {
+        return memory;
+    }
+
+    public boolean getTrace(){
+        return  trace;
+    }
     public int getReadId() {
         return readId;
     }

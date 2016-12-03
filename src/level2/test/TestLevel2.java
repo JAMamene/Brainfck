@@ -65,7 +65,7 @@ public class TestLevel2 {
         System.setOut(new PrintStream(baos));
         String[] args = {"-p", "Test1", "--rewrite"}; // rewrite code
         perf = new CommandPerform(args); //will perform the actions needed
-        perf.performAction(); // no need for other commands
+        perf.performStoppingAction(); // no need for other commands
         assertEquals("++++++++>>>++<++--\r\n", baos.toString()); // assert code is the same in short syntax
     }
 
@@ -76,7 +76,7 @@ public class TestLevel2 {
         System.setOut(new PrintStream(baos));
         String[] args = {"-p", "Test1,5", "--rewrite"}; // same as above but with mixed syntax
         perf = new CommandPerform(args); //will perform the actions needed
-        perf.performAction(); // no need for other commands
+        perf.performStoppingAction(); // no need for other commands
         assertEquals("++++++++>>>++<++--\r\n", baos.toString()); // assert code is the same in short syntax
     }
 
@@ -89,7 +89,7 @@ public class TestLevel2 {
         System.setOut(new PrintStream(baos));
         String[] args = {"-p", "Test1.bmp", "--rewrite"};
         perf = new CommandPerform(args);
-        perf.performAction(); // no need for other commands
+        perf.performStoppingAction(); // no need for other commands
         assertEquals("+++\r\n", baos.toString());  // The image in short syntax should be like this
     }
 
@@ -100,7 +100,7 @@ public class TestLevel2 {
         System.setOut(new PrintStream(baos));
         String[] args = {"-p", "Test1,5.bmp", "--rewrite"};
         perf = new CommandPerform(args);
-        perf.performAction(); // no need for other commands
+        perf.performStoppingAction(); // no need for other commands
         assertEquals("++++++++>>>++<++--\r\n", baos.toString()); // The image in short syntax should be like this
     }
 
@@ -111,12 +111,12 @@ public class TestLevel2 {
         exit.expectSystemExit();
         String[] args = {"-p", "Test1,5", "--translate"}; // use translate option to create bmp from Test1,5
         perf = new CommandPerform(args); //will perform the actions needed
-        perf.performAction(); // no need for other commands
+        perf.performStoppingAction(); // no need for other commands
         baos = new ByteArrayOutputStream(); // Now we use the image created to check if it is as expected (test7_2)
         System.setOut(new PrintStream(baos));
         String[] args2 = {"-p", "Test1,5.bmp", "--rewrite"};
         perf = new CommandPerform(args2);
-        perf.performAction(); // no need for other commands
+        perf.performStoppingAction(); // no need for other commands
         assertEquals("++++++++>>>++<++--\r\n", baos.toString()); // The image in short syntax should be like this
     }
 
@@ -172,7 +172,7 @@ public class TestLevel2 {
         System.setOut(new PrintStream(baos));
         String[] args = {"-p", "Test2", "--rewrite"};
         perf = new CommandPerform(args);
-        perf.performAction(); // no need for other commands
+        perf.performStoppingAction(); // no need for other commands
         assertEquals(">>++++++++--<,.++\r\n", baos.toString());
     }
 
@@ -196,7 +196,7 @@ public class TestLevel2 {
         String[] args = {"-p", "TestCheck1", "--check"};
         exit.expectSystemExitWithStatus(0); // should work
         perf = new CommandPerform(args); // should terminate the program with exit code 4
-        perf.performAction();
+        perf.performStoppingAction();
     }
 
     @org.junit.Test
@@ -205,7 +205,7 @@ public class TestLevel2 {
         exit.expectSystemExitWithStatus(4); // check should raise exception
         exception.expect(SyntaxException.class);
         perf = new CommandPerform(args); // should terminate the program with exit code 4
-        perf.performAction();
+        perf.performStoppingAction();
     }
 
     @org.junit.Test
@@ -214,7 +214,7 @@ public class TestLevel2 {
         exception.expect(SyntaxException.class);
         exit.expectSystemExitWithStatus(4); // check should raise exception
         perf = new CommandPerform(args); // should terminate the program with exit code 4
-        perf.performAction();
+        perf.performStoppingAction();
     }
 
     @org.junit.Test
@@ -223,7 +223,7 @@ public class TestLevel2 {
         exception.expect(SyntaxException.class);
         exit.expectSystemExitWithStatus(0); // check should raise exception
         perf = new CommandPerform(args); // should terminate the program with exit code 4
-        perf.performAction();
+        perf.performStoppingAction();
     }
 
     @org.junit.Test

@@ -1,5 +1,6 @@
 package level2.command;
 
+import level2.argument.ArgsCheck;
 import level2.constants.Metrics;
 import level2.interpreter.Bfck;
 import level2.interpreter.BfckMetrics;
@@ -27,7 +28,7 @@ public class CommandPerform {
         } else {
             reader = new InstructionReader();
         }
-        if(!arg.getMetrics()) bfck = new Bfck(reader.readFile(arg.getFileName()), arg.getFileName(), arg.getIn(), arg.getOut());
+        if(!arg.getMetrics())bfck = new Bfck(reader.readFile(arg.getFileName()), arg.getFileName(), arg.getIn(), arg.getOut());
         else bfck = new BfckMetrics(reader.readFile(arg.getFileName()), arg.getFileName(), arg.getIn(), arg.getOut());
     }
 
@@ -47,13 +48,19 @@ public class CommandPerform {
     /**
      * perform all the action given in argument
      */
-    public void performAction() {
+    public void performStoppingAction() {
         boolean exit = false;
-        while (arg.hasActions()) {
+        while (arg.hasStoppingActions()) {
             exit = true;
-            perform(arg.nextAction());
+            perform(arg.nextStoppingAction());
         }
         if (exit) System.exit(0);
+    }
+
+    public void performPassiveAction() {
+        while (arg.hasPassiveActions()) {
+            perform(arg.nextPassiveAction());
+        }
     }
 
     /**
@@ -62,10 +69,10 @@ public class CommandPerform {
     public void performAll() {
         perform(new SetInCommand());
         perform(new SetOutCommand());
-        if (arg.getMetrics()) perform(new MetricsCommand());
-        if(arg.getTrace()) perform(new TraceCommand());
 
-        performAction();
+        performStoppingAction();
+
+        performPassiveAction();
 
         //performing the file interpretation
         perform(new HandleCommand());

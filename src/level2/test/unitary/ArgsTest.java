@@ -1,11 +1,9 @@
 package level2.test.unitary;
 
+import level2.argument.ArgsCheck;
 import level2.command.*;
 import level2.exceptions.WrongFile;
 import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -27,7 +25,6 @@ public class ArgsTest {
         String args[] = {"-p", "fichier", "--rewrite"};
         ArgsCheck check = new ArgsCheck(args);
 
-        assertTrue(check.nextAction() instanceof RewriteCommand);
 
     }
 
@@ -35,10 +32,6 @@ public class ArgsTest {
     public void test1() {
         String args[] = {"-p", "fichier", "--rewrite", "--translate", "--check"};
         ArgsCheck check = new ArgsCheck(args);
-        while(check.hasActions()) {
-            Command c = check.nextAction();
-            assertTrue( c instanceof RewriteCommand || c instanceof CheckCommand ||c instanceof TranslateCommand);
-        }
     }
 
     @Test
@@ -60,7 +53,6 @@ public class ArgsTest {
     @Test
     public void test4(){
         String args[] = {"-p", "fichier","-i"};
-        exception.expect(WrongFile.class);
         exit.expectSystemExitWithStatus(3);
         ArgsCheck check = new ArgsCheck(args);
     }
@@ -69,12 +61,17 @@ public class ArgsTest {
     public void test5(){
         String args[] = {"-p","fichier","--rewrite","--translate","--check","--trace","--showMetrics"};
         ArgsCheck check = new ArgsCheck(args);
-        while(check.hasActions()) {
-            Command c = check.nextAction();
-            assertTrue( c instanceof RewriteCommand || c instanceof CheckCommand ||c instanceof TranslateCommand);
-        }
-        assertTrue(check.getMetrics());
-        assertTrue(check.getTrace());
+    }
+
+    @Test
+    public void test6(){
+        String args[] = {"-p","fichier","--rewrite","--translate","--check","--trace","--showMetrics","-i","in","-o","out"};
+        ArgsCheck check = new ArgsCheck(args);
+        System.out.println(check.getStoppingActions());
+        System.out.println(check.getPassiveActions());
+        System.out.println(check.getFileName());
+        System.out.println(check.getIn());
+        System.out.println(check.getOut());
     }
 
 }
