@@ -1,8 +1,7 @@
 package level2.test.unitary;
 
 import level2.argument.ArgsCheck;
-import level2.command.*;
-import level2.exceptions.WrongFile;
+import level2.exceptions.FileException;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -37,7 +36,7 @@ public class ArgsTest {
     @Test
     public void test2() {
         String args[] = {"-p"};
-        exception.expect(WrongFile.class);
+        exception.expect(FileException.class);
         exit.expectSystemExitWithStatus(3);
         ArgsCheck check = new ArgsCheck(args);
 

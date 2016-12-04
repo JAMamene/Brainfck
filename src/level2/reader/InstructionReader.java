@@ -4,7 +4,7 @@ package level2.reader;
 import level2.constants.Executable;
 import level2.constants.InstructionEnum;
 import level2.exceptions.SyntaxException;
-import level2.exceptions.WrongFile;
+import level2.exceptions.FileException;
 import level2.macro.Macro;
 
 import java.io.BufferedReader;
@@ -40,6 +40,7 @@ public class InstructionReader implements BfReader {
             FileReader fr = new FileReader(fileName);
             BufferedReader br = new BufferedReader(fr);
             while ((str = br.readLine()) != null) {
+                if (str.isEmpty()) continue;
                 if (str.charAt(0) == '{') {
                     currentMacro = defineMacro(str);
                     continue;
@@ -54,7 +55,7 @@ public class InstructionReader implements BfReader {
             }
             return instructions;
         } catch (FileNotFoundException e) {
-            throw new WrongFile("missing-file");
+            throw new FileException("missing-file");
         } catch (IOException e) {
             e.printStackTrace();
         }

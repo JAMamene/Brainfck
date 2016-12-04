@@ -3,7 +3,7 @@ package level2.reader;
 import level2.constants.Executable;
 import level2.constants.InstructionEnum;
 import level2.exceptions.SyntaxException;
-import level2.exceptions.WrongFile;
+import level2.exceptions.FileException;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -27,7 +27,7 @@ public class ImageReader implements BfReader {
      * A method that reads from an image
      */
     @Override
-    public List<Executable> readFile(String fileName) throws WrongFile {
+    public List<Executable> readFile(String fileName) throws FileException {
         BufferedImage img;
 
         List<Executable> instructions = new ArrayList<>();
@@ -39,7 +39,7 @@ public class ImageReader implements BfReader {
             // Custom exception if the provided bmp is not square
             // or if its width/height is not a multiple of SQUARE_SIZE
             if ((img.getHeight() != img.getWidth()) || (img.getWidth() % SQUARE_SIZE.get() != 0))
-                throw new WrongFile("dimension-image");
+                throw new FileException("dimension-image");
 
             // PROCESSING : For each colored square...
 
@@ -65,7 +65,7 @@ public class ImageReader implements BfReader {
                 }
             }
         } catch (FileNotFoundException e) {
-            throw new WrongFile("missing-file");
+            throw new FileException("missing-file");
         } catch (IOException e) {
             e.printStackTrace();
         }

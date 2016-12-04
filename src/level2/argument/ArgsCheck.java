@@ -1,14 +1,8 @@
 package level2.argument;
 
-import level2.command.CheckCommand;
 import level2.command.Command;
-import level2.command.RewriteCommand;
-import level2.command.TranslateCommand;
-import level2.exceptions.WrongFile;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 
 public class ArgsCheck {
@@ -52,19 +46,39 @@ public class ArgsCheck {
         return fileExtension;
     }
 
+    public void setFileExtension(String fileExtension) {
+        this.fileExtension = fileExtension;
+    }
+
     public String getFileName() {
         return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 
     public String getIn() {
         return in;
     }
 
+    public void setIn(String in) {
+        this.in = in;
+    }
+
     public String getOut() {
         return out;
     }
 
+    public void setOut(String out) {
+        this.out = out;
+    }
+
     public boolean getMetrics(){return metrics;}
+
+    public void setMetrics(boolean metrics) {
+        this.metrics = metrics;
+    }
 
     public boolean hasStoppingActions() {
         return !stoppingActions.isEmpty();
@@ -90,8 +104,6 @@ public class ArgsCheck {
             return trace;
     }
 
-
-
     public int getPointer() {
         return pointer;
     }
@@ -108,20 +120,8 @@ public class ArgsCheck {
         stoppingActions.add(action);
     }
 
-    public String getArgs(){
+    public String getArg() {
         return args[pointer];
-    }
-
-    public void setIn(String in) {
-        this.in = in;
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
-
-    public void setOut(String out) {
-        this.out = out;
     }
 
     public List<Command> getPassiveActions() {
@@ -130,13 +130,5 @@ public class ArgsCheck {
 
     public List<Command> getStoppingActions() {
         return stoppingActions;
-    }
-
-    public void setFileExtension(String fileExtension) {
-        this.fileExtension = fileExtension;
-    }
-
-    public void setMetrics(boolean metrics) {
-        this.metrics = metrics;
     }
 }

@@ -14,6 +14,6 @@ public class RewriteCommand implements Command {
      */
     @Override
     public void execute(Bfck bfck) {
-        instructWriter.WriteFile(bfck.getInstructions(), "");
+        instructWriter.WriteFile(bfck.getVisualisableInstructions(), "");
     }
 }

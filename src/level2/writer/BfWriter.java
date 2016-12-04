@@ -1,6 +1,6 @@
 package level2.writer;
 
-import level2.constants.Executable;
+import level2.constants.Visualisable;
 
 import java.util.List;
 
@@ -10,5 +10,5 @@ import java.util.List;
 
 
 public interface BfWriter {
-    void WriteFile(List<Executable> instructions, String fileName);
+    void WriteFile(List<Visualisable> instructions, String fileName);
 }

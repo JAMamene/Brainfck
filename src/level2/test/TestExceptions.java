@@ -3,7 +3,7 @@ package level2.test;
 import level2.command.CommandPerform;
 import level2.exceptions.ExecuteException;
 import level2.exceptions.SyntaxException;
-import level2.exceptions.WrongFile;
+import level2.exceptions.FileException;
 import level2.interpreter.Bfck;
 import org.junit.contrib.java.lang.system.ExpectedSystemExit;
 import org.junit.rules.ExpectedException;
@@ -12,19 +12,18 @@ import org.junit.rules.ExpectedException;
  * Tests for the different exceptions and exits our program can face
  */
 public class TestExceptions {
-    private CommandPerform perf;
-    private Bfck bfck;
-
     @org.junit.Rule
     public final ExpectedSystemExit exit = ExpectedSystemExit.none(); //Cutom library 'system rule'
     public final ExpectedException exception = ExpectedException.none();
+    private CommandPerform perf;
+    private Bfck bfck;
 
     // test for the WrongFile exceptions
 
     @org.junit.Test
     public void testWrongProp() {
         String[] args = {"-p", "WrongProp.bmp"};
-        exception.expect(WrongFile.class);
+        exception.expect(FileException.class);
         exit.expectSystemExitWithStatus(3); // should terminate the program with exit code 3
         perf = new CommandPerform(args); //will perform the actions needed
         perf.performAll();
@@ -141,7 +140,7 @@ public class TestExceptions {
         perf = new CommandPerform(args); //will perform the actions needed
         bfck = perf.getBfck();
         bfck.setIn(str);
-        exception.expect(WrongFile.class);
+        exception.expect(FileException.class);
         exit.expectSystemExitWithStatus(3); // should terminate the program with exit code 3
         perf.performAll();
     }
@@ -150,7 +149,7 @@ public class TestExceptions {
     public void testsNotEnoughChar() {
         String[] args = {"-p", "TestMultiInput", "-i", "ITestInput"}; //Doesn't contain enough char
         perf = new CommandPerform(args); //will perform the actions needed
-        exception.expect(WrongFile.class); //Should throw wrongfile exception
+        exception.expect(FileException.class); //Should throw wrongfile exception
         exit.expectSystemExitWithStatus(3); // should terminate the program with exit code 3
         perf.performAll();
     }

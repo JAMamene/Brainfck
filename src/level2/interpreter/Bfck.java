@@ -1,10 +1,9 @@
 package level2.interpreter;
 
-import level2.constants.Executable;
-import level2.constants.InstructionEnum;
-import level2.constants.Metrics;
-import level2.constants.Trace;
+import level2.constants.*;
+import level2.exceptions.ExecuteException;
 import level2.exceptions.SyntaxException;
+import level2.exceptions.VisualisableException;
 
 import java.util.*;
 
@@ -14,18 +13,16 @@ import static level2.constants.Sizes.*;
  * Main class of the interpreter, translate the brainfuck code into java directives
  */
 public class Bfck {
+    protected List<Executable> instructions;
+    protected int instruction;
+    boolean trace = false;
     private String filename;
     private String filenameOut;
     private String filenameIn;
     private String in;
     private int readId;
-    protected boolean trace = false;
-
-    protected List<Executable> instructions;
     private Map<Integer, Integer> jumpTable;
-
     private byte[] memory;
-    protected int instruction;
     private short pointer;
 
     /**
@@ -145,6 +142,19 @@ public class Bfck {
 
     public List<Executable> getInstructions() {
         return instructions;
+    }
+
+    public List<Visualisable> getVisualisableInstructions() {
+        List<Visualisable> visualisables = new ArrayList<>();
+        for (Executable e : instructions) {
+            if (!(e instanceof InstructionEnum)) throw new VisualisableException();
+            visualisables.add(e);
+        }
+        return visualisables;
+    }
+
+    public List<Visualisable> getOptimizedInstructions() {
+        return new Optimizer().optimize(instructions);
     }
 
     public Map<Integer, Integer> getJumpTable() {

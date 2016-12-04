@@ -1,6 +1,6 @@
 package level2.command;
 
-import level2.exceptions.WrongFile;
+import level2.exceptions.FileException;
 import level2.interpreter.Bfck;
 
 import java.io.*;
@@ -27,9 +27,9 @@ public class SetInCommand implements Command {
                     }
                     bfck.setIn(stringBuilder.toString());
                 } catch (FileNotFoundException e) {
-                    throw new WrongFile("missing-file");
+                    throw new FileException("missing-file");
                 } catch (IOException e) {
-                    throw new WrongFile("invalid-file");
+                    throw new FileException("invalid-file");
                 }
             }
         }

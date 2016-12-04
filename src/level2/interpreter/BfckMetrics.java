@@ -18,7 +18,6 @@ public class BfckMetrics extends Bfck {
     }
     @Override
     public void setCase(byte val){
-
         super.setCase(val);
         Metrics.incrDataWrite();
     }
@@ -37,7 +36,6 @@ public class BfckMetrics extends Bfck {
 
     @Override
     public void addToPointer(int val){
-
         super.addToPointer(val);
         Metrics.incrDataMove();
     }

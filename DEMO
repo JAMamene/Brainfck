@@ -1,32 +1,32 @@
 { SET_ZERO
-    [-]                              #Cette macro met la case actuelle à zéro
+    [-]              #Cette macro met la case actuelle à zéro
 }
 { MULTI_DECR
-    DECR                             #Cette macro correspond simplement à decr (afin de créer une récursion)
+    DECR             #Cette macro correspond simplement à decr pour l'expansion récursive
 }
 { TO_DIGIT
-    MULTI_DECR%48                    #On appelle La macro MULTI_DECR 48 fois afin de réduire une entrée ascii en digit
+    MULTI_DECR%48    #On appelle La macro MULTI_DECR 48 fois pour réduire ascii en digit
 }
-SET_ZERO                             #R = 0
+SET_ZERO             #R = 0
 >
-SET_ZERO                             #T = 0
+SET_ZERO             #T = 0
 >
-SET_ZERO                             #O = 0
+SET_ZERO             #O = 0
 ,
-TO_DIGIT                             #O = in to digit (changez ici le nombre d'incrémentation pour modifier le résultat)
+TO_DIGIT             #O = in to digit
 >
-SET_ZERO                             #M = 0
+SET_ZERO             #M = 0
 ,
-TO_DIGIT                             #M = in to digit (changez ici le nombre d'incrémentation pour modifier le résultat)
-<                                    #Reviens à O
-[                                    #Tant que O différent de 0
-        >                                #Passe à M
-        [                                #Tant que M différent de 0
-                <<+                          #Reviens à T / Incrémenter T
-                <+                           #Reviens à R / Incrémenter R
-                >>>-                         #Passe à M / Décrémenter M
-        ]                                #Retour boucle
-    <<[>>+<<-]		     #Reinitialise M / Détruit T
+TO_DIGIT             #M = in to digit
+<                    #Reviens à O
+[                    #Tant que O différent de 0
+    >                #Passe à M
+    [                #Tant que M différent de 0
+        <<+          #Reviens à T / Incrémenter T
+        <+           #eviens à R / Incrémenter R
+        >>>-         #Passe à M / Décrémenter M
+    ]                #Retour boucle
+    <<[>>+<<-]		 #Reinitialise M / Détruit T
     >-			     #Décrémente O
 ]                    #Retour boucle
 >
@@ -35,3 +35,4 @@ SET_ZERO		     #Retourne à M / M = 0
 <
 SET_ZERO             #Retourne à T / T = 0
 <                    #Retourne à R
+

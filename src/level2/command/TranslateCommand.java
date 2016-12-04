@@ -15,6 +15,6 @@ public class TranslateCommand implements Command {
      */
     @Override
     public void execute(Bfck bfck) {
-        imgWriter.WriteFile(bfck.getInstructions(), bfck.getFilename());
+        imgWriter.WriteFile(bfck.getVisualisableInstructions(), bfck.getFilename());
     }
 }
