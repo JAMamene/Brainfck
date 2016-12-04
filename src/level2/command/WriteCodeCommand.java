@@ -16,6 +16,6 @@ public class WriteCodeCommand implements Command {
     @Override
     public void execute(Bfck bfck) {
         BfWriter writer = language.getCodeClass();
-        writer.WriteFile(bfck.getVisualisableInstructions(), bfck.getFilename());
+        writer.WriteFile(bfck.getOptimizedInstructions(), bfck.getFilename());
     }
 }
