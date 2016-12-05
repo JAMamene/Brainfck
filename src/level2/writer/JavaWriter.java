@@ -21,8 +21,8 @@ public class JavaWriter extends CodeWriter {
                 if (instruction == BACK && indentLevel.length() >= 2) {
                     indentLevel = indentLevel.substring(0, indentLevel.length() - 1);
                 }
-                if (!(instruction.getJava() == null)) {
-                    bw.write(indentLevel + instruction.getJava() + "\n");
+                if (instruction.getJava().isPresent()) {
+                    bw.write(indentLevel + instruction.getJava().get() + "\n");
                 }
                 if (instruction == JUMP) {
                     indentLevel += '\t';

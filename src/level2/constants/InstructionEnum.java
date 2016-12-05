@@ -5,7 +5,9 @@ import level2.exceptions.FileException;
 import level2.interpreter.Bfck;
 
 import java.awt.*;
+import java.util.Optional;
 import java.util.Scanner;
+import java.util.stream.Stream;
 
 import static level2.constants.Sizes.*;
 
@@ -69,6 +71,11 @@ public enum InstructionEnum implements Executable {
             System.out.print((char) (bfck.getCell() + MASK.get()));
             bfck.incrementInstructions();
         }
+
+        @Override
+        public Optional<String> getJS() {
+            return Optional.of("document.getElementById(\"output\").innerHTML += mem[i]");
+        }
     },
 
     IN(',', new Color(0xffff00),
@@ -89,6 +96,11 @@ public enum InstructionEnum implements Executable {
                 throw new ExecuteException("invalid-input", in, bfck.getInstruction());
             bfck.setCase((byte) (in - MASK.get()));
             bfck.incrementInstructions();
+        }
+
+        @Override
+        public Optional<String> getJS() {
+            return Optional.of("mem[i] = prompt(\"type input\").charAt(0);");
         }
     },
 
@@ -124,6 +136,7 @@ public enum InstructionEnum implements Executable {
     private Color color;
     private String java;
     private String c;
+    private String js;
 
     InstructionEnum(char shortcut, Color color, String java, String c) {
         this.shortcut = shortcut;
@@ -140,11 +153,15 @@ public enum InstructionEnum implements Executable {
         return color;
     }
 
-    public String getJava() {
-        return java;
+    public Optional<String> getJava() {
+        return Optional.of(java);
     }
 
-    public String getC() {
-        return c;
+    public Optional<String> getC() {
+        return Optional.of(c);
+    }
+
+    public Optional<String> getJS() {
+        return getJava();
     }
 }

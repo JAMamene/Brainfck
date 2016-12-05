@@ -3,6 +3,7 @@ package level2.constants;
 import level2.writer.BfWriter;
 import level2.writer.CWriter;
 import level2.writer.JavaWriter;
+import level2.writer.JavascriptWriter;
 
 import java.util.Arrays;
 
@@ -11,7 +12,8 @@ import java.util.Arrays;
  */
 public enum Languages {
     java(new JavaWriter()),
-    c(new CWriter());
+    c(new CWriter()),
+    js(new JavascriptWriter());
 
     private BfWriter bfw;
 

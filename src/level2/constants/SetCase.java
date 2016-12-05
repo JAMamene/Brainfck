@@ -1,34 +1,36 @@
 package level2.constants;
 
 import java.awt.*;
+import java.util.Optional;
 
-public class SetCase implements Visualisable {
-
-    private int value;
+public class SetCase extends Refactor implements Visualisable {
 
     public SetCase(int value) {
-        this.value = value;
+        super(value);
     }
 
     @Override
-    public String getJava() {
-        if (value < 0) {
-            return null;
-        } else if (value == 0) {
-            return "mem[i] = 0;";
-        } else {
-            return "mem[i] = " + value + ";";
-        }
+    public Optional<String> getJava() {
+        return getRepresentationSet("mem[i]");
     }
 
     @Override
-    public String getC() {
+    public Optional<String> getC() {
+        return getRepresentationSet("mem");
+    }
+
+    @Override
+    public Optional<String> getJS() {
+        return getRepresentationSet("mem[i]");
+    }
+
+    private Optional<String> getRepresentationSet(String memoryRep) {
         if (value < 0) {
-            return null;
+            return Optional.empty();
         } else if (value == 0) {
-            return "*mem = 0;";
+            return Optional.of(memoryRep + "=0;");
         } else {
-            return "*mem = " + value + ";";
+            return Optional.of(memoryRep + "=" + value + ";");
         }
     }
 

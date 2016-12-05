@@ -100,27 +100,27 @@ public class ArgsCheck {
         return action;
     }
 
-    public Boolean getTrace() {
-            return trace;
+    boolean hasArg() {
+        return (pointer < args.length - 1);
     }
 
-    public int getPointer() {
-        return pointer;
+    String peekArg() {
+        return args[pointer + 1];
     }
 
-    public int incrPointer(){
+    int incrPointer() {
         return pointer++;
     }
 
-    public void addPassiveActions(Command action){
+    void addPassiveActions(Command action) {
         passiveActions.add(action);
     }
 
-    public void addStoppingActions(Command action){
+    void addStoppingActions(Command action) {
         stoppingActions.add(action);
     }
 
-    public String getArg() {
+    String getCurrentArg() {
         return args[pointer];
     }
 

@@ -1,43 +1,28 @@
 package level2.constants;
 
 import java.awt.*;
+import java.util.Optional;
+import java.util.stream.Stream;
 
-public class MultiIncrDecr implements Visualisable {
-
-    private int value;
+public class MultiIncrDecr extends Refactor implements Visualisable {
 
     public MultiIncrDecr(int value) {
-        this.value = value;
+        super(value);
     }
 
     @Override
-    public String getJava() {
-        if (value == 0) {
-            return null;
-        } else if (value == -1) {
-            return "++mem[i];";
-        } else if (value == 1) {
-            return "--mem[i];";
-        } else if (value > 1) {
-            return "mem[i]+=" + value + ";";
-        } else {
-            return "mem[i]-=" + Math.abs(value) + ";";
-        }
+    public Optional<String> getJava() {
+        return getRepresentation("mem[i]", value);
     }
 
     @Override
-    public String getC() {
-        if (value == 0) {
-            return null;
-        } else if (value == -1) {
-            return "++*mem;";
-        } else if (value == 1) {
-            return "--*mem;";
-        } else if (value > 1) {
-            return "*mem+=" + value + ";";
-        } else {
-            return "*mem-=" + Math.abs(value) + ";";
-        }
+    public Optional<String> getC() {
+        return getRepresentation("*mem", value);
+    }
+
+    @Override
+    public Optional<String> getJS() {
+        return getRepresentation("mem[i]", value);
     }
 
     @Override

@@ -2,13 +2,15 @@ package level2.constants;
 
 
 import java.awt.*;
+import java.util.Optional;
 
 public interface Visualisable {
 
-    String getJava();
+    Optional<String> getJava();
 
-    String getC();
+    Optional<String> getC();
 
+    Optional<String> getJS();
 
     Color getColor();
 

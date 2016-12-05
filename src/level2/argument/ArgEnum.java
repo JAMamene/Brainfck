@@ -9,67 +9,67 @@ import level2.exceptions.FileException;
 import java.util.Arrays;
 
 public enum ArgEnum implements Parsable {
-    Metrics("--showMetrics"){
+    Metrics("--showMetrics") {
         @Override
-        public void exec(ArgsCheck arg){
+        public void exec(ArgsCheck arg) {
             arg.addPassiveActions(new MetricsCommand());
             arg.setMetrics(true);
         }
     },
-    Rewrite("--rewrite"){
+    Rewrite("--rewrite") {
         @Override
-        public void exec(ArgsCheck arg){
+        public void exec(ArgsCheck arg) {
             arg.addStoppingActions(new RewriteCommand());
         }
     },
-    Translate("--translate"){
+    Translate("--translate") {
         @Override
-        public void exec(ArgsCheck arg){
+        public void exec(ArgsCheck arg) {
             arg.addStoppingActions(new TranslateCommand());
         }
     },
-    Check("--check"){
+    Check("--check") {
         @Override
-        public void exec(ArgsCheck arg){
+        public void exec(ArgsCheck arg) {
             arg.addStoppingActions(new CheckCommand());
         }
     },
-    Trace("--trace"){
+    Trace("--trace") {
         @Override
-        public void exec(ArgsCheck arg){
+        public void exec(ArgsCheck arg) {
             arg.addPassiveActions(new TraceCommand());
         }
     },
-    FileIn("-i"){
+    FileIn("-i") {
         @Override
-        public void exec(ArgsCheck arg){
+        public void exec(ArgsCheck arg) {
             arg.incrPointer();
             try {
-                arg.setIn(arg.getArg());
-            } catch (Exception e){
+                arg.setIn(arg.getCurrentArg());
+            } catch (Exception e) {
                 wrongFile();
             }
         }
     },
-    FileOut("-o"){
+    FileOut("-o") {
         @Override
-        public void exec(ArgsCheck arg){
+        public void exec(ArgsCheck arg) {
             arg.incrPointer();
             try {
-                arg.setOut(arg.getArg());
-            } catch (Exception e){
+                arg.setOut(arg.getCurrentArg());
+            } catch (Exception e) {
                 wrongFile();
             }
         }
     },
-    FileProg("-p"){
+    FileProg("-p") {
         @Override
-        public void exec(ArgsCheck arg){
+        public void exec(ArgsCheck arg) {
             arg.incrPointer();
             try {
-                arg.setFileName(arg.getArg());
+                arg.setFileName(arg.getCurrentArg());
                 arg.setFileExtension(ArgEnum.findFileExtension(arg.getFileName()));
-            } catch (Exception e){
+            } catch (Exception e) {
                 wrongFile();
             }
         }
@@ -79,17 +79,25 @@ public enum ArgEnum implements Parsable {
         public void exec(ArgsCheck arg) {
             arg.incrPointer();
             try {
-                if (!Arrays.asList(Languages.values()).contains(Languages.valueOf(arg.getArg())))
+                Boolean optimize = false;
+                System.out.println(arg.getCurrentArg());
+                if (!Arrays.asList(Languages.values()).contains(Languages.valueOf(arg.getCurrentArg()))) {
                     throw new ArgumentException("invalid-language");
-                arg.addStoppingActions(new WriteCodeCommand(Languages.valueOf(arg.getArg())));
+                } else if (arg.hasArg() && arg.peekArg().equals("optimize")) {
+                    optimize = true;
+                }
+                System.out.println(arg.getCurrentArg());
+                arg.addStoppingActions(new WriteCodeCommand(Languages.valueOf(arg.getCurrentArg()), optimize));
+                if (optimize) arg.incrPointer();
             } catch (Exception e) {
+                e.printStackTrace();
                 throw new ArgumentException("missing-arg");
             }
         }
     },
-    UnknownArg("???"){
+    UnknownArg("???") {
         @Override
-        public void exec(ArgsCheck arg){
+        public void exec(ArgsCheck arg) {
             printHelp(arg);
             System.exit(3);
         }
@@ -97,16 +105,16 @@ public enum ArgEnum implements Parsable {
 
     private String expression;
 
-    ArgEnum(String expression){
+    ArgEnum(String expression) {
         this.expression = expression;
     }
 
-    private static void wrongFile(){
+    private static void wrongFile() {
         throw new FileException("missing-file");
     }
 
     private static void printHelp(ArgsCheck args) {
-        System.err.println("Invalid arguments : " + args.getArg() + ", use these :\n" +
+        System.err.println("Invalid arguments : " + args.getCurrentArg() + ", use these :\n" +
                 "-p + the brainfuck file you want to interpret, \n" +
                 "-i + the input file you want to use for in, \n" +
                 "-o + the output file you want to use for out, \n" +
@@ -115,7 +123,8 @@ public enum ArgEnum implements Parsable {
                 "--check to only check if the program is well formed \n" +
                 "--showMetrics to print metrics of the program \n" +
                 "--trace to create log\n" +
-                "--code (java, c) to translate the brainfuck code in the appropriate language\n");
+                "--code (java, c) [optimize] to translate the brainfuck code in the appropriate language\n" +
+                "and with optimization if you specify the option");
     }
 
     /**

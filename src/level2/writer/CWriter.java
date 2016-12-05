@@ -5,7 +5,7 @@ import level2.constants.Visualisable;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.List;
-
+import java.util.Optional;
 import static level2.constants.InstructionEnum.BACK;
 import static level2.constants.InstructionEnum.JUMP;
 
@@ -21,8 +21,8 @@ public class CWriter extends CodeWriter {
                 if (instruction == BACK && indentLevel.length() >= 1) {
                     indentLevel = indentLevel.substring(0, indentLevel.length() - 1);
                 }
-                if (!(instruction.getJava() == null)) {
-                    bw.write(indentLevel + instruction.getC() + "\n");
+                if (instruction.getC().isPresent()) {
+                    bw.write(indentLevel + instruction.getC().get() + "\n");
                 }
                 if (instruction == JUMP) {
                     indentLevel += '\t';
