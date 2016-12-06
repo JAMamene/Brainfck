@@ -3,13 +3,14 @@ package level2.command;
 import level2.argument.ArgsCheck;
 import level2.constants.Metrics;
 import level2.interpreter.Bfck;
+import level2.interpreter.BfckContainer;
 import level2.interpreter.BfckMetrics;
 import level2.reader.BfReader;
 import level2.reader.ImageReader;
 import level2.reader.InstructionReader;
 
 public class CommandPerform {
-    private Bfck bfck;
+    private BfckContainer container;
     private ArgsCheck arg;
 
     /**
@@ -28,8 +29,7 @@ public class CommandPerform {
         } else {
             reader = new InstructionReader();
         }
-        if(!arg.getMetrics())bfck = new Bfck(reader.readFile(arg.getFileName()), arg.getFileName(), arg.getIn(), arg.getOut());
-        else bfck = new BfckMetrics(reader.readFile(arg.getFileName()), arg.getFileName(), arg.getIn(), arg.getOut());
+        container = new BfckContainer(reader.readFile(arg.getFileName()), arg.getFileName(), arg.getIn(), arg.getOut());
     }
 
     /**

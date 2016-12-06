@@ -3,11 +3,11 @@ package level2.constants;
 import level2.exceptions.ExecuteException;
 import level2.exceptions.FileException;
 import level2.interpreter.Bfck;
+import level2.interpreter.Interpreter;
 
 import java.awt.*;
 import java.util.Optional;
 import java.util.Scanner;
-import java.util.stream.Stream;
 
 import static level2.constants.Sizes.*;
 
@@ -19,11 +19,11 @@ public enum InstructionEnum implements Executable {
             "++mem[i];",
             "++*mem;") {
         @Override
-        public void exec(Bfck bfck) {
+        public void exec(Bfck bfck, Interpreter interpreter) {
             if (bfck.getCellCheck() == MAXDATASIZE.get())
-                throw new ExecuteException("cell-overflow", bfck.getPointer(), bfck.getInstruction());
+                throw new ExecuteException("cell-overflow", bfck.getPointer(), interpreter.getInstruction());
             bfck.incrCell();
-            bfck.incrementInstructions();
+            interpreter.incrementInstructions();
         }
     },
 
@@ -31,11 +31,11 @@ public enum InstructionEnum implements Executable {
             "--mem[i];",
             "--*mem;") {
         @Override
-        public void exec(Bfck bfck) {
+        public void exec(Bfck bfck, Interpreter interpreter) {
             if (bfck.getCellCheck() == MINDATASIZE.get())
-                throw new ExecuteException("cell-underflow", bfck.getPointer(), bfck.getInstruction());
+                throw new ExecuteException("cell-underflow", bfck.getPointer(), interpreter.getInstruction());
             bfck.decrCell();
-            bfck.incrementInstructions();
+            interpreter.incrementInstructions();
         }
     },
 
@@ -43,11 +43,11 @@ public enum InstructionEnum implements Executable {
             "--i;",
             "--mem") {
         @Override
-        public void exec(Bfck bfck) {
+        public void exec(Bfck bfck, Interpreter interpreter) {
             if (bfck.getPointer() == MINMEMORYSIZE.get())
-                throw new ExecuteException("memory-underflow", bfck.getPointer(), bfck.getInstruction());
+                throw new ExecuteException("memory-underflow", bfck.getPointer(), interpreter.getInstruction());
             bfck.addToPointer(-1);
-            bfck.incrementInstructions();
+            interpreter.incrementInstructions();
         }
     },
 
@@ -55,11 +55,11 @@ public enum InstructionEnum implements Executable {
             "++i;",
             "++mem;") {
         @Override
-        public void exec(Bfck bfck) {
+        public void exec(Bfck bfck, Interpreter interpreter) {
             if (bfck.getPointer() == MAXMEMORYSIZE.get())
-                throw new ExecuteException("memory-overflow", bfck.getPointer(), bfck.getInstruction());
+                throw new ExecuteException("memory-overflow", bfck.getPointer(), interpreter.getInstruction());
             bfck.addToPointer(1);
-            bfck.incrementInstructions();
+            interpreter.incrementInstructions();
         }
     },
 
@@ -67,9 +67,9 @@ public enum InstructionEnum implements Executable {
             "System.out.print(mem[i]);",
             "printf(%c,*mem);") {
         @Override
-        public void exec(Bfck bfck) {
+        public void exec(Bfck bfck, Interpreter interpreter) {
             System.out.print((char) (bfck.getCell() + MASK.get()));
-            bfck.incrementInstructions();
+            interpreter.incrementInstructions();
         }
 
         @Override
@@ -82,20 +82,20 @@ public enum InstructionEnum implements Executable {
             "mem[i] = reader.next().charAt(0);",
             "scanf(%c,mem);") {
         @Override
-        public void exec(Bfck bfck) {
+        public void exec(Bfck bfck, Interpreter interpreter) {
             Byte in;
-            if (bfck.getIn() == null) {
+            if (interpreter.getIn() == null) {
                 Scanner s = new Scanner(System.in);
                 in = (byte) s.next().charAt(0);
             } else {
-                if (bfck.getIn().length() <= bfck.getReadId()) throw new FileException("unexpected-eof");
-                in = (byte) bfck.getIn().charAt(bfck.getReadId());
-                bfck.incrReadId();
+                if (interpreter.getIn().length() <= interpreter.getReadId()) throw new FileException("unexpected-eof");
+                in = (byte) interpreter.getIn().charAt(interpreter.getReadId());
+                interpreter.incrReadId();
             }
             if (in < MINDATASIZE.get() + MASK.get() || in > MAXDATASIZE.get() + MASK.get())
-                throw new ExecuteException("invalid-input", in, bfck.getInstruction());
+                throw new ExecuteException("invalid-input", in, interpreter.getInstruction());
             bfck.setCase((byte) (in - MASK.get()));
-            bfck.incrementInstructions();
+            interpreter.incrementInstructions();
         }
 
         @Override
@@ -108,12 +108,11 @@ public enum InstructionEnum implements Executable {
             "while (mem[i] != 0) {",
             "while (*mem) {") {
         @Override
-        public void exec(Bfck bfck) {
-            int i = bfck.getInstruction();
+        public void exec(Bfck bfck, Interpreter interpreter) {
             if (bfck.getCell() != -MASK.get()) {
-                bfck.incrementInstructions();
+                interpreter.incrementInstructions();
             } else {
-                bfck.setInstruction(bfck.getJumpTable().get(bfck.getInstruction()));
+                interpreter.setInstruction(interpreter.useJumpTable(interpreter.getInstruction()));
             }
         }
     },
@@ -122,12 +121,11 @@ public enum InstructionEnum implements Executable {
             "}",
             "}") {
         @Override
-        public void exec(Bfck bfck) {
-            int i = bfck.getInstruction();
+        public void exec(Bfck bfck, Interpreter interpreter) {
             if (bfck.getCell() == -MASK.get()) {
-                bfck.incrementInstructions();
+                interpreter.incrementInstructions();
             } else {
-                bfck.setInstruction(bfck.getJumpTable().get(bfck.getInstruction()));
+                interpreter.setInstruction(interpreter.useJumpTable(interpreter.getInstruction()));
             }
         }
     };

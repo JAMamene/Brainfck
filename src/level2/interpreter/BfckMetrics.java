@@ -8,13 +8,9 @@ import java.util.List;
 
 public class BfckMetrics extends Bfck {
 
-    public BfckMetrics(List<Executable> instructions, String filename, String filenameIn, String filenameOut){
-        super(instructions,filename,filenameIn,filenameOut);
-        Metrics.setProgSize(instructions.size());
-    }
-
-    public BfckMetrics(Bfck bfck){
-        super(bfck);
+    public BfckMetrics(int progSize){
+        super();
+        Metrics.setProgSize(progSize);
     }
     @Override
     public void setCase(byte val){
@@ -45,18 +41,6 @@ public class BfckMetrics extends Bfck {
         Metrics.incrDataRead();
         return super.getCell();
     }
-    @Override
-    public void handle(){
-        while (instruction < instructions.size()) {
-            instructions.get(instruction).exec(this);
-            Metrics.incrExecMove();
-            if (trace) {
-                Trace.saveState(this);
-            }
-        }
-        if (trace) Trace.end();
-    }
-
     @Override
     public String toString(){
         StringBuilder res = new StringBuilder();

@@ -1,6 +1,7 @@
 package level2.constants;
 
 import level2.interpreter.Bfck;
+import level2.interpreter.Interpreter;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -36,11 +37,11 @@ public class Trace {
         }
     }
 
-    public static void saveState(Bfck bfck) {
+    public static void saveState(Bfck bfck, Interpreter interpreter) {
         try {
             writer.write("step : " + step);
             writer.newLine();
-            writer.write("execPtr : " + bfck.getInstruction());
+            writer.write("execPtr : " + interpreter.getInstruction());
             writer.newLine();
             writer.write("dataPtr : " + bfck.getPointer());
             writer.newLine();
