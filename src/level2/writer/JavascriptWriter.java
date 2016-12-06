@@ -17,7 +17,7 @@ public class JavascriptWriter extends CodeWriter {
     public void WriteFile(List<Visualisable> instructions, String fileName) {
         BufferedWriter bw = getBw(fileName, ".js");
         BufferedWriter htmlw;
-        File outputFile = new File("index.html"); //File to call the js code from
+        File outputFile = new File(removeExtension(fileName) + ".html"); //File to call the js code from
         try {
             htmlw = new BufferedWriter(new FileWriter(outputFile));
             htmlw.write(getHTML(fileName));
@@ -48,9 +48,9 @@ public class JavascriptWriter extends CodeWriter {
 
     @Override
     protected String getHeader() {
-        return "$(document).ready(function () {\n" +
-                "\tvar mem = [];\n" +
-                "\tvar i;\n";
+        return "function Bfck() {\n" +
+                "\tmem = Array.apply(null, Array(30000)).map(Number.prototype.valueOf,0);\n" +
+                "\tvar i = 0;";
     }
 
     @Override
@@ -60,7 +60,7 @@ public class JavascriptWriter extends CodeWriter {
                 "\t\t\tdocument.getElementById(\"final-output\").innerHTML += \"<br/>\".concat(mem[j]);\n" +
                 "\t\t}\n" +
                 "\t}\n" +
-                "});\n";
+                "}";
     }
 
     private String getHTML(String fileName) {
@@ -68,19 +68,20 @@ public class JavascriptWriter extends CodeWriter {
                 "<html>\n" +
                 "<head>\n" +
                 "\t<meta charset=\"ascii\">\n" +
-                "\t<title>" + fileName + "</title>\n" +
-                "\t<script src=\"" + fileName + ".js\"></script>\n" +
+                "\t<title>" + removeExtension(fileName) + "</title>\n" +
+                "\t<script src=\"" + removeExtension(fileName) + ".js\"></script>\n" +
                 "</head>\n" +
                 "<body>\n" +
-                "\t<form>\n" +
-                "\t\tOutput : \n" +
-                "\t\t<div id=\"output\" ><br/>\t\n" +
-                "\t\t</div>\n" +
-                "\t\tMemory state :\n" +
-                "\t\t<div id=\"final-output\" ><br/>\n" +
-                "\t\t</div>\n" +
-                "\t</form>\n" +
-                "</body>\n" +
-                "</html>\n";
+                "\t<input type=\"button\" value=\"run Bfck\" onclick=\"Bfck();\"><br/><br/>\n" +
+                "\tOutput : <br/>\n" +
+                "\t<div style=\"margin-left:40px\" >\n" +
+                "\t\t<pre id=\"output\"></pre>\n" +
+                "\t</div>\n" +
+                "\tMemory state : <br/>\n" +
+                "\t<div style=\"margin-left:40px\">\n" +
+                "\t\t<pre id=\"final-output\"></pre>\n" +
+                "\t</div>\n" +
+                "</body>" +
+                "</html>";
     }
 }

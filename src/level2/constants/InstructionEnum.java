@@ -74,7 +74,7 @@ public enum InstructionEnum implements Executable {
 
         @Override
         public Optional<String> getJS() {
-            return Optional.of("document.getElementById(\"output\").innerHTML += mem[i]");
+            return Optional.of("document.getElementById(\"output\").innerHTML += String.fromCharCode(mem[i]);");
         }
     },
 
@@ -100,7 +100,7 @@ public enum InstructionEnum implements Executable {
 
         @Override
         public Optional<String> getJS() {
-            return Optional.of("mem[i] = prompt(\"type input\").charAt(0);");
+            return Optional.of("mem[i] = prompt(\"type input\").charCodeAt(0);");
         }
     },
 

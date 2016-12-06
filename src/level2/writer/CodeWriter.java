@@ -1,8 +1,6 @@
 package level2.writer;
 
 
-import level2.constants.Visualisable;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -27,4 +25,11 @@ abstract class CodeWriter implements BfWriter {
     protected abstract String getHeader();
 
     protected abstract String getFooter();
+
+    protected String removeExtension(String fileName) {
+        if ((fileName.lastIndexOf('.')) != -1) {
+            return fileName.substring(0, fileName.lastIndexOf('.'));
+        }
+        return fileName;
+    }
 }
