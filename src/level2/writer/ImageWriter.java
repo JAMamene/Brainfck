@@ -1,6 +1,5 @@
 package level2.writer;
 
-import level2.constants.Executable;
 import level2.constants.Visualisable;
 
 import javax.imageio.ImageIO;

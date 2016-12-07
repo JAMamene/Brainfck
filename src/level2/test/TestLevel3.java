@@ -2,17 +2,16 @@ package level2.test;
 
 import level2.command.CommandPerform;
 import level2.constants.Metrics;
-import level2.constants.Trace;
 import level2.interpreter.Bfck;
 import org.junit.Test;
 import org.junit.contrib.java.lang.system.ExpectedSystemExit;
 import org.junit.rules.ExpectedException;
 
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 
 import static level2.constants.Sizes.MASK;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the slices of level 2
@@ -27,7 +26,7 @@ public class TestLevel3 {
     @org.junit.Test
     public void tests12_1() {
         Metrics.reset(); //reset metrics just to be sure
-        String[] args = {"-p", "Test1","--showMetrics"}; //test metrics without loops
+        String[] args = {"-p", "Test1", "--showMetrics"}; //test metrics without loops
         perf = new CommandPerform((args));
         perf.performAll();
         assertEquals(18, Metrics.getProgSize());

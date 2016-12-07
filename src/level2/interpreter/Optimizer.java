@@ -1,7 +1,12 @@
 package level2.interpreter;
 
 
-import level2.constants.*;
+import level2.Optimization.MultiIncrDecr;
+import level2.Optimization.MultiRightLeft;
+import level2.Optimization.SetCell;
+import level2.constants.Executable;
+import level2.constants.InstructionEnum;
+import level2.constants.Visualisable;
 
 import java.util.ArrayList;
 import java.util.List;

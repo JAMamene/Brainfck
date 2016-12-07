@@ -1,6 +1,5 @@
 package level2.writer;
 
-import level2.constants.Executable;
 import level2.constants.Visualisable;
 
 import java.util.List;
@@ -13,6 +12,7 @@ public class InstructionWriter implements BfWriter {
 
     /**
      * print the short version of a program to the standard output
+     *
      * @param instructions list of instructions to print
      * @param fileName     the output file (actually not used)
      */

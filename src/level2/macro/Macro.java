@@ -1,7 +1,6 @@
 package level2.macro;
 
 import level2.constants.Executable;
-import level2.constants.InstructionEnum;
 
 import java.util.ArrayList;
 import java.util.HashMap;

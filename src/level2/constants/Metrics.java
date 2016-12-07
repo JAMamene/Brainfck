@@ -85,12 +85,12 @@ public class Metrics {
      */
     public static String print() {
         StringBuilder res = new StringBuilder();
-        res.append("PROG SIZE: " + PROG_SIZE+"\n");
-        res.append("EXEC TIME: " + EXEC_TIME+"\n");
-        res.append("EXEC MOVE: " + EXEC_MOVE+"\n");
-        res.append("DATA MOVE: " + DATA_MOVE+"\n");
-        res.append("DATA WRITE: " + DATA_WRITE+"\n");
-        res.append("DATA READ: " + DATA_READ+"\n");
+        res.append("PROG SIZE: " + PROG_SIZE + "\n");
+        res.append("EXEC TIME: " + EXEC_TIME + "\n");
+        res.append("EXEC MOVE: " + EXEC_MOVE + "\n");
+        res.append("DATA MOVE: " + DATA_MOVE + "\n");
+        res.append("DATA WRITE: " + DATA_WRITE + "\n");
+        res.append("DATA READ: " + DATA_READ + "\n");
         return res.toString();
     }
 }

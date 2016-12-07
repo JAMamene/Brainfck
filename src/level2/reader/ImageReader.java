@@ -2,8 +2,8 @@ package level2.reader;
 
 import level2.constants.Executable;
 import level2.constants.InstructionEnum;
-import level2.exceptions.SyntaxException;
 import level2.exceptions.FileException;
+import level2.exceptions.SyntaxException;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

@@ -2,7 +2,10 @@ package level2.constants;
 
 import level2.interpreter.Bfck;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -16,7 +19,7 @@ public class Trace {
      * print all the data into a log file and save the file
      */
     public static void init(String fileName) {
-        try{
+        try {
             // checks if the file has an extension, if it has one, remove it
             if ((fileName.lastIndexOf('.')) != -1) {
                 fileName = fileName.substring(0, fileName.lastIndexOf('.'));
@@ -26,7 +29,7 @@ public class Trace {
             file.createNewFile();
 
             writer = new BufferedWriter(new FileWriter(file));
-            writer.write("Brainf*ck interpreter launched at "+getCurrentTime());
+            writer.write("Brainf*ck interpreter launched at " + getCurrentTime());
             writer.newLine();
             writer.newLine();
             writer.flush();
@@ -54,14 +57,14 @@ public class Trace {
         step++;
     }
 
-    private static String getCurrentTime(){
+    private static String getCurrentTime() {
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
         return sdf.format(cal.getTime());
     }
 
-    public static void end(){
-        try{
+    public static void end() {
+        try {
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();

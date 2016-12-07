@@ -1,7 +1,9 @@
 package level2.interpreter;
 
-import level2.constants.*;
-import level2.exceptions.ExecuteException;
+import level2.constants.Executable;
+import level2.constants.InstructionEnum;
+import level2.constants.Trace;
+import level2.constants.Visualisable;
 import level2.exceptions.SyntaxException;
 import level2.exceptions.VisualisableException;
 
@@ -44,7 +46,7 @@ public class Bfck {
         fillJumpTable();
     }
 
-    public Bfck(Bfck bfck){
+    public Bfck(Bfck bfck) {
         memory = bfck.getMemory();
         instruction = bfck.getInstruction();
         filename = bfck.getFilename();
@@ -61,9 +63,10 @@ public class Bfck {
         return memory;
     }
 
-    public boolean getTrace(){
-        return  trace;
+    public boolean getTrace() {
+        return trace;
     }
+
     public int getReadId() {
         return readId;
     }
@@ -96,15 +99,15 @@ public class Bfck {
         return memory[pointer];
     }
 
-    public byte getCellCheck(){
+    public byte getCellCheck() {
         return memory[pointer];
     }
 
-    public void incrCell(){
+    public void incrCell() {
         memory[pointer]++;
     }
 
-    public void decrCell(){
+    public void decrCell() {
         memory[pointer]--;
     }
 

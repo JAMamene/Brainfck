@@ -10,12 +10,12 @@ public class ArgsCheck {
     private String fileExtension;
     private String in;
     private String out;
-    private Boolean trace=false;
+    private Boolean trace = false;
     private boolean metrics = false;
     private List<Command> actions;
     private List<Command> passiveActions;
     private List<Command> stoppingActions;
-    private int pointer ;
+    private int pointer;
     private String[] args;
 
     /**
@@ -24,22 +24,21 @@ public class ArgsCheck {
      * a file must be specified even if it doesn't exist else throw an exception
      */
     public ArgsCheck(String[] args) {
-        if(args.length == 0) System.exit(3);
+        if (args.length == 0) System.exit(3);
         this.args = args;
         passiveActions = new ArrayList<>();
         stoppingActions = new ArrayList<>();
-        for(pointer = 0;pointer < args.length ; incrPointer()){
-            for(ArgEnum arg : ArgEnum.values()){
-                if(arg.getExpression().equals(args[pointer])) {
+        for (pointer = 0; pointer < args.length; incrPointer()) {
+            for (ArgEnum arg : ArgEnum.values()) {
+                if (arg.getExpression().equals(args[pointer])) {
                     arg.exec(this);
                     break;
                 }
-                if(arg.getExpression().equals("???"))arg.exec(this);
+                if (arg.getExpression().equals("???")) arg.exec(this);
             }
         }
 
     }
-
 
 
     public String getFileExtension() {
@@ -74,7 +73,9 @@ public class ArgsCheck {
         this.out = out;
     }
 
-    public boolean getMetrics(){return metrics;}
+    public boolean getMetrics() {
+        return metrics;
+    }
 
     public void setMetrics(boolean metrics) {
         this.metrics = metrics;

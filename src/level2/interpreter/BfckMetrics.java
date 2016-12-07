@@ -8,45 +8,47 @@ import java.util.List;
 
 public class BfckMetrics extends Bfck {
 
-    public BfckMetrics(List<Executable> instructions, String filename, String filenameIn, String filenameOut){
-        super(instructions,filename,filenameIn,filenameOut);
+    public BfckMetrics(List<Executable> instructions, String filename, String filenameIn, String filenameOut) {
+        super(instructions, filename, filenameIn, filenameOut);
         Metrics.setProgSize(instructions.size());
     }
 
-    public BfckMetrics(Bfck bfck){
+    public BfckMetrics(Bfck bfck) {
         super(bfck);
     }
+
     @Override
-    public void setCase(byte val){
+    public void setCase(byte val) {
         super.setCase(val);
         Metrics.incrDataWrite();
     }
 
     @Override
-    public void incrCell(){
+    public void incrCell() {
         Metrics.incrDataWrite();
         super.incrCell();
     }
 
     @Override
-    public void decrCell(){
+    public void decrCell() {
         Metrics.incrDataWrite();
         super.decrCell();
     }
 
     @Override
-    public void addToPointer(int val){
+    public void addToPointer(int val) {
         super.addToPointer(val);
         Metrics.incrDataMove();
     }
 
     @Override
-    public byte getCell(){
+    public byte getCell() {
         Metrics.incrDataRead();
         return super.getCell();
     }
+
     @Override
-    public void handle(){
+    public void handle() {
         while (instruction < instructions.size()) {
             instructions.get(instruction).exec(this);
             Metrics.incrExecMove();
@@ -58,7 +60,7 @@ public class BfckMetrics extends Bfck {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         StringBuilder res = new StringBuilder();
         res.append(super.toString());
         res.append(Metrics.print());

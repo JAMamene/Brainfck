@@ -28,7 +28,8 @@ public class CommandPerform {
         } else {
             reader = new InstructionReader();
         }
-        if(!arg.getMetrics())bfck = new Bfck(reader.readFile(arg.getFileName()), arg.getFileName(), arg.getIn(), arg.getOut());
+        if (!arg.getMetrics())
+            bfck = new Bfck(reader.readFile(arg.getFileName()), arg.getFileName(), arg.getIn(), arg.getOut());
         else bfck = new BfckMetrics(reader.readFile(arg.getFileName()), arg.getFileName(), arg.getIn(), arg.getOut());
     }
 
