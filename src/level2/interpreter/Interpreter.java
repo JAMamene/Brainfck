@@ -29,7 +29,7 @@ public class Interpreter {
         jumpTable = new HashMap<>();
         fillJumpTable();
     }
-    public void handle(Bfck bfck) {
+    public void handle(Memory bfck) {
         while (instruction < instructions.size()) {
             instructions.get(instruction).exec(bfck,this);
             if (trace) {
@@ -159,5 +159,9 @@ public class Interpreter {
 
     public String getFilenameOut(){
         return filenameOut;
+    }
+
+    public int getInstructionSize(){
+        return instructions.size();
     }
 }

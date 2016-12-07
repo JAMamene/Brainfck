@@ -5,6 +5,7 @@ import level2.exceptions.ExecuteException;
 import level2.exceptions.SyntaxException;
 import level2.exceptions.FileException;
 import level2.interpreter.Bfck;
+import level2.interpreter.Memory;
 import org.junit.contrib.java.lang.system.ExpectedSystemExit;
 import org.junit.rules.ExpectedException;
 
@@ -16,7 +17,7 @@ public class TestExceptions {
     public final ExpectedSystemExit exit = ExpectedSystemExit.none(); //Cutom library 'system rule'
     public final ExpectedException exception = ExpectedException.none();
     private CommandPerform perf;
-    private Bfck bfck;
+    private Memory bfck;
 
     // test for the WrongFile exceptions
 

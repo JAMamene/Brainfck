@@ -3,6 +3,7 @@ package level2.test;
 import level2.command.CommandPerform;
 import level2.interpreter.Bfck;
 import level2.interpreter.BfckContainer;
+import level2.interpreter.Memory;
 import org.junit.contrib.java.lang.system.ExpectedSystemExit;
 
 import static level2.constants.Sizes.MASK;
@@ -13,7 +14,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class TestLevel1 {
     private CommandPerform perf;
-    private Bfck bfck;
+    private Memory bfck;
 
     @org.junit.Rule
     public final ExpectedSystemExit exit = ExpectedSystemExit.none(); //Cutom library 'system rule'

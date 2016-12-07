@@ -9,7 +9,7 @@ import level2.writer.InstructionWriter;
 import java.util.List;
 
 public class BfckContainer {
-    private Bfck bfck;
+    private Memory bfck;
     private Interpreter interpreter;
     private BfWriter instructWriter;
     private BfWriter imgWriter;
@@ -47,7 +47,7 @@ public class BfckContainer {
     }
 
     public void toMetrics(){
-        bfck = new BfckMetrics(interpreter.getProgSize());
+        bfck = new MetricsDecorator(bfck,interpreter.getInstructionSize());
     }
 
     public void writeCode(Languages language, boolean optimize){
@@ -75,7 +75,7 @@ public class BfckContainer {
         return interpreter.getFilename();
     }
 
-    public Bfck getBfck(){
+    public Memory getBfck(){
         return bfck;
     }
 

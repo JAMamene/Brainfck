@@ -12,8 +12,7 @@ import static level2.constants.Sizes.*;
 /**
  * Main class of the interpreter, translate the brainfuck code into java directives
  */
-public class Bfck {
-
+public class Bfck implements Memory{
     private byte[] memory;
     private short pointer;
 
@@ -27,40 +26,53 @@ public class Bfck {
         pointer = 0;
     }
 
+    @Override
     public byte[] getMemory() {
         return memory;
     }
 
+    @Override
     public byte getCell() {
         return memory[pointer];
     }
 
+    @Override
     public byte getCellCheck(){
         return memory[pointer];
     }
 
+    @Override
     public void incrCell(){
         memory[pointer]++;
     }
 
+    @Override
     public void decrCell(){
         memory[pointer]--;
     }
 
+    @Override
+    public void left(){
+        pointer--;
+    }
+
+    @Override
+    public void right(){
+        pointer++;
+    }
+    @Override
     public short getMemoryAt(short index) {
         return memory[index];
     } // Only for testing
 
+    @Override
     public short getPointer() {
         return pointer;
     }
 
+    @Override
     public void setCase(byte val) {
         memory[pointer] = val;
-    }
-
-    public void addToPointer(int val) {
-        pointer += val;
     }
 
     /**
@@ -79,6 +91,7 @@ public class Bfck {
         return rtrn.toString();
     }
 
+    @Override
     public String toDebugString() {
         StringBuilder rtrn = new StringBuilder("[");
         Boolean notFound = true;

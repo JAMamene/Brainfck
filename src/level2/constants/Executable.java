@@ -1,14 +1,14 @@
 package level2.constants;
 
-import level2.interpreter.Bfck;
 import level2.interpreter.Interpreter;
+import level2.interpreter.Memory;
 
 import java.awt.*;
 
 
 public interface Executable extends Visualisable {
 
-    void exec(Bfck bfck, Interpreter interpreter);
+    void exec(Memory bfck, Interpreter interpreter);
 
     Color getColor();
 

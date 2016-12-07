@@ -4,6 +4,7 @@ import level2.command.CommandPerform;
 import level2.constants.Metrics;
 import level2.constants.Trace;
 import level2.interpreter.Bfck;
+import level2.interpreter.Memory;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.contrib.java.lang.system.ExpectedSystemExit;
@@ -23,9 +24,8 @@ public class TestLevel3 {
     public final ExpectedSystemExit exit = ExpectedSystemExit.none(); //Cutom library 'system rule'
     public final ExpectedException exception = ExpectedException.none();
     private CommandPerform perf;
-    private Bfck bfck;
+    private Memory bfck;
 
-    @Ignore
     @org.junit.Test
     public void tests12_1() {
         Metrics.reset(); //reset metrics just to be sure
@@ -39,7 +39,6 @@ public class TestLevel3 {
         assertEquals(0, Metrics.getDataRead());
     }
 
-    @Ignore
     @org.junit.Test
     public void tests12_2() {
         Metrics.reset();

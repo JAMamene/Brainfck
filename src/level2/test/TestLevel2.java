@@ -4,6 +4,7 @@ import level2.command.CommandPerform;
 import level2.constants.Executable;
 import level2.exceptions.SyntaxException;
 import level2.interpreter.Bfck;
+import level2.interpreter.Memory;
 import level2.reader.ImageReader;
 import org.junit.contrib.java.lang.system.ExpectedSystemExit;
 import org.junit.rules.ExpectedException;
@@ -25,7 +26,7 @@ public class TestLevel2 {
     public final ExpectedSystemExit exit = ExpectedSystemExit.none(); //Cutom library 'system rule'
     public final ExpectedException exception = ExpectedException.none();
     private CommandPerform perf;
-    private Bfck bfck;
+    private Memory bfck;
     private ByteArrayOutputStream baos;
 
     @org.junit.Test
