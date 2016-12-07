@@ -26,7 +26,7 @@ public class JavascriptWriter extends CodeWriter {
             e.printStackTrace();
         }
         try {
-            bw.write(getHeader());
+            bw.write(getHeader(fileName));
             String indentLevel = "\t";
             for (Visualisable instruction : instructions) {
                 if (instruction == BACK && indentLevel.length() >= 1) {
@@ -47,7 +47,7 @@ public class JavascriptWriter extends CodeWriter {
     }
 
     @Override
-    protected String getHeader() {
+    protected String getHeader(String fileName) {
         return "function Bfck() {\n" +
                 "\tmem = Array.apply(null, Array(30000)).map(Number.prototype.valueOf,0);\n" +
                 "\tvar i = 0;";
@@ -57,7 +57,7 @@ public class JavascriptWriter extends CodeWriter {
     protected String getFooter() {
         return "\tfor (var j = 0; j < mem.length; j++) {\n" +
                 "\t\tif (mem[j] != 0) {\n" +
-                "\t\t\tdocument.getElementById(\"final-output\").innerHTML += \"<br/>\".concat(mem[j]);\n" +
+                "\t\t\tdocument.getElementById(\"final-output\").innerHTML += \"<br/>\".concat(\"[\" + j + \"] = \" + mem[j]);\n" +
                 "\t\t}\n" +
                 "\t}\n" +
                 "}";

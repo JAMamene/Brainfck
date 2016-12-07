@@ -5,7 +5,7 @@ import level2.constants.Visualisable;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
+
 import static level2.constants.InstructionEnum.BACK;
 import static level2.constants.InstructionEnum.JUMP;
 
@@ -15,7 +15,7 @@ public class CWriter extends CodeWriter {
     public void WriteFile(List<Visualisable> instructions, String fileName) {
         BufferedWriter bw = getBw(fileName, ".c");
         try {
-            bw.write(getHeader());
+            bw.write(getHeader(fileName));
             String indentLevel = "\t";
             for (Visualisable instruction : instructions) {
                 if (instruction == BACK && indentLevel.length() >= 1) {
@@ -36,12 +36,17 @@ public class CWriter extends CodeWriter {
     }
 
     @Override
-    protected String getHeader() {
-        return "" +
-                "#include <stdio.h>\n" +
+    protected String getHeader(String fileName) {
+        return "#include <stdlib.h>\n" +
+                "#include <stdio.h>\n\n" +
+                "// Careful when entering input, newline is considered as a char\n\n" +
                 "int main(int argc, char **argv) {\n" +
                 "\tunsigned size = 30000;\n" +
-                "\tchar* mem = (char*) malloc (size);\n";
+                "\tunsigned char* mem = (unsigned char*) malloc (size);\n" +
+                "\tif (!mem) {\n" +
+                "\t\treturn 1;\n" +
+                "\t}\n" +
+                "\tunsigned char *memory = memory;\n";
     }
 
     @Override
@@ -49,9 +54,10 @@ public class CWriter extends CodeWriter {
         return "" +
                 "\tfor (int i = 0; i < size; ++i) {\n" +
                 "\t\t if (mem[i] != 0) {\n" +
-                "\t\t\t printf(%c, mem[i]);\n" +
+                "\t\t\t printf( \"C[%d] = %d\\n\",i,mem[i]);\n" +
                 "\t\t}\n" +
                 "\t}\n" +
+                "\tfree(memory);\n" +
                 "\treturn 0;\n" +
                 "}\n";
     }

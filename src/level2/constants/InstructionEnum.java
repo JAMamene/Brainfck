@@ -41,7 +41,7 @@ public enum InstructionEnum implements Executable {
 
     LEFT('<', new Color(0x9400D3),
             "--i;",
-            "--mem") {
+            "--mem;") {
         @Override
         public void exec(Bfck bfck) {
             if (bfck.getPointer() == MINMEMORYSIZE.get())
@@ -65,7 +65,7 @@ public enum InstructionEnum implements Executable {
 
     OUT('.', new Color(0x00ff00),
             "System.out.print(mem[i]);",
-            "printf(%c,*mem);") {
+            "printf(\"%c\",*mem);") {
         @Override
         public void exec(Bfck bfck) {
             System.out.print((char) (bfck.getCell() + MASK.get()));
@@ -80,7 +80,7 @@ public enum InstructionEnum implements Executable {
 
     IN(',', new Color(0xffff00),
             "mem[i] = reader.next().charAt(0);",
-            "scanf(%c,mem);") {
+            "scanf(\"%c\",mem);") {
         @Override
         public void exec(Bfck bfck) {
             Byte in;

@@ -16,7 +16,7 @@ public class SetCase extends Refactor implements Visualisable {
 
     @Override
     public Optional<String> getC() {
-        return getRepresentationSet("mem");
+        return getRepresentationSet("*mem");
     }
 
     @Override
