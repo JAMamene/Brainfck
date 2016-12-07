@@ -123,25 +123,27 @@ public class TestExceptions {
 
     @org.junit.Test
     public void testInvalidInput1() {
+        exception.expect(ExecuteException.class);
+        exit.expectSystemExitWithStatus(1); // should terminate the program with exit code 1
         String[] args = {"-p", "Test2"};
         String str = "ҕ"; // input to big
         perf = new CommandPerform(args); //will perform the actions needed
-        bfck = perf.getBfck();
-        bfck.setIn(str);
-        exception.expect(ExecuteException.class);
-        exit.expectSystemExitWithStatus(1); // should terminate the program with exit code 1
+        bfck = perf.getContainer().getBfck();
+        perf.getContainer().setIn(str);
+        perf.performAll();
         perf.performAll();
     }
 
     @org.junit.Test
     public void testInvalidInput2() {
+        exception.expect(FileException.class);
+        exit.expectSystemExitWithStatus(3); // should terminate the program with exit code 3
         String[] args = {"-p", "Test2"};
         String str = ""; // input invalid
         perf = new CommandPerform(args); //will perform the actions needed
-        bfck = perf.getBfck();
-        bfck.setIn(str);
-        exception.expect(FileException.class);
-        exit.expectSystemExitWithStatus(3); // should terminate the program with exit code 3
+        bfck = perf.getContainer().getBfck();
+        perf.getContainer().setIn(str);
+        perf.performAll();
         perf.performAll();
     }
 

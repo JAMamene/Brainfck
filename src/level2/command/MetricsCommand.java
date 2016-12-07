@@ -1,8 +1,6 @@
 package level2.command;
 
-import level2.constants.Metrics;
-import level2.interpreter.Bfck;
-import level2.interpreter.BfckMetrics;
+import level2.interpreter.BfckContainer;
 
 public class MetricsCommand implements Command {
     /**
@@ -10,6 +8,7 @@ public class MetricsCommand implements Command {
      * @param bfck
      */
     @Override
-    public void execute(Bfck bfck){
+    public void execute(BfckContainer bfck){
+        bfck.toMetrics();
     }
 }

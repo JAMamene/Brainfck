@@ -34,6 +34,7 @@ public class testBfck {
     private Bfck bfck;
 
     private void testInstruction(List<Executable> instructions) {
+
         bfck = new Bfck(instructions, null, null, null);
         bfck.handle();
     }

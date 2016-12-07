@@ -1,6 +1,6 @@
 package level2.command;
 
-import level2.interpreter.Bfck;
+import level2.interpreter.BfckContainer;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -14,7 +14,7 @@ public class SetOutCommand implements Command {
      *
      * @param bfck
      */
-    public void execute(Bfck bfck) {
+    public void execute(BfckContainer bfck) {
         //setting output file
         try {
             if (bfck.getFilenameOut() != null) {

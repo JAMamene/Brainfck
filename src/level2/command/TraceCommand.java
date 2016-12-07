@@ -1,7 +1,7 @@
 package level2.command;
 
 import level2.constants.Trace;
-import level2.interpreter.Bfck;
+import level2.interpreter.BfckContainer;
 
 
 public class TraceCommand implements Command {
@@ -15,7 +15,7 @@ public class TraceCommand implements Command {
      *
      * @param bfck
      */
-    public void execute(Bfck bfck){
+    public void execute(BfckContainer bfck){
         bfck.setTrace();
         Trace.init(bfck.getFilename());
     }

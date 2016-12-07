@@ -7,10 +7,7 @@ import level2.constants.Visualisable;
 import level2.exceptions.SyntaxException;
 import level2.exceptions.VisualisableException;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Stack;
+import java.util.*;
 
 public class Interpreter {
     protected List<Executable> instructions;
@@ -29,6 +26,7 @@ public class Interpreter {
         this.filename = filename;
         this.filenameIn = filenameIn;
         this.filenameOut = filenameOut;
+        jumpTable = new HashMap<>();
         fillJumpTable();
     }
     public void handle(Bfck bfck) {
@@ -149,5 +147,17 @@ public class Interpreter {
 
     public int getProgSize(){
         return instructions.size();
+    }
+
+    public String getFilenameIn() {
+        return filenameIn;
+    }
+
+    public void setIn(String in){
+        this.in = in ;
+    }
+
+    public String getFilenameOut(){
+        return filenameOut;
     }
 }

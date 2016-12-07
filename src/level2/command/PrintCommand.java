@@ -1,6 +1,6 @@
 package level2.command;
 
-import level2.interpreter.Bfck;
+import level2.interpreter.BfckContainer;
 
 public class PrintCommand implements Command {
 
@@ -9,7 +9,7 @@ public class PrintCommand implements Command {
      *
      * @param bfck
      */
-    public void execute(Bfck bfck) {
+    public void execute(BfckContainer bfck) {
         System.out.println(bfck);
     }
 }

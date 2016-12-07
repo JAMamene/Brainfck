@@ -2,9 +2,7 @@ package level2.command;
 
 import level2.argument.ArgsCheck;
 import level2.constants.Metrics;
-import level2.interpreter.Bfck;
 import level2.interpreter.BfckContainer;
-import level2.interpreter.BfckMetrics;
 import level2.reader.BfReader;
 import level2.reader.ImageReader;
 import level2.reader.InstructionReader;
@@ -37,12 +35,12 @@ public class CommandPerform {
      *
      * @return Bfck the interpreter
      */
-    public Bfck getBfck() {
-        return bfck;
+    public BfckContainer getContainer() {
+        return container;
     }
 
     private void perform(Command cmd) {
-        cmd.execute(bfck);
+        cmd.execute(container);
     }
 
     /**
@@ -57,7 +55,7 @@ public class CommandPerform {
         if (exit) System.exit(0);
     }
 
-    public void performPassiveAction() {
+    private void performPassiveAction() {
         while (arg.hasPassiveActions()) {
             perform(arg.nextPassiveAction());
         }
