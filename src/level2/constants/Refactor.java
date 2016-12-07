@@ -2,7 +2,7 @@ package level2.constants;
 
 import java.util.Optional;
 
-class Refactor {
+public class Refactor {
 
     protected int value;
 
@@ -10,8 +10,7 @@ class Refactor {
         this.value = value;
     }
 
-    protected Optional<String> getRepresentation(String memoryRep, int value) {
-
+    protected Optional<String> getClassicRepresentation(String memoryRep, int value) {
         if (value == 0) {
             return null;
         } else if (value == 1) {

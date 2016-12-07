@@ -17,7 +17,8 @@ import static level2.constants.Sizes.*;
 public enum InstructionEnum implements Executable {
     INCR('+', new Color(0xffffff),
             "++mem[i];",
-            "++*mem;") {
+            "++*mem;",
+            "mem[i]+=1") {
         @Override
         public void exec(Bfck bfck) {
             if (bfck.getCellCheck() == MAXDATASIZE.get())
@@ -29,7 +30,8 @@ public enum InstructionEnum implements Executable {
 
     DECR('-', new Color(0x4b0082),
             "--mem[i];",
-            "--*mem;") {
+            "--*mem;",
+            "mem[i]-=1") {
         @Override
         public void exec(Bfck bfck) {
             if (bfck.getCellCheck() == MINDATASIZE.get())
@@ -41,7 +43,8 @@ public enum InstructionEnum implements Executable {
 
     LEFT('<', new Color(0x9400D3),
             "--i;",
-            "--mem;") {
+            "--mem;",
+            "i-=1") {
         @Override
         public void exec(Bfck bfck) {
             if (bfck.getPointer() == MINMEMORYSIZE.get())
@@ -53,7 +56,8 @@ public enum InstructionEnum implements Executable {
 
     RIGHT('>', new Color(0x0000ff),
             "++i;",
-            "++mem;") {
+            "++mem;",
+            "i+=1") {
         @Override
         public void exec(Bfck bfck) {
             if (bfck.getPointer() == MAXMEMORYSIZE.get())
@@ -65,7 +69,8 @@ public enum InstructionEnum implements Executable {
 
     OUT('.', new Color(0x00ff00),
             "System.out.print(mem[i]);",
-            "printf(\"%c\",*mem);") {
+            "printf(\"%c\",*mem);",
+            "sys.stdout.write(chr(mem[i]))") {
         @Override
         public void exec(Bfck bfck) {
             System.out.print((char) (bfck.getCell() + MASK.get()));
@@ -80,7 +85,8 @@ public enum InstructionEnum implements Executable {
 
     IN(',', new Color(0xffff00),
             "mem[i] = reader.next().charAt(0);",
-            "scanf(\"%c\",mem);") {
+            "scanf(\"%c\",mem);",
+            "mem[i] = ord(getch.getch())") {
         @Override
         public void exec(Bfck bfck) {
             Byte in;
@@ -106,7 +112,8 @@ public enum InstructionEnum implements Executable {
 
     JUMP('[', new Color(0xff7f00),
             "while (mem[i] != 0) {",
-            "while (*mem) {") {
+            "while (*mem) {",
+            "while mem[i] != 0") {
         @Override
         public void exec(Bfck bfck) {
             int i = bfck.getInstruction();
@@ -119,6 +126,7 @@ public enum InstructionEnum implements Executable {
     },
 
     BACK(']', new Color(0xff0000),
+            "}",
             "}",
             "}") {
         @Override
@@ -136,13 +144,14 @@ public enum InstructionEnum implements Executable {
     private Color color;
     private String java;
     private String c;
-    private String js;
+    private String python;
 
-    InstructionEnum(char shortcut, Color color, String java, String c) {
+    InstructionEnum(char shortcut, Color color, String java, String c, String python) {
         this.shortcut = shortcut;
         this.color = color;
         this.java = java;
         this.c = c;
+        this.python = python;
     }
 
     public char getShortcut() {
@@ -161,7 +170,12 @@ public enum InstructionEnum implements Executable {
         return Optional.of(c);
     }
 
+    public Optional<String> getPython() {
+        return Optional.of(python);
+    }
+
     public Optional<String> getJS() {
         return getJava();
     }
+
 }

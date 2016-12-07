@@ -12,6 +12,8 @@ public interface Visualisable {
 
     Optional<String> getJS();
 
+    Optional<String> getPython();
+
     Color getColor();
 
     char getShortcut();

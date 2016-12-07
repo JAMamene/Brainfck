@@ -2,7 +2,6 @@ package level2.constants;
 
 import java.awt.*;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 public class MultiIncrDecr extends Refactor implements Visualisable {
 
@@ -12,17 +11,28 @@ public class MultiIncrDecr extends Refactor implements Visualisable {
 
     @Override
     public Optional<String> getJava() {
-        return getRepresentation("mem[i]", value);
+        return getClassicRepresentation("mem[i]", value);
     }
 
     @Override
     public Optional<String> getC() {
-        return getRepresentation("*mem", value);
+        return getClassicRepresentation("*mem", value);
     }
 
     @Override
     public Optional<String> getJS() {
-        return getRepresentation("mem[i]", value);
+        return getClassicRepresentation("mem[i]", value);
+    }
+
+    @Override
+    public Optional<String> getPython() {
+        if (value == 0) {
+            return null;
+        } else if (value < 0) {
+            return Optional.of("mem[i] +=" + value);
+        } else {
+            return Optional.of("mem[i] -=" + Math.abs(value));
+        }
     }
 
     @Override

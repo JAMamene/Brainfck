@@ -68,9 +68,9 @@ public class Optimizer {
             iter += 3;
             OptionalInt opt = simplify(DECR, INCR);
             if (!opt.isPresent()) {
-                optimized.add(new SetCase(0));
+                optimized.add(new SetCell(0));
             } else {
-                optimized.add(new SetCase(opt.getAsInt()));
+                optimized.add(new SetCell(opt.getAsInt()));
             }
             return true;
         }

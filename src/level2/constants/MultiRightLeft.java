@@ -11,17 +11,28 @@ public class MultiRightLeft extends Refactor implements Visualisable {
 
     @Override
     public Optional<String> getJava() {
-        return getRepresentation("i", value);
+        return getClassicRepresentation("i", value);
     }
 
     @Override
     public Optional<String> getC() {
-        return getRepresentation("mem", value);
+        return getClassicRepresentation("mem", value);
     }
 
     @Override
     public Optional<String> getJS() {
-        return getRepresentation("i", value);
+        return getClassicRepresentation("i", value);
+    }
+
+    @Override
+    public Optional<String> getPython() {
+        if (value == 0) {
+            return null;
+        } else if (value < 0) {
+            return Optional.of("i +=" + value);
+        } else {
+            return Optional.of("i -=" + Math.abs(value));
+        }
     }
 
     @Override

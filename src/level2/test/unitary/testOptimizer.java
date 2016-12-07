@@ -107,7 +107,7 @@ public class testOptimizer {
         instructions = Arrays.asList(JUMP, DECR, BACK);
         optimized = optimizer.optimize(instructions);
         assertTrue(optimized.size() == 1);
-        assertTrue(optimized.get(0) instanceof SetCase);
+        assertTrue(optimized.get(0) instanceof SetCell);
         assertEquals("mem[i]=0;", optimized.get(0).getJava().get());
     }
 
@@ -116,7 +116,7 @@ public class testOptimizer {
         instructions = Arrays.asList(JUMP, DECR, BACK, INCR, INCR, INCR);
         optimized = optimizer.optimize(instructions);
         assertTrue(optimized.size() == 1);
-        assertTrue(optimized.get(0) instanceof SetCase);
+        assertTrue(optimized.get(0) instanceof SetCell);
         assertEquals("mem[i]=3;", optimized.get(0).getJava().get());
     }
 
@@ -129,7 +129,7 @@ public class testOptimizer {
         assertEquals("i+=2;", optimized.get(0).getJava().get());
         assertTrue(optimized.get(1) instanceof MultiIncrDecr);
         assertEquals("mem[i]+=2;", optimized.get(1).getJava().get());
-        assertTrue(optimized.get(2) instanceof SetCase);
+        assertTrue(optimized.get(2) instanceof SetCell);
         assertEquals("mem[i]=3;", optimized.get(2).getJava().get());
     }
 
@@ -143,7 +143,7 @@ public class testOptimizer {
         assertEquals(IN, optimized.get(1));
         assertTrue(optimized.get(2) instanceof MultiIncrDecr);
         assertEquals("mem[i]+=2;", optimized.get(2).getJava().get());
-        assertTrue(optimized.get(3) instanceof SetCase);
+        assertTrue(optimized.get(3) instanceof SetCell);
         assertEquals("mem[i]=3;", optimized.get(3).getJava().get());
     }
 }
