@@ -15,9 +15,7 @@ import static level2.constants.Sizes.*;
  * enum for the correspondence between the different way of writing instructions
  */
 public enum InstructionEnum implements Executable {
-    INCR('+', new Color(0xffffff),
-            "++mem[i];",
-            "++*mem;") {
+    INCR('+', new Color(0xffffff)) {
         @Override
         public void exec(Memory bfck, Interpreter interpreter) {
             if (bfck.getCellCheck() == MAXDATASIZE.get())
@@ -25,11 +23,17 @@ public enum InstructionEnum implements Executable {
             bfck.incrCell();
             interpreter.incrementInstructions();
         }
+
+        @Override
+        public Optional<String> getCode(Languages l) {
+            return Optional.of(l.getIncr());
+        }
     },
 
-    DECR('-', new Color(0x4b0082),
+    DECR('-', new Color(0x4b0082)/*,
             "--mem[i];",
-            "--*mem;") {
+            "--*mem;",
+            "mem[i]-=1"*/) {
         @Override
         public void exec(Memory bfck, Interpreter interpreter) {
             if (bfck.getCellCheck() == MINDATASIZE.get())
@@ -37,11 +41,17 @@ public enum InstructionEnum implements Executable {
             bfck.decrCell();
             interpreter.incrementInstructions();
         }
+
+        @Override
+        public Optional<String> getCode(Languages l) {
+            return Optional.of(l.getDecr());
+        }
     },
 
-    LEFT('<', new Color(0x9400D3),
+    LEFT('<', new Color(0x9400D3)/*,
             "--i;",
-            "--mem") {
+            "--mem;",
+            "i-=1"*/) {
         @Override
         public void exec(Memory bfck, Interpreter interpreter) {
             if (bfck.getPointer() == MINMEMORYSIZE.get())
@@ -49,11 +59,17 @@ public enum InstructionEnum implements Executable {
             bfck.left();
             interpreter.incrementInstructions();
         }
+
+        @Override
+        public Optional<String> getCode(Languages l) {
+            return Optional.of(l.getLeft());
+        }
     },
 
-    RIGHT('>', new Color(0x0000ff),
+    RIGHT('>', new Color(0x0000ff)/*,
             "++i;",
-            "++mem;") {
+            "++mem;",
+            "i+=1"*/) {
         @Override
         public void exec(Memory bfck, Interpreter interpreter) {
             if (bfck.getPointer() == MAXMEMORYSIZE.get())
@@ -61,11 +77,17 @@ public enum InstructionEnum implements Executable {
             bfck.right();
             interpreter.incrementInstructions();
         }
+
+        @Override
+        public Optional<String> getCode(Languages l) {
+            return Optional.of(l.getRight());
+        }
     },
 
-    OUT('.', new Color(0x00ff00),
+    OUT('.', new Color(0x00ff00)/*,
             "System.out.print(mem[i]);",
-            "printf(%c,*mem);") {
+            "printf(\"%c\",*mem);",
+            "sys.stdout.write(chr(mem[i]))"*/) {
         @Override
         public void exec(Memory bfck, Interpreter interpreter) {
             System.out.print((char) (bfck.getCell() + MASK.get()));
@@ -73,14 +95,20 @@ public enum InstructionEnum implements Executable {
         }
 
         @Override
+        public Optional<String> getCode(Languages l) {
+            return Optional.of(l.getOut());
+        }
+/*
+        @Override
         public Optional<String> getJS() {
             return Optional.of("document.getElementById(\"output\").innerHTML += String.fromCharCode(mem[i]);");
-        }
+        }*/
     },
 
-    IN(',', new Color(0xffff00),
+    IN(',', new Color(0xffff00)/*,
             "mem[i] = reader.next().charAt(0);",
-            "scanf(%c,mem);") {
+            "scanf(\"%c\",mem);",
+            "mem[i] = ord(getch.getch())"*/) {
         @Override
         public void exec(Memory bfck, Interpreter interpreter) {
             Byte in;
@@ -99,14 +127,20 @@ public enum InstructionEnum implements Executable {
         }
 
         @Override
+        public Optional<String> getCode(Languages l) {
+            return Optional.of(l.getIn());
+        }
+/*
+        @Override
         public Optional<String> getJS() {
             return Optional.of("mem[i] = prompt(\"type input\").charCodeAt(0);");
-        }
+        }*/
     },
 
-    JUMP('[', new Color(0xff7f00),
-            "while (mem[i] != 0) {",
-            "while (*mem) {") {
+    JUMP('[', new Color(0xff7f00)
+/*            "while (mem[i] != 0) {",
+            "while (*mem) {",
+            "while mem[i] != 0 :"*/) {
         @Override
         public void exec(Memory bfck, Interpreter interpreter) {
             if (bfck.getCell() != -MASK.get()) {
@@ -115,11 +149,17 @@ public enum InstructionEnum implements Executable {
                 interpreter.setInstruction(interpreter.useJumpTable(interpreter.getInstruction()));
             }
         }
+
+        @Override
+        public Optional<String> getCode(Languages l) {
+            return Optional.of(l.getJump());
+        }
     },
 
-    BACK(']', new Color(0xff0000),
+    BACK(']', new Color(0xff0000)
+/*            "}",
             "}",
-            "}") {
+            "\n"*/) {
         @Override
         public void exec(Memory bfck, Interpreter interpreter) {
             if (bfck.getCell() == -MASK.get()) {
@@ -128,19 +168,19 @@ public enum InstructionEnum implements Executable {
                 interpreter.setInstruction(interpreter.useJumpTable(interpreter.getInstruction()));
             }
         }
+
+        @Override
+        public Optional<String> getCode(Languages l) {
+            return Optional.of(l.getBack());
+        }
     };
 
     private char shortcut;
     private Color color;
-    private String java;
-    private String c;
-    private String js;
 
-    InstructionEnum(char shortcut, Color color, String java, String c) {
+    InstructionEnum(char shortcut, Color color) {
         this.shortcut = shortcut;
         this.color = color;
-        this.java = java;
-        this.c = c;
     }
 
     public char getShortcut() {
@@ -149,17 +189,5 @@ public enum InstructionEnum implements Executable {
 
     public Color getColor() {
         return color;
-    }
-
-    public Optional<String> getJava() {
-        return Optional.of(java);
-    }
-
-    public Optional<String> getC() {
-        return Optional.of(c);
-    }
-
-    public Optional<String> getJS() {
-        return getJava();
     }
 }

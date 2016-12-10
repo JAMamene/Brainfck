@@ -80,13 +80,11 @@ public enum ArgEnum implements Parsable {
             arg.incrPointer();
             try {
                 Boolean optimize = false;
-                System.out.println(arg.getCurrentArg());
                 if (!Arrays.asList(Languages.values()).contains(Languages.valueOf(arg.getCurrentArg()))) {
                     throw new ArgumentException("invalid-language");
                 } else if (arg.hasArg() && arg.peekArg().equals("optimize")) {
                     optimize = true;
                 }
-                System.out.println(arg.getCurrentArg());
                 arg.addStoppingActions(new WriteCodeCommand(Languages.valueOf(arg.getCurrentArg()), optimize));
                 if (optimize) arg.incrPointer();
             } catch (Exception e) {

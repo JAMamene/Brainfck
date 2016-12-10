@@ -12,5 +12,6 @@ import java.util.List;
  */
 public interface IProcedure {
     void declare(String name, List<Executable> body);
+
     List<Executable> getBody(String name);
 }

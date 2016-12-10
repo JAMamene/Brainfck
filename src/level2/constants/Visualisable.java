@@ -6,11 +6,7 @@ import java.util.Optional;
 
 public interface Visualisable {
 
-    Optional<String> getJava();
-
-    Optional<String> getC();
-
-    Optional<String> getJS();
+    Optional<String> getCode(Languages l);
 
     Color getColor();
 

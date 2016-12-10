@@ -2,7 +2,6 @@ package level2.main;
 
 
 import level2.command.CommandPerform;
-import level2.constants.Metrics;
 
 /**
  * Main class to test the program with the arguments that you can give

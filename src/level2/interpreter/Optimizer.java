@@ -1,7 +1,12 @@
 package level2.interpreter;
 
 
-import level2.constants.*;
+import level2.Optimization.MultiIncrDecr;
+import level2.Optimization.MultiRightLeft;
+import level2.Optimization.SetCell;
+import level2.constants.Executable;
+import level2.constants.InstructionEnum;
+import level2.constants.Visualisable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,9 +73,9 @@ public class Optimizer {
             iter += 3;
             OptionalInt opt = simplify(DECR, INCR);
             if (!opt.isPresent()) {
-                optimized.add(new SetCase(0));
+                optimized.add(new SetCell(0));
             } else {
-                optimized.add(new SetCase(opt.getAsInt()));
+                optimized.add(new SetCell(opt.getAsInt()));
             }
             return true;
         }

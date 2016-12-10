@@ -1,5 +1,6 @@
 package level2.writer;
 
+import level2.constants.Languages;
 import level2.constants.Visualisable;
 
 import java.io.BufferedWriter;
@@ -8,14 +9,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
-import static level2.constants.InstructionEnum.BACK;
-import static level2.constants.InstructionEnum.JUMP;
-
 public class JavascriptWriter extends CodeWriter {
 
     @Override
     public void WriteFile(List<Visualisable> instructions, String fileName) {
-        BufferedWriter bw = getBw(fileName, ".js");
         BufferedWriter htmlw;
         File outputFile = new File(removeExtension(fileName) + ".html"); //File to call the js code from
         try {
@@ -25,29 +22,11 @@ public class JavascriptWriter extends CodeWriter {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        try {
-            bw.write(getHeader());
-            String indentLevel = "\t";
-            for (Visualisable instruction : instructions) {
-                if (instruction == BACK && indentLevel.length() >= 1) {
-                    indentLevel = indentLevel.substring(0, indentLevel.length() - 1);
-                }
-                if (instruction.getJava().isPresent()) {
-                    bw.write(indentLevel + instruction.getJS().get() + "\n");
-                }
-                if (instruction == JUMP) {
-                    indentLevel += '\t';
-                }
-            }
-            bw.write(getFooter());
-            bw.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        writeCode(instructions, "\t", fileName, ".js", Languages.js);
     }
 
     @Override
-    protected String getHeader() {
+    protected String getHeader(String fileName) {
         return "function Bfck() {\n" +
                 "\tmem = Array.apply(null, Array(30000)).map(Number.prototype.valueOf,0);\n" +
                 "\tvar i = 0;";
@@ -57,10 +36,10 @@ public class JavascriptWriter extends CodeWriter {
     protected String getFooter() {
         return "\tfor (var j = 0; j < mem.length; j++) {\n" +
                 "\t\tif (mem[j] != 0) {\n" +
-                "\t\t\tdocument.getElementById(\"final-output\").innerHTML += \"<br/>\".concat(mem[j]);\n" +
+                "\t\t\tdocument.getElementById(\"final-output\").innerHTML += \"<br/>\".concat(\"[\" + j + \"] = \" + mem[j]);\n" +
                 "\t\t}\n" +
                 "\t}\n" +
-                "}";
+                "}\n";
     }
 
     private String getHTML(String fileName) {
@@ -81,7 +60,7 @@ public class JavascriptWriter extends CodeWriter {
                 "\t<div style=\"margin-left:40px\">\n" +
                 "\t\t<pre id=\"final-output\"></pre>\n" +
                 "\t</div>\n" +
-                "</body>" +
+                "</body>\n" +
                 "</html>";
     }
 }

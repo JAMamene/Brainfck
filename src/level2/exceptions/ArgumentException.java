@@ -4,8 +4,6 @@ import level2.constants.Languages;
 
 import java.util.Arrays;
 
-import static level2.constants.Sizes.SQUARE_SIZE;
-
 /**
  * Custom exception that handles argument isssues, extends RunTimeException so no propagation is forced by Java
  */

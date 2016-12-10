@@ -2,8 +2,8 @@ package level2.test;
 
 import level2.command.CommandPerform;
 import level2.exceptions.ExecuteException;
-import level2.exceptions.SyntaxException;
 import level2.exceptions.FileException;
+import level2.exceptions.SyntaxException;
 import level2.interpreter.Bfck;
 import level2.interpreter.Memory;
 import org.junit.Before;
