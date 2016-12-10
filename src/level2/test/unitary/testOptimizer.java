@@ -87,7 +87,7 @@ public class testOptimizer {
         optimized = optimizer.optimize(instructions);
         assertTrue(optimized.size() == 1);
         assertTrue(optimized.get(0) instanceof MultiIncrDecr);
-        assertEquals("mem[i]+=4;", optimized.get(0).getCode(Languages.java).get());
+        assertEquals("mem[i] += 4;", optimized.get(0).getCode(Languages.java).get());
     }
 
     @org.junit.Test
@@ -96,7 +96,7 @@ public class testOptimizer {
         optimized = optimizer.optimize(instructions);
         assertTrue(optimized.size() == 1);
         assertTrue(optimized.get(0) instanceof MultiIncrDecr);
-        assertEquals("mem[i]-=4;", optimized.get(0).getCode(Languages.java).get());
+        assertEquals("mem[i] -= 4;", optimized.get(0).getCode(Languages.java).get());
     }
 
     @org.junit.Test
@@ -105,7 +105,7 @@ public class testOptimizer {
         optimized = optimizer.optimize(instructions);
         assertTrue(optimized.size() == 1);
         assertTrue(optimized.get(0) instanceof MultiRightLeft);
-        assertEquals("i-=4;", optimized.get(0).getCode(Languages.java).get());
+        assertEquals("i -= 4;", optimized.get(0).getCode(Languages.java).get());
     }
 
     @org.junit.Test
@@ -114,7 +114,7 @@ public class testOptimizer {
         optimized = optimizer.optimize(instructions);
         assertTrue(optimized.size() == 1);
         assertTrue(optimized.get(0) instanceof SetCell);
-        assertEquals("mem[i]=0;", optimized.get(0).getCode(Languages.java).get());
+        assertEquals("mem[i] = 0;", optimized.get(0).getCode(Languages.java).get());
     }
 
     @org.junit.Test
@@ -123,7 +123,7 @@ public class testOptimizer {
         optimized = optimizer.optimize(instructions);
         assertTrue(optimized.size() == 1);
         assertTrue(optimized.get(0) instanceof SetCell);
-        assertEquals("mem[i]=3;", optimized.get(0).getCode(Languages.java).get());
+        assertEquals("mem[i] = 3;", optimized.get(0).getCode(Languages.java).get());
     }
 
     @org.junit.Test
@@ -132,11 +132,11 @@ public class testOptimizer {
         optimized = optimizer.optimize(instructions);
         assertTrue(optimized.size() == 3);
         assertTrue(optimized.get(0) instanceof MultiRightLeft);
-        assertEquals("i+=2;", optimized.get(0).getCode(Languages.java).get());
+        assertEquals("i += 2;", optimized.get(0).getCode(Languages.java).get());
         assertTrue(optimized.get(1) instanceof MultiIncrDecr);
-        assertEquals("mem[i]+=2;", optimized.get(1).getCode(Languages.java).get());
+        assertEquals("mem[i] += 2;", optimized.get(1).getCode(Languages.java).get());
         assertTrue(optimized.get(2) instanceof SetCell);
-        assertEquals("mem[i]=3;", optimized.get(2).getCode(Languages.java).get());
+        assertEquals("mem[i] = 3;", optimized.get(2).getCode(Languages.java).get());
     }
 
     @org.junit.Test
@@ -145,11 +145,11 @@ public class testOptimizer {
         optimized = optimizer.optimize(instructions);
         assertTrue(optimized.size() == 4);
         assertTrue(optimized.get(0) instanceof MultiRightLeft);
-        assertEquals("i+=2;", optimized.get(0).getCode(Languages.java).get());
+        assertEquals("i += 2;", optimized.get(0).getCode(Languages.java).get());
         assertEquals(IN, optimized.get(1));
         assertTrue(optimized.get(2) instanceof MultiIncrDecr);
-        assertEquals("mem[i]+=2;", optimized.get(2).getCode(Languages.java).get());
+        assertEquals("mem[i] += 2;", optimized.get(2).getCode(Languages.java).get());
         assertTrue(optimized.get(3) instanceof SetCell);
-        assertEquals("mem[i]=3;", optimized.get(3).getCode(Languages.java).get());
+        assertEquals("mem[i] = 3;", optimized.get(3).getCode(Languages.java).get());
     }
 }
