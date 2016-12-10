@@ -6,6 +6,7 @@ import level2.exceptions.SyntaxException;
 import level2.exceptions.FileException;
 import level2.interpreter.Bfck;
 import level2.interpreter.Memory;
+import org.junit.Before;
 import org.junit.contrib.java.lang.system.ExpectedSystemExit;
 import org.junit.rules.ExpectedException;
 

@@ -11,7 +11,7 @@ import java.util.*;
 
 public class Interpreter {
     protected List<Executable> instructions;
-    protected int instruction;
+    protected static int instruction;
     boolean trace = false;
     private String filename;
     private String filenameOut;
@@ -26,6 +26,7 @@ public class Interpreter {
         this.filename = filename;
         this.filenameIn = filenameIn;
         this.filenameOut = filenameOut;
+        this.instruction = 0;
         jumpTable = new HashMap<>();
         fillJumpTable();
     }
