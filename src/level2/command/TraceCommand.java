@@ -16,7 +16,6 @@ public class TraceCommand implements Command {
      * @param bfck
      */
     public void execute(BfckContainer bfck){
-        bfck.setTrace();
-        Trace.init(bfck.getFilename());
+        bfck.toTrace();
     }
 }

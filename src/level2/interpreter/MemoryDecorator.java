@@ -59,4 +59,5 @@ public abstract class MemoryDecorator implements Memory {
     public String toDebugString(){
         return decoratedBfck.toDebugString();
     }
+
 }

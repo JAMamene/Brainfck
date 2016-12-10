@@ -38,15 +38,15 @@ public class Trace {
         }
     }
 
-    public static void saveState(Memory bfck, Interpreter interpreter) {
+    public static void saveState(int instrution,int pointer,String debug) {
         try {
             writer.write("step : " + step);
             writer.newLine();
-            writer.write("execPtr : " + interpreter.getInstruction());
+            writer.write("execPtr : " + instrution);
             writer.newLine();
-            writer.write("dataPtr : " + bfck.getPointer());
+            writer.write("dataPtr : " + pointer);
             writer.newLine();
-            writer.write("memoryState : " + bfck.toDebugString());
+            writer.write("memoryState : " + debug);
             writer.newLine();
             writer.newLine();
             writer.flush();

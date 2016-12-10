@@ -49,6 +49,9 @@ public class BfckContainer {
     public void toMetrics(){
         bfck = new MetricsDecorator(bfck,interpreter.getInstructionSize());
     }
+    public void toTrace(){
+        bfck = new TraceDecorator(bfck,interpreter.getFilename());
+    }
 
     public void writeCode(Languages language, boolean optimize){
         codeWriter = language.getCodeClass();

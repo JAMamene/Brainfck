@@ -32,9 +32,6 @@ public class Interpreter {
     public void handle(Memory bfck) {
         while (instruction < instructions.size()) {
             instructions.get(instruction).exec(bfck,this);
-            if (trace) {
-                Trace.saveState(bfck,this);
-            }
         }
         if (trace) Trace.end();
     }

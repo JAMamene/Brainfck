@@ -15,6 +15,7 @@ import static level2.constants.Sizes.*;
 public class Bfck implements Memory{
     private byte[] memory;
     private short pointer;
+    private int instruction;
 
     /**
      * Constructor that initializes values and get the List of InstructionEnum (String)
@@ -33,6 +34,7 @@ public class Bfck implements Memory{
 
     @Override
     public byte getCell() {
+        instruction++;
         return memory[pointer];
     }
 
@@ -44,21 +46,25 @@ public class Bfck implements Memory{
     @Override
     public void incrCell(){
         memory[pointer]++;
+        instruction++;
     }
 
     @Override
     public void decrCell(){
         memory[pointer]--;
+        instruction++;
     }
 
     @Override
     public void left(){
         pointer--;
+        instruction++;
     }
 
     @Override
     public void right(){
         pointer++;
+        instruction++;
     }
     @Override
     public short getMemoryAt(short index) {
@@ -73,6 +79,7 @@ public class Bfck implements Memory{
     @Override
     public void setCase(byte val) {
         memory[pointer] = val;
+        instruction++;
     }
 
     /**
