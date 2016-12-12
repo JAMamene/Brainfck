@@ -2,7 +2,7 @@ package level2.command;
 
 
 import level2.constants.Languages;
-import level2.interpreter.Bfck;
+import level2.interpreter.BfckContainer;
 import level2.writer.BfWriter;
 
 public class WriteCodeCommand implements Command {
@@ -16,12 +16,7 @@ public class WriteCodeCommand implements Command {
     }
 
     @Override
-    public void execute(Bfck bfck) {
-        BfWriter writer = language.getCodeClass();
-        if (optimize) {
-            writer.WriteFile(bfck.getOptimizedInstructions(), bfck.getFilename());
-        } else {
-            writer.WriteFile(bfck.getVisualisableInstructions(), bfck.getFilename());
-        }
+    public void execute(BfckContainer bfck) {
+        bfck.writeCode(language, optimize);
     }
 }

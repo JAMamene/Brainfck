@@ -1,14 +1,19 @@
 package level2.test;
 
 import level2.command.CommandPerform;
+import level2.constants.Executable;
 import level2.exceptions.SyntaxException;
 import level2.interpreter.Bfck;
+import level2.interpreter.Memory;
+import level2.reader.ImageReader;
 import org.junit.contrib.java.lang.system.ExpectedSystemExit;
 import org.junit.rules.ExpectedException;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
 import java.io.PrintStream;
+import java.util.List;
 
 import static level2.constants.Sizes.MASK;
 import static org.junit.Assert.assertEquals;
@@ -21,7 +26,7 @@ public class TestLevel2 {
     public final ExpectedSystemExit exit = ExpectedSystemExit.none(); //Cutom library 'system rule'
     public final ExpectedException exception = ExpectedException.none();
     private CommandPerform perf;
-    private Bfck bfck;
+    private Memory bfck;
     private ByteArrayOutputStream baos;
 
     @org.junit.Test
@@ -29,7 +34,7 @@ public class TestLevel2 {
         String[] args = {"-p", "Test1"}; // short syntax
         perf = new CommandPerform(args); //will perform the actions needed
         perf.performAll();
-        bfck = perf.getBfck();
+        bfck = perf.getContainer().getBfck();
         assertEquals(8 - MASK.get(), bfck.getMemoryAt((short) 0)); // checks if memory matches expected output
         assertEquals(0 - MASK.get(), bfck.getMemoryAt((short) 1));
         assertEquals(0 - MASK.get(), bfck.getMemoryAt((short) 2));
@@ -42,7 +47,7 @@ public class TestLevel2 {
         String[] args = {"-p", "Test1,5"}; // same as above but with mixed syntax
         perf = new CommandPerform(args); //will perform the actions needed
         perf.performAll();
-        bfck = perf.getBfck();
+        bfck = perf.getContainer().getBfck();
         assertEquals(8 - MASK.get(), bfck.getMemoryAt((short) 0)); // checks if memory matches expected output
         assertEquals(0 - MASK.get(), bfck.getMemoryAt((short) 1));
         assertEquals(0 - MASK.get(), bfck.getMemoryAt((short) 2));
@@ -123,10 +128,9 @@ public class TestLevel2 {
         String[] args = {"-p", "Test2"}; // mixed syntax with in and out in short syntax
         String str = "5";  // Set input stream to simulate the in instruction
         perf = new CommandPerform(args); //will perform the actions needed
-        bfck = perf.getBfck();
-        bfck.setIn(str);
+        bfck = perf.getContainer().getBfck();
+        perf.getContainer().setIn(str);
         perf.performAll();
-        bfck = perf.getBfck();
         assertEquals(0 - MASK.get(), bfck.getMemoryAt((short) 0)); // assert if the memory state is as expected
         assertEquals(55 - MASK.get(), bfck.getMemoryAt((short) 1));
         assertEquals(6 - MASK.get(), bfck.getMemoryAt((short) 2));
@@ -139,10 +143,9 @@ public class TestLevel2 {
         String str = "5";
         ByteArrayInputStream bais = new ByteArrayInputStream(str.getBytes()); // Set input stream to simulate the in instruction
         perf = new CommandPerform(args); //will perform the actions needed
-        bfck = perf.getBfck();
-        bfck.setIn(str);
+        bfck = perf.getContainer().getBfck();
+        perf.getContainer().setIn(str);
         perf.performAll();
-        bfck = perf.getBfck();
         assertEquals(0 - MASK.get(), bfck.getMemoryAt((short) 0)); // assert if the memory state is as expected
         assertEquals(55 - MASK.get(), bfck.getMemoryAt((short) 1));
         assertEquals(6 - MASK.get(), bfck.getMemoryAt((short) 2));
@@ -154,7 +157,7 @@ public class TestLevel2 {
         String[] args = {"-p", "Test2", "-i", "ITestInput"}; // ITestInput contains 34;
         perf = new CommandPerform(args); //will perform the actions needed
         perf.performAll();
-        bfck = perf.getBfck();
+        bfck = perf.getContainer().getBfck();
         assertEquals(0 - MASK.get(), bfck.getMemoryAt((short) 0)); // assert if the memory state is as expected
         assertEquals(102 - MASK.get(), bfck.getMemoryAt((short) 1));
         assertEquals(6 - MASK.get(), bfck.getMemoryAt((short) 2));
@@ -177,7 +180,7 @@ public class TestLevel2 {
         String[] args = {"-p", "TestMultiInput", "-i", "ITestMultiInput"}; // ITestInput contains 34;
         perf = new CommandPerform(args); //will perform the actions needed
         perf.performAll();
-        bfck = perf.getBfck();
+        bfck = perf.getContainer().getBfck();
         assertEquals(97 - MASK.get(), bfck.getMemoryAt((short) 0)); // assert if the memory state is as expected
         assertEquals(98 - MASK.get(), bfck.getMemoryAt((short) 1));
         assertEquals(99 - MASK.get(), bfck.getMemoryAt((short) 2));
@@ -227,7 +230,7 @@ public class TestLevel2 {
         String[] args = {"-p", "TestAddition"}; //3 + 4
         perf = new CommandPerform(args); //will perform the actions needed
         perf.performAll();
-        bfck = perf.getBfck();
+        bfck = perf.getContainer().getBfck();
         assertEquals(7 - MASK.get(), bfck.getMemoryAt((short) 0)); // assert if the memory state is as expected
         assertEquals(0 - MASK.get(), bfck.getMemoryAt((short) 1));
     }
@@ -237,7 +240,7 @@ public class TestLevel2 {
         String[] args = {"-p", "TestMultiplication"}; //8 * 7
         perf = new CommandPerform(args); //will perform the actions needed
         perf.performAll();
-        bfck = perf.getBfck();
+        bfck = perf.getContainer().getBfck();
         assertEquals(56 - MASK.get(), bfck.getMemoryAt((short) 0)); // assert if the memory state is as expected
         assertEquals(0 - MASK.get(), bfck.getMemoryAt((short) 1));
     }

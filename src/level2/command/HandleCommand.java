@@ -1,6 +1,6 @@
 package level2.command;
 
-import level2.interpreter.Bfck;
+import level2.interpreter.BfckContainer;
 
 public class HandleCommand implements Command {
 
@@ -11,7 +11,7 @@ public class HandleCommand implements Command {
      */
 
     @Override
-    public void execute(Bfck bfck) {
+    public void execute(BfckContainer bfck) {
         bfck.handle();
     }
 }

@@ -4,6 +4,8 @@ import level2.command.SetInCommand;
 import level2.constants.Executable;
 import level2.exceptions.ExecuteException;
 import level2.interpreter.Bfck;
+import level2.interpreter.BfckContainer;
+import level2.interpreter.Memory;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.contrib.java.lang.system.ExpectedSystemExit;
@@ -31,11 +33,13 @@ public class testBfck {
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
     private List<Executable> instructions;
-    private Bfck bfck;
+    private BfckContainer container;
+    private Memory bfck;
 
     private void testInstruction(List<Executable> instructions) {
-        bfck = new Bfck(instructions, null, null, null);
-        bfck.handle();
+        container = new BfckContainer(instructions, null, null, null);
+        container.handle();
+        bfck = container.getBfck();
     }
 
     @Test
@@ -194,10 +198,11 @@ public class testBfck {
     @Test
     public void testIN1() {
         instructions = Arrays.asList(RIGHT, IN); // test in
-        bfck = new Bfck(instructions, null, null, null);
+        container = new BfckContainer(instructions,null,null,null);
         String str = "1";
-        bfck.setIn(str);
-        bfck.handle();
+        container.setIn(str);
+        container.handle();
+        bfck = container.getBfck();
         assertEquals(0 - MASK.get(), bfck.getMemoryAt((short) 0)); // assert if the memory state is as expected
         assertEquals(49 - MASK.get(), bfck.getMemoryAt((short) 1));
         assertEquals(0 - MASK.get(), bfck.getMemoryAt((short) 2));
@@ -217,9 +222,10 @@ public class testBfck {
             e.printStackTrace();
         }
         SetInCommand in = new SetInCommand();
-        bfck = new Bfck(instructions, null, folder.getRoot().toString() + "\\ab", null);
-        in.execute(bfck);
-        bfck.handle();
+        container = new BfckContainer(instructions, null, folder.getRoot().toString() + "\\ab", null);
+        in.execute(container);
+        container.handle();
+         bfck = container.getBfck();
         assertEquals(49 - MASK.get(), bfck.getMemoryAt((short) 0)); // assert if the memory state is as expected
         assertEquals(50 - MASK.get(), bfck.getMemoryAt((short) 1));
         assertEquals(0 - MASK.get(), bfck.getMemoryAt((short) 2));

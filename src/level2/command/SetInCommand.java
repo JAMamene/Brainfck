@@ -1,7 +1,7 @@
 package level2.command;
 
 import level2.exceptions.FileException;
-import level2.interpreter.Bfck;
+import level2.interpreter.BfckContainer;
 
 import java.io.*;
 
@@ -13,7 +13,7 @@ public class SetInCommand implements Command {
      *
      * @param bfck
      */
-    public void execute(Bfck bfck) {
+    public void execute(BfckContainer bfck) {
         //setting file input only if the file exist
         if (bfck.getFilenameIn() != null) {
             File file = new File(bfck.getFilenameIn());

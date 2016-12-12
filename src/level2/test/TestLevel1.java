@@ -2,6 +2,8 @@ package level2.test;
 
 import level2.command.CommandPerform;
 import level2.interpreter.Bfck;
+import level2.interpreter.BfckContainer;
+import level2.interpreter.Memory;
 import org.junit.contrib.java.lang.system.ExpectedSystemExit;
 
 import static level2.constants.Sizes.MASK;
@@ -12,7 +14,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class TestLevel1 {
     private CommandPerform perf;
-    private Bfck bfck;
+    private Memory bfck;
 
     @org.junit.Rule
     public final ExpectedSystemExit exit = ExpectedSystemExit.none(); //Cutom library 'system rule'
@@ -24,7 +26,7 @@ public class TestLevel1 {
         String[] args = {"-p", "TestEmpty"}; // Empty test, memory should be empty
         perf = new CommandPerform(args);
         perf.performAll();
-        bfck = perf.getBfck();
+        bfck = perf.getContainer().getBfck();
         assertEquals(0 - MASK.get(), bfck.getMemoryAt((short) 0)); // assert if the memory state is as expected
         assertEquals(0 - MASK.get(), bfck.getMemoryAt((short) 1)); // assert if the memory state is as expected
         assertEquals(0 - MASK.get(), bfck.getMemoryAt((short) 2)); // assert if the memory state is as expected
@@ -39,7 +41,7 @@ public class TestLevel1 {
         String[] args = {"-p", "TestINCR"}; // Only 4 incrementations for the first cell
         perf = new CommandPerform(args);
         perf.performAll();
-        bfck = perf.getBfck();
+        bfck = perf.getContainer().getBfck();
         assertEquals(4 - MASK.get(), bfck.getMemoryAt((short) 0)); // assert if the memory state is as expected
         assertEquals(0 - MASK.get(), bfck.getMemoryAt((short) 1)); // assert if the memory state is as expected
     }
@@ -51,7 +53,7 @@ public class TestLevel1 {
         String[] args = {"-p", "TestDECR"}; // Still 4 increments but also two decrements
         perf = new CommandPerform(args);
         perf.performAll();
-        bfck = perf.getBfck();
+        bfck = perf.getContainer().getBfck();
         assertEquals(2 - MASK.get(), bfck.getMemoryAt((short) 0)); // assert if the memory state is as expected
         assertEquals(0 - MASK.get(), bfck.getMemoryAt((short) 1)); // assert if the memory state is as expected
     }
@@ -63,7 +65,7 @@ public class TestLevel1 {
         String[] args = {"-p", "TestRIGHT"}; // Some RIGHT instructions in there
         perf = new CommandPerform(args);
         perf.performAll();
-        bfck = perf.getBfck();
+        bfck = perf.getContainer().getBfck();
         assertEquals(2 - MASK.get(), bfck.getMemoryAt((short) 0)); // assert if the memory state is as expected
         assertEquals(2 - MASK.get(), bfck.getMemoryAt((short) 1)); // assert if the memory state is as expected
         assertEquals(1 - MASK.get(), bfck.getMemoryAt((short) 2)); // assert if the memory state is as expected
@@ -76,7 +78,7 @@ public class TestLevel1 {
         String[] args = {"-p", "TestLEFT"}; // Every instructions so far
         perf = new CommandPerform(args);
         perf.performAll();
-        bfck = perf.getBfck();
+        bfck = perf.getContainer().getBfck();
         assertEquals(1 - MASK.get(), bfck.getMemoryAt((short) 0)); // assert if the memory state is as expected
         assertEquals(1 - MASK.get(), bfck.getMemoryAt((short) 1)); // assert if the memory state is as expected
         assertEquals(1 - MASK.get(), bfck.getMemoryAt((short) 2)); // assert if the memory state is as expected

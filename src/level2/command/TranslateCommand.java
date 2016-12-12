@@ -1,6 +1,6 @@
 package level2.command;
 
-import level2.interpreter.Bfck;
+import level2.interpreter.BfckContainer;
 import level2.writer.BfWriter;
 import level2.writer.ImageWriter;
 
@@ -14,7 +14,7 @@ public class TranslateCommand implements Command {
      * @param bfck
      */
     @Override
-    public void execute(Bfck bfck) {
-        imgWriter.WriteFile(bfck.getVisualisableInstructions(), bfck.getFilename());
+    public void execute(BfckContainer bfck) {
+        bfck.translate();
     }
 }

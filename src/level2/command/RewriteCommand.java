@@ -1,6 +1,6 @@
 package level2.command;
 
-import level2.interpreter.Bfck;
+import level2.interpreter.BfckContainer;
 import level2.writer.BfWriter;
 import level2.writer.InstructionWriter;
 
@@ -13,7 +13,7 @@ public class RewriteCommand implements Command {
      * @param bfck
      */
     @Override
-    public void execute(Bfck bfck) {
-        instructWriter.WriteFile(bfck.getVisualisableInstructions(), "");
+    public void execute(BfckContainer bfck) {
+        bfck.rewrite();
     }
 }
