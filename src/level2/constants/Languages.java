@@ -53,15 +53,15 @@ public enum Languages {
             "mem[i]-=1",
             "i-=1",
             "i+=1",
-            "mem[i] = ord(getch.getch())",
-            "sys.stdout.write(chr(mem[i]))",
+            "mem[i] = ord(sys.stdin.read(1))",
+            "print chr(mem[i]",
             "while mem[i] != 0 :",
-            "\n",
-            "mem[i] = ",
-            "mem[i] += ",
-            "mem[i] -= ",
-            "i -= ",
-            "i += ") {
+            "",
+            "mem[i]=",
+            "mem[i]+=",
+            "mem[i]-=",
+            "i-=",
+            "i+=") {
         @Override
         public String getSet(int value) {
             return python.set + value;

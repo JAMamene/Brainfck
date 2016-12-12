@@ -31,7 +31,7 @@ abstract class CodeWriter implements BfWriter {
         try {
             bw.write(getHeader(fileName));
             for (Visualisable instruction : instructions) {
-                if (instruction == BACK && indentLevel.length() >= 2) {
+                if (instruction == BACK && indentLevel.length() >= 1) {
                     indentLevel = indentLevel.substring(0, indentLevel.length() - 1);
                 }
                 if (instruction.getCode(l).isPresent()) {

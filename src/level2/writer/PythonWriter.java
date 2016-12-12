@@ -9,23 +9,22 @@ public class PythonWriter extends CodeWriter {
 
     @Override
     public void WriteFile(List<Visualisable> instructions, String fileName) {
-        writeCode(instructions, "\t", fileName, ".py", Languages.python);
+        writeCode(instructions, "", fileName, ".py", Languages.python);
     }
 
     @Override
     protected String getHeader(String fileName) {
         return "import sys\n" +
-                "import getch\n" +
-                "def main():\n" +
-                "\tsize = 30000\n" +
-                "\tmem = [0] * size\n" +
-                "\ti = 0\n";
+                "# Careful, same as C, if you press enter it will add it as an input\n" +
+                "size = 30000\n" +
+                "mem = [0] * size\n" +
+                "i = 0\n";
     }
 
     @Override
     protected String getFooter() {
-        return "\tfor i in range(0, size):\n" +
-                "\t\tif mem[i] != 0:\n" +
-                "\t\t\tsys.stdout.write(mem[i])\n";
+        return "for i in range(0, size):\n" +
+                "\tif mem[i] != 0:\n" +
+                "\t\tprint mem[i]\n";
     }
 }
