@@ -1,10 +1,7 @@
 package level2.test.unitary;
 
 import level2.argument.ArgsCheck;
-import level2.command.CheckCommand;
-import level2.command.Command;
-import level2.command.RewriteCommand;
-import level2.command.TranslateCommand;
+import level2.command.*;
 import level2.exceptions.FileException;
 import org.junit.Test;
 import org.junit.contrib.java.lang.system.ExpectedSystemExit;
@@ -68,12 +65,40 @@ public class ArgsTest {
     public void test5() {
         String args[] = {"-p", "fichier", "--rewrite", "--translate", "--check", "--trace", "--showMetrics"};
         ArgsCheck check = new ArgsCheck(args);
+        assertTrue(check.getFileName().equals("fichier"));
+        while(check.hasStoppingActions()){
+            Command stoppingAction = check.nextStoppingAction();
+            assertTrue(stoppingAction instanceof RewriteCommand
+                    ||stoppingAction instanceof TranslateCommand
+                    ||stoppingAction instanceof CheckCommand);
+        }
+        while(check.hasPassiveActions()){
+            Command passiveAction = check.nextPassiveAction();
+            assertTrue(passiveAction instanceof TraceCommand
+                    ||passiveAction instanceof MetricsCommand);
+        }
     }
 
     @Test
     public void test6() {
         String args[] = {"-p", "fichier", "--rewrite", "--translate", "--check", "--trace", "--showMetrics", "-i", "in", "-o", "out"};
         ArgsCheck check = new ArgsCheck(args);
+        assertTrue(check.getFileName().equals("fichier"));
+        assertTrue(check.getIn().equals("in"));
+        assertTrue(check.getOut().equals("out"));
+        while(check.hasStoppingActions()){
+            Command stoppingAction = check.nextStoppingAction();
+            assertTrue(stoppingAction instanceof RewriteCommand
+                    ||stoppingAction instanceof TranslateCommand
+                    ||stoppingAction instanceof CheckCommand);
+        }
+        while(check.hasPassiveActions()){
+            Command passiveAction = check.nextPassiveAction();
+            assertTrue(passiveAction instanceof TraceCommand
+                    ||passiveAction instanceof MetricsCommand);
+        }
+
+
     }
 
 }
