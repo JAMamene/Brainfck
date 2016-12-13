@@ -60,4 +60,9 @@ public abstract class MemoryDecorator implements Memory {
         return decoratedBfck.toDebugString();
     }
 
+    @Override
+    public void setPointer(short val){
+        decoratedBfck.setPointer(val);
+    }
+
 }

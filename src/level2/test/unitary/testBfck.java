@@ -1,5 +1,6 @@
 package level2.test.unitary;
 
+import level2.command.CommandPerform;
 import level2.command.SetInCommand;
 import level2.constants.Executable;
 import level2.exceptions.ExecuteException;

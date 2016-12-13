@@ -13,19 +13,13 @@ public class Interpreter {
     protected List<Executable> instructions;
     protected static int instruction;
     boolean trace = false;
-    private String filename;
-    private String filenameOut;
-    private String filenameIn;
     private String in;
     private int readId;
     private Map<Integer, Integer> jumpTable;
 
 
-    public Interpreter(List<Executable> instructions,String filename,String filenameIn,String filenameOut){
+    public Interpreter(List<Executable> instructions){
         this.instructions = instructions;
-        this.filename = filename;
-        this.filenameIn = filenameIn;
-        this.filenameOut = filenameOut;
         this.instruction = 0;
         jumpTable = new HashMap<>();
         fillJumpTable();
@@ -48,18 +42,17 @@ public class Interpreter {
         int charId = 0;
         for (Executable i : instructions) {
             charId++;
-            char c = i.getShortcut();
-            if (c == InstructionEnum.JUMP.getShortcut()) {
+            if (i== InstructionEnum.JUMP) {
                 check.add(']');
-            } else if (c == InstructionEnum.BACK.getShortcut())
+            } else if (i == InstructionEnum.BACK)
                 if (!check.empty()) {
                     check.pop();
                 } else {
-                    throw new SyntaxException("bracket-missmatch", i.getShortcut(), charId);
+                    throw new SyntaxException("bracket-missmatch", i.toString(), charId);
                 }
         }
         if (!check.isEmpty()) {
-            throw new SyntaxException("missing-bracket", InstructionEnum.BACK.getShortcut(), instructions.size());
+            throw new SyntaxException("missing-bracket", InstructionEnum.BACK.toString(), instructions.size());
         }
         return true;
     }
@@ -67,21 +60,21 @@ public class Interpreter {
     private boolean bound(int i, int j) {
         int compteur = 1;
         for (int a = i + 1; a < j + 1; a++) {
-            if (instructions.get(a).getShortcut() == InstructionEnum.JUMP.getShortcut()) {
+            if (instructions.get(a) == InstructionEnum.JUMP) {
                 compteur++;
             }
-            if (instructions.get(a).getShortcut() == InstructionEnum.BACK.getShortcut()) {
+            if (instructions.get(a) == InstructionEnum.BACK) {
                 compteur--;
             }
         }
-        return instructions.get(j).getShortcut() == InstructionEnum.BACK.getShortcut() && compteur == 0;
+        return instructions.get(j) == InstructionEnum.BACK && compteur == 0;
     }
 
 
     private void fillJumpTable() {
         if (check()) {
             for (int i = 0; i < instructions.size(); i++) {
-                if (instructions.get(i).getShortcut() == InstructionEnum.JUMP.getShortcut()) {
+                if (instructions.get(i) == InstructionEnum.JUMP) {
                     for (int j = i; j < instructions.size(); j++) {
                         if (bound(i, j)) {
                             jumpTable.put(i, j);
@@ -97,14 +90,14 @@ public class Interpreter {
     public List<Visualisable> getVisualisableInstructions() {
         List<Visualisable> visualisables = new ArrayList<>();
         for (Executable e : instructions) {
-            if (!(e instanceof InstructionEnum)) throw new VisualisableException();
-            visualisables.add(e);
+            if (!(e instanceof Visualisable)) throw new VisualisableException();
+            visualisables.add((Visualisable)e);
         }
         return visualisables;
     }
 
     public List<Visualisable> getOptimizedInstructions() {
-        return new Optimizer().optimize(instructions);
+        return new Optimizer().optimize(getVisualisableInstructions());
     }
 
     public void incrementInstructions(){
@@ -139,24 +132,12 @@ public class Interpreter {
         this.trace = true;
     }
 
-    public String getFilename() {
-        return filename;
-    }
-
     public int getProgSize(){
         return instructions.size();
     }
 
-    public String getFilenameIn() {
-        return filenameIn;
-    }
-
     public void setIn(String in){
         this.in = in ;
-    }
-
-    public String getFilenameOut(){
-        return filenameOut;
     }
 
     public int getInstructionSize(){

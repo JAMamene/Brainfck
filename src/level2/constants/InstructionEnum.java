@@ -14,7 +14,7 @@ import static level2.constants.Sizes.*;
 /**
  * enum for the correspondence between the different way of writing instructions
  */
-public enum InstructionEnum implements Executable {
+public enum InstructionEnum implements Executable,Visualisable {
     INCR('+', new Color(0xffffff)) {
         @Override
         public void exec(Memory bfck, Interpreter interpreter) {

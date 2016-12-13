@@ -16,11 +16,11 @@ import static level2.constants.InstructionEnum.*;
 
 public class Optimizer {
 
-    private List<Executable> instructions;
+    private List<Visualisable> instructions;
     private List<Visualisable> optimized;
     private int iter;
 
-    public List<Visualisable> optimize(List<Executable> instructions) {
+    public List<Visualisable> optimize(List<Visualisable> instructions) {
         this.instructions = instructions;
         this.optimized = new ArrayList<>();
         optimized = new ArrayList<>();

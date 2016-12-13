@@ -22,7 +22,7 @@ import static org.junit.Assert.assertTrue;
  */
 public class testOptimizer {
 
-    private List<Executable> instructions;
+    private List<Visualisable> instructions;
     private List<Visualisable> optimized;
     private Optimizer optimizer = new Optimizer();
 
