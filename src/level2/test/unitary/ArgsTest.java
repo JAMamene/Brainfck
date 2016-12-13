@@ -1,10 +1,15 @@
 package level2.test.unitary;
 
 import level2.argument.ArgsCheck;
+import level2.command.CheckCommand;
+import level2.command.Command;
+import level2.command.RewriteCommand;
+import level2.command.TranslateCommand;
 import level2.exceptions.FileException;
 import org.junit.Test;
 import org.junit.contrib.java.lang.system.ExpectedSystemExit;
 import org.junit.rules.ExpectedException;
+import static org.junit.Assert.assertTrue;
 
 /**
  * test sur l'interpreteur d'agument
@@ -19,14 +24,21 @@ public class ArgsTest {
     public void test0() {
         String args[] = {"-p", "fichier", "--rewrite"};
         ArgsCheck check = new ArgsCheck(args);
-
-
+        assertTrue(check.getFileName().equals("fichier"));
+        assertTrue(check.nextStoppingAction() instanceof RewriteCommand);
     }
 
     @Test
     public void test1() {
         String args[] = {"-p", "fichier", "--rewrite", "--translate", "--check"};
         ArgsCheck check = new ArgsCheck(args);
+        assertTrue(check.getFileName().equals("fichier"));
+        while(check.hasStoppingActions()){
+            Command stoppingAction = check.nextStoppingAction();
+            assertTrue(stoppingAction instanceof RewriteCommand
+                        ||stoppingAction instanceof TranslateCommand
+                        ||stoppingAction instanceof CheckCommand);
+        }
     }
 
     @Test
@@ -62,11 +74,6 @@ public class ArgsTest {
     public void test6() {
         String args[] = {"-p", "fichier", "--rewrite", "--translate", "--check", "--trace", "--showMetrics", "-i", "in", "-o", "out"};
         ArgsCheck check = new ArgsCheck(args);
-        System.out.println(check.getStoppingActions());
-        System.out.println(check.getPassiveActions());
-        System.out.println(check.getFileName());
-        System.out.println(check.getIn());
-        System.out.println(check.getOut());
     }
 
 }
