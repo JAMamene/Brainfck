@@ -8,7 +8,7 @@ import level2.exceptions.FileException;
 
 import java.util.Arrays;
 
-public enum ArgEnum implements Parsable {
+public enum ArgEnum implements Arguments {
     Metrics("--showMetrics") {
         @Override
         public void exec(ArgsCheck arg) {
