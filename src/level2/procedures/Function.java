@@ -10,20 +10,20 @@ import static level2.constants.Sizes.MAXMEMORYSIZE;
 import static level2.constants.Sizes.PROC_SIZE;
 
 /**
- * Handle procedures with or without parameters
+ * Handle functions with or without parameters
+ * The returned value is stored in the cell where the function was called
  */
-
-public class Procedure implements Executable {
+public class Function implements Executable {
     private byte[] parameters;
-    private Interpreter procedureInterpreter;
+    private Interpreter functionInterpreter;
 
     /**
      * Method used when a procedure is declared in a Bf program
      * @param instructions the list of instructions done by the procedure
      * @param parameters the list of parameters (values)
      */
-    public Procedure(List<Executable> instructions, byte... parameters){
-        procedureInterpreter = new Interpreter(instructions);
+    public Function(List<Executable> instructions, byte... parameters){
+        functionInterpreter = new Interpreter(instructions);
         this.parameters = parameters;
     }
 
@@ -38,14 +38,16 @@ public class Procedure implements Executable {
         int size = MAXMEMORYSIZE.get()-PROC_SIZE.get();
         bfck.setPointer((short) size);
 
-
         for(int i = 0;i<parameters.length;i++){
             bfck.setCase(parameters[i]);
             bfck.right();
         }
 
-        procedureInterpreter.handle(bfck);
-        bfck.setPointer(pointer);
+        functionInterpreter.handle(bfck);
+
+        byte returnValue = bfck.getCell();
+        bfck.setPointer(pointer); // we go back to the cell where the function was called
+        bfck.setCase(returnValue); // we store the return value
     }
 
 }
