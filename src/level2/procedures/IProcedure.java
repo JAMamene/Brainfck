@@ -10,8 +10,5 @@ import java.util.List;
  *
  * @author Julien Maureille
  */
-public interface IProcedure {
-    void declare(String name, List<Executable> body);
-
-    List<Executable> getBody(String name);
+public interface IProcedure extends Executable {
 }

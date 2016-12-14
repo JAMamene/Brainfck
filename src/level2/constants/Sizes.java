@@ -4,7 +4,7 @@ package level2.constants;
  * enum for the constants, mainly the sizes of the data.
  */
 public enum Sizes {
-
+    PROC_SIZE(500), //buffer allocated to procedure
     //The boundaries of data used in bfck
     MINMEMORYSIZE(0),
     MAXMEMORYSIZE(29999),

@@ -123,4 +123,8 @@ public class Bfck implements Memory{
      * Main method of the interpreter, reads all the instructions and uses the private methods accordingly.
      */
 
+    @Override
+    public void setPointer(short val){
+        pointer = val;
+    }
 }

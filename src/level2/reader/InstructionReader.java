@@ -68,7 +68,7 @@ public class InstructionReader implements BfReader {
         if (args.length == 2) {
             name = args[1];
         } else {
-            throw new SyntaxException("macro-syntax", args[0].charAt(0), charId);
+            throw new SyntaxException("macro-syntax", args[0].charAt(0)+"", charId);
         }
         charId += args.length;
         macro.define(name);
@@ -97,7 +97,7 @@ public class InstructionReader implements BfReader {
                 try {
                     param = Integer.parseInt(split[1]);
                 } catch (NumberFormatException e) {
-                    throw new SyntaxException("macro-syntax", split[0].charAt(0), charId);
+                    throw new SyntaxException("macro-syntax", split[0].charAt(0)+"", charId);
                 }
             }
             charId += split.length;
@@ -120,7 +120,7 @@ public class InstructionReader implements BfReader {
                     break;
                 }
                 charId++;
-                if (!found) throw new SyntaxException("unknown-char", c, charId);
+                if (!found) throw new SyntaxException("unknown-char", c.toString(), charId);
             }
         }
         return instructions;

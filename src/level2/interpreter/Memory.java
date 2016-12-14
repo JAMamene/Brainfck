@@ -19,4 +19,5 @@ public interface Memory {
     short getPointer();
     void setCase(byte val);
     String toDebugString();
+    void setPointer(short val);
 }

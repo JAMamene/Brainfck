@@ -14,10 +14,16 @@ public class BfckContainer {
     private BfWriter instructWriter;
     private BfWriter imgWriter;
     private BfWriter codeWriter;
+    private String filenameOut;
+    private String filenameIn;
+    private String filename;
 
     public BfckContainer(List<Executable> instructions,String filename,String filenameIn,String filenameOut){
         bfck = new Bfck();
-        interpreter = new Interpreter(instructions,filename,filenameIn,filenameOut);
+        interpreter = new Interpreter(instructions);
+        this.filenameOut = filenameOut;
+        this.filenameIn = filenameIn;
+        this.filename = filename;
         instructWriter = new InstructionWriter();
         imgWriter = new ImageWriter();
     }
@@ -43,27 +49,27 @@ public class BfckContainer {
     }
 
     public void translate(){
-        imgWriter.WriteFile(interpreter.getVisualisableInstructions(),interpreter.getFilename());
+        imgWriter.WriteFile(interpreter.getVisualisableInstructions(),filename);
     }
 
     public void toMetrics(){
         bfck = new MetricsDecorator(bfck,interpreter.getInstructionSize());
     }
     public void toTrace(){
-        bfck = new TraceDecorator(bfck,interpreter.getFilename());
+        bfck = new TraceDecorator(bfck,filename);
     }
 
     public void writeCode(Languages language, boolean optimize){
         codeWriter = language.getCodeClass();
         if(optimize){
-            codeWriter.WriteFile(interpreter.getOptimizedInstructions(),interpreter.getFilename());
+            codeWriter.WriteFile(interpreter.getOptimizedInstructions(),filename);
         } else {
-            codeWriter.WriteFile(interpreter.getVisualisableInstructions(),interpreter.getFilename());
+            codeWriter.WriteFile(interpreter.getVisualisableInstructions(),filename);
         }
     }
 
     public String getFilenameIn(){
-        return interpreter.getFilenameIn();
+        return filenameIn;
     }
 
     public void setIn(String in){
@@ -71,11 +77,11 @@ public class BfckContainer {
     }
 
     public String getFilenameOut(){
-        return interpreter.getFilenameOut();
+        return filenameOut;
     }
 
     public String getFilename(){
-        return interpreter.getFilename();
+        return filename;
     }
 
     public Memory getBfck(){

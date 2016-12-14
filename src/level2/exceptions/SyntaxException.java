@@ -1,5 +1,8 @@
 package level2.exceptions;
 
+import level2.constants.Executable;
+import level2.constants.InstructionEnum;
+
 import java.awt.*;
 
 /**
@@ -15,7 +18,7 @@ public class SyntaxException extends RuntimeException {
      * @param c      the invalid char
      * @param charId the id (number of the char) in the file
      */
-    public SyntaxException(String type, char c, int charId) {
+    public SyntaxException(String type, String c, int charId) {
         switch (type) {
             case "unknown-char":
                 System.err.println("Error : Syntax error at charId " + charId + ", char: " + c);

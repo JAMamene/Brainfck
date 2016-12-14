@@ -6,11 +6,8 @@ import level2.interpreter.Memory;
 import java.awt.*;
 
 
-public interface Executable extends Visualisable {
+public interface Executable {
 
     void exec(Memory bfck, Interpreter interpreter);
 
-    Color getColor();
-
-    char getShortcut();
 }

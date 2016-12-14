@@ -2,7 +2,7 @@ package level2.constants;
 
 public class Metrics {
     private static long PROG_SIZE = 0;
-    private static double EXEC_TIME = System.currentTimeMillis();
+    private static double EXEC_TIME ;
     private static long EXEC_MOVE = 0;
     private static long DATA_MOVE = 0;
     private static long DATA_WRITE = 0;

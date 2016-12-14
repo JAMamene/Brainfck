@@ -1,28 +1,34 @@
 package level2.procedures;
 
 import level2.constants.Executable;
+import level2.constants.Sizes;
+import level2.interpreter.Bfck;
+import level2.interpreter.Interpreter;
+import level2.interpreter.Memory;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static level2.constants.Sizes.MAXMEMORYSIZE;
+import static level2.constants.Sizes.PROC_SIZE;
+
 /**
  * Class modelizing a procedure
  */
 public class Procedure implements IProcedure {
-    private Map<String, List<Executable>> procedures = new HashMap<>();
+    Interpreter procedureInterpreter;
 
-    /**
-     * Method that declares a procedure
-     *
-     * @param name the name of the procedure declared
-     * @param body the list of instructions
-     */
-    public void declare(String name, List<Executable> body) {
-        procedures.put(name, body);
+    public Procedure(List<Executable> instructions){
+        procedureInterpreter = new Interpreter(instructions);
+    }
+    @Override
+    public void exec(Memory bfck, Interpreter interpreter){
+        int size = MAXMEMORYSIZE.get()-PROC_SIZE.get();
+        short pointer = bfck.getPointer();
+        bfck.setPointer((short) size);
+        procedureInterpreter.handle(bfck);
+        bfck.setPointer(pointer);
     }
 
-    public List<Executable> getBody(String name) {
-        return procedures.get(name);
-    }
 }

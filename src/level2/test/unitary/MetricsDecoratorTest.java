@@ -19,7 +19,7 @@ public class MetricsDecoratorTest {
         List<Executable> instructions = new ArrayList<>();
         instructions.add(InstructionEnum.RIGHT);
         instructions.add(InstructionEnum.RIGHT);
-        Interpreter interpreter = new Interpreter(instructions,null,null,null);
+        Interpreter interpreter = new Interpreter(instructions);
         Bfck bfck = new Bfck();
         MetricsDecorator metrics = new MetricsDecorator(bfck,100);
         interpreter.handle(bfck);
