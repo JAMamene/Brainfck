@@ -30,10 +30,7 @@ public enum InstructionEnum implements Executable,Visualisable {
         }
     },
 
-    DECR('-', new Color(0x4b0082)/*,
-            "--mem[i];",
-            "--*mem;",
-            "mem[i]-=1"*/) {
+    DECR('-', new Color(0x4b0082)) {
         @Override
         public void exec(Memory bfck, Interpreter interpreter) {
             if (bfck.getCellCheck() == MINDATASIZE.get())
@@ -48,10 +45,7 @@ public enum InstructionEnum implements Executable,Visualisable {
         }
     },
 
-    LEFT('<', new Color(0x9400D3)/*,
-            "--i;",
-            "--mem;",
-            "i-=1"*/) {
+    LEFT('<', new Color(0x9400D3)) {
         @Override
         public void exec(Memory bfck, Interpreter interpreter) {
             if (bfck.getPointer() == MINMEMORYSIZE.get())
@@ -84,10 +78,7 @@ public enum InstructionEnum implements Executable,Visualisable {
         }
     },
 
-    OUT('.', new Color(0x00ff00)/*,
-            "System.out.print(mem[i]);",
-            "printf(\"%c\",*mem);",
-            "sys.stdout.write(chr(mem[i]))"*/) {
+    OUT('.', new Color(0x00ff00)) {
         @Override
         public void exec(Memory bfck, Interpreter interpreter) {
             System.out.print((char) (bfck.getCell() + MASK.get()));
@@ -98,17 +89,9 @@ public enum InstructionEnum implements Executable,Visualisable {
         public Optional<String> getCode(Languages l) {
             return Optional.of(l.getOut());
         }
-/*
-        @Override
-        public Optional<String> getJS() {
-            return Optional.of("document.getElementById(\"output\").innerHTML += String.fromCharCode(mem[i]);");
-        }*/
     },
 
-    IN(',', new Color(0xffff00)/*,
-            "mem[i] = reader.next().charAt(0);",
-            "scanf(\"%c\",mem);",
-            "mem[i] = ord(getch.getch())"*/) {
+    IN(',', new Color(0xffff00)) {
         @Override
         public void exec(Memory bfck, Interpreter interpreter) {
             Byte in;
@@ -130,17 +113,9 @@ public enum InstructionEnum implements Executable,Visualisable {
         public Optional<String> getCode(Languages l) {
             return Optional.of(l.getIn());
         }
-/*
-        @Override
-        public Optional<String> getJS() {
-            return Optional.of("mem[i] = prompt(\"type input\").charCodeAt(0);");
-        }*/
     },
 
-    JUMP('[', new Color(0xff7f00)
-/*            "while (mem[i] != 0) {",
-            "while (*mem) {",
-            "while mem[i] != 0 :"*/) {
+    JUMP('[', new Color(0xff7f00)) {
         @Override
         public void exec(Memory bfck, Interpreter interpreter) {
             if (bfck.getCell() != -MASK.get()) {
@@ -156,10 +131,7 @@ public enum InstructionEnum implements Executable,Visualisable {
         }
     },
 
-    BACK(']', new Color(0xff0000)
-/*            "}",
-            "}",
-            "\n"*/) {
+    BACK(']', new Color(0xff0000)) {
         @Override
         public void exec(Memory bfck, Interpreter interpreter) {
             if (bfck.getCell() == -MASK.get()) {
