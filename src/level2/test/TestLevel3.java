@@ -31,10 +31,10 @@ public class TestLevel3 {
         String[] args = {"-p", "Test1", "--showMetrics"}; //test metrics without loops
         perf = new CommandPerform((args));
         perf.performAll();
-        assertEquals(18, Metrics.getProgSize());
-        assertEquals(18, Metrics.getExecMove());
-        assertEquals(4, Metrics.getDataMove());
-        assertEquals(14, Metrics.getDataWrite());
+        assertEquals(8, Metrics.getProgSize());
+        assertEquals(8, Metrics.getExecMove());
+        assertEquals(2, Metrics.getDataMove());
+        assertEquals(6, Metrics.getDataWrite());
         assertEquals(0, Metrics.getDataRead());
     }
 

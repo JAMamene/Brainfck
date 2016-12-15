@@ -10,10 +10,17 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
+import static java.lang.Enum.valueOf;
 import static level2.constants.InstructionEnum.BACK;
 import static level2.constants.InstructionEnum.JUMP;
 
-abstract class CodeWriter implements BfWriter {
+public class CodeWriter implements BfWriter {
+
+    private Languages l;
+
+    public CodeWriter(Languages l) {
+        this.l = l;
+    }
 
     private BufferedWriter getBw(String fileName, String extension) {
         // checks if the file has an extension, if it has one, remove it
@@ -26,10 +33,31 @@ abstract class CodeWriter implements BfWriter {
         return null;
     }
 
-    protected void writeCode(List<Visualisable> instructions, String indentLevel, String fileName, String extension, Languages l) {
-        BufferedWriter bw = getBw(fileName, extension);
+    private String removeExtension(String fileName) {
+        fileName = fileName.trim();
+        if ((fileName.lastIndexOf('.')) != -1) {
+            return fileName.substring(0, fileName.lastIndexOf('.'));
+        }
+        return fileName;
+    }
+
+    @Override
+    public void WriteFile(List<Visualisable> instructions, String fileName) {
+        BufferedWriter bw;
+        BufferedWriter bwHelper;
         try {
-            bw.write(getHeader(fileName));
+            bw = getBw(fileName, l.getExtension());
+
+            if (l == Languages.js) {
+                bwHelper = getBw(fileName, ".html");
+            } else {
+                bwHelper = getBw(fileName, ".sh");
+                bwHelper.write("#!/bin/bash\n");
+            }
+            bwHelper.write(l.getHelper(removeExtension(fileName)));
+            bwHelper.close();
+            bw.write(l.getHeader(removeExtension(fileName)));
+            String indentLevel = l.getIndentLevel();
             for (Visualisable instruction : instructions) {
                 if (instruction == BACK && indentLevel.length() >= 1) {
                     indentLevel = indentLevel.substring(0, indentLevel.length() - 1);
@@ -41,23 +69,10 @@ abstract class CodeWriter implements BfWriter {
                     indentLevel += '\t';
                 }
             }
-            bw.write(getFooter());
+            bw.write(l.getFooter());
             bw.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
-    protected abstract String getHeader(String fileName);
-
-    protected abstract String getFooter();
-
-    protected String removeExtension(String fileName) {
-        fileName = fileName.trim();
-        if ((fileName.lastIndexOf('.')) != -1) {
-            return fileName.substring(0, fileName.lastIndexOf('.'));
-        }
-        return fileName;
-    }
-
 }
