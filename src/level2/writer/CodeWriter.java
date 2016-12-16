@@ -10,18 +10,30 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
-import static java.lang.Enum.valueOf;
 import static level2.constants.InstructionEnum.BACK;
 import static level2.constants.InstructionEnum.JUMP;
 
+/**
+ * an implementation of writer to create generated code of a language
+ */
 public class CodeWriter implements BfWriter {
 
+    /**
+     * language to generate code from
+     */
     private Languages l;
 
     public CodeWriter(Languages l) {
         this.l = l;
     }
 
+    /**
+     * puts a bufferedwriter on a file with an extension
+     *
+     * @param fileName  name of the file with optional extension
+     * @param extension new extension
+     * @return a bufferedwriter on the file created or selected
+     */
     private BufferedWriter getBw(String fileName, String extension) {
         // checks if the file has an extension, if it has one, remove it
         File outputFile = new File(removeExtension(fileName) + extension); //ad new extension
@@ -33,6 +45,11 @@ public class CodeWriter implements BfWriter {
         return null;
     }
 
+    /**
+     * removes the extension of a file
+     * @param fileName name of the file with optional extension
+     * @return String new name
+     */
     private String removeExtension(String fileName) {
         fileName = fileName.trim();
         if ((fileName.lastIndexOf('.')) != -1) {
@@ -41,6 +58,12 @@ public class CodeWriter implements BfWriter {
         return fileName;
     }
 
+    /**
+     * this implementation creates two files, a helper and a file for the code
+     * the helper is used to have a launcher fo the code generated depending on the language
+     * @param instructions list of visualisable to print (accordingly to the language) to the file
+     * @param fileName name of the file
+     */
     @Override
     public void WriteFile(List<Visualisable> instructions, String fileName) {
         BufferedWriter bw;

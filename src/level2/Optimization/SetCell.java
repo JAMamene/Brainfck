@@ -6,6 +6,9 @@ import level2.constants.Visualisable;
 import java.awt.*;
 import java.util.Optional;
 
+/**
+ * A visualisable implementation for code generation, set a cell to zero or a specific value
+ */
 public class SetCell implements Visualisable {
 
     private int value;

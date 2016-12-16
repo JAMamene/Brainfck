@@ -2,6 +2,14 @@ package level2.constants;
 
 /**
  * enum for the supported language to recode brainfuck with
+ * Each of those defines a dictionary of things associated with it
+ * the header and footer of code
+ * the indentation level where the main code starts
+ * the extension
+ * all the instructions + the optimized instructions
+ * the helper code
+ * ***
+ * To add a language support just write a new entry in the enum
  */
 public enum Languages {
     java(
@@ -123,7 +131,7 @@ public enum Languages {
             "--i;",
             "++i;",
             "mem[i] = prompt(\"type input\").charCodeAt(0);",
-            "print(String.fromCharCode(mem[i]));",
+            "document.getElementById(\"output\").innerHTML += String.fromCharCode(mem[i]);",
             "while (mem[i] != 0) {",
             "}",
             "mem[i] = ",
@@ -196,7 +204,7 @@ public enum Languages {
             "i += (char)") {
         @Override
         public String getHelper(String progName) {
-            return ""; //TODO
+            return "mcs " + progName + ".cs #Careful, requires the mono package\n./" + progName + ".exe\n";
         }
     },
 
@@ -221,7 +229,7 @@ public enum Languages {
             "i-=1",
             "i+=1",
             "mem[i] = ord(sys.stdin.read(1))",
-            "print chr(mem[i]",
+            "sys.stdout.write(chr(mem[i]))",
             "while mem[i] != 0 :",
             "",
             "mem[i]=",
@@ -352,7 +360,6 @@ public enum Languages {
         return multright + value + ";";
     }
 
-
     public String getHeader(String progName) {
         return header;
     }
@@ -361,6 +368,12 @@ public enum Languages {
         return footer;
     }
 
+    /**
+     * Helper file with the compilation lines (or a website for javascript)
+     *
+     * @param progName name of the program wihtout extension
+     * @return the code to add to the script
+     */
     abstract public String getHelper(String progName);
 
     public String getExtension() {

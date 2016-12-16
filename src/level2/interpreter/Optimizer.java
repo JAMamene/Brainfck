@@ -14,12 +14,19 @@ import java.util.OptionalInt;
 
 import static level2.constants.InstructionEnum.*;
 
+/**
+ * A parser class to optimize a set of visualisable into more compact instructions
+ */
 public class Optimizer {
 
     private List<Visualisable> instructions;
     private List<Visualisable> optimized;
     private int iter;
 
+    /**
+     * @param instructions the list of visualisable to optimize
+     * @return the new shorter or equal optimized list
+     */
     public List<Visualisable> optimize(List<Visualisable> instructions) {
         this.instructions = instructions;
         this.optimized = new ArrayList<>();
@@ -34,6 +41,7 @@ public class Optimizer {
         }
         return optimized;
     }
+
 
     private OptionalInt simplify(InstructionEnum minus, InstructionEnum plus) {
         if (iter == instructions.size() || (instructions.get(iter) != minus && instructions.get(iter) != plus))
