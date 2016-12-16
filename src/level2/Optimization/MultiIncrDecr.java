@@ -6,6 +6,9 @@ import level2.constants.Visualisable;
 import java.awt.*;
 import java.util.Optional;
 
+/**
+ * A visualisable implementation for code generation, concatenation of incr or decr
+ */
 public class MultiIncrDecr implements Visualisable {
 
     private int value;

@@ -35,10 +35,10 @@ public class TestLevel2 {
         perf = new CommandPerform(args); //will perform the actions needed
         perf.performAll();
         bfck = perf.getContainer().getBfck();
-        assertEquals(8 - MASK.get(), bfck.getMemoryAt((short) 0)); // checks if memory matches expected output
-        assertEquals(0 - MASK.get(), bfck.getMemoryAt((short) 1));
-        assertEquals(0 - MASK.get(), bfck.getMemoryAt((short) 2));
-        assertEquals(2 - MASK.get(), bfck.getMemoryAt((short) 3));
+        assertEquals(1 - MASK.get(), bfck.getMemoryAt((short) 0)); // checks if memory matches expected output
+        assertEquals(2 - MASK.get(), bfck.getMemoryAt((short) 1));
+        assertEquals(3 - MASK.get(), bfck.getMemoryAt((short) 2));
+        assertEquals(0 - MASK.get(), bfck.getMemoryAt((short) 3));
         assertEquals(0 - MASK.get(), bfck.getMemoryAt((short) 4));
     }
 

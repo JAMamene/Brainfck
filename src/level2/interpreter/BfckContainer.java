@@ -3,6 +3,7 @@ package level2.interpreter;
 import level2.constants.Executable;
 import level2.constants.Languages;
 import level2.writer.BfWriter;
+import level2.writer.CodeWriter;
 import level2.writer.ImageWriter;
 import level2.writer.InstructionWriter;
 
@@ -11,9 +12,7 @@ import java.util.List;
 public class BfckContainer {
     private Memory bfck;
     private Interpreter interpreter;
-    private BfWriter instructWriter;
-    private BfWriter imgWriter;
-    private BfWriter codeWriter;
+    private BfWriter writer;
     private String filenameOut;
     private String filenameIn;
     private String filename;
@@ -24,8 +23,6 @@ public class BfckContainer {
         this.filenameOut = filenameOut;
         this.filenameIn = filenameIn;
         this.filename = filename;
-        instructWriter = new InstructionWriter();
-        imgWriter = new ImageWriter();
     }
 
     public void check(){
@@ -41,7 +38,8 @@ public class BfckContainer {
     }
 
     public void rewrite(){
-        instructWriter.WriteFile(interpreter.getVisualisableInstructions(),"");
+        writer = new InstructionWriter();
+        writer.WriteFile(interpreter.getVisualisableInstructions(), "");
     }
 
     public void setTrace(){
@@ -49,7 +47,8 @@ public class BfckContainer {
     }
 
     public void translate(){
-        imgWriter.WriteFile(interpreter.getVisualisableInstructions(),filename);
+        writer = new ImageWriter();
+        writer.WriteFile(interpreter.getVisualisableInstructions(), filename);
     }
 
     public void toMetrics(){
@@ -60,11 +59,11 @@ public class BfckContainer {
     }
 
     public void writeCode(Languages language, boolean optimize){
-        codeWriter = language.getCodeClass();
+        writer = new CodeWriter(language);
         if(optimize){
-            codeWriter.WriteFile(interpreter.getOptimizedInstructions(),filename);
+            writer.WriteFile(interpreter.getOptimizedInstructions(), filename);
         } else {
-            codeWriter.WriteFile(interpreter.getVisualisableInstructions(),filename);
+            writer.WriteFile(interpreter.getVisualisableInstructions(), filename);
         }
     }
 

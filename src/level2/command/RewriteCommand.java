@@ -5,8 +5,6 @@ import level2.writer.BfWriter;
 import level2.writer.InstructionWriter;
 
 public class RewriteCommand implements Command {
-    private BfWriter instructWriter = new InstructionWriter();
-
     /**
      * print the instructions of the bfck in short syntax on standard output
      *
