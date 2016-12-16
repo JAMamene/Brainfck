@@ -2,6 +2,8 @@ package level2.reader;
 
 import level2.constants.Executable;
 import level2.constants.InstructionEnum;
+import level2.exceptions.FileException;
+import level2.exceptions.SyntaxException;
 import level2.reader.parser.Parse;
 import level2.reader.parser.Text;
 import level2.reader.parser.parser;
@@ -13,8 +15,9 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class ModulableReader {
+public class ModulableReader implements BfReader {
     private String text;
+    private int charId = 0;
 
     public List<Executable> readFile(String filename) {
         try {
@@ -29,8 +32,10 @@ public class ModulableReader {
             text = res.toString();
             parse();
             return toExecutable(text);
-        } catch (IOException e){
-            System.out.println(e);
+        } catch (FileNotFoundException e) {
+            throw new FileException("missing-file");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return null;
     }
@@ -59,14 +64,17 @@ public class ModulableReader {
 
                 if( (exec = findShortInstructions(res.charAt(i))) != null){
                     instructions.add(exec);
+                    charId++;
                     continue;
                 }
                 break;
             }
             if((exec = findLongInstructions(res)) != null){
                 instructions.add(exec);
+                charId++;
                 continue;
             }
+            //throw new SyntaxException("unknown-char", res, charId);
         }
         return instructions;
     }

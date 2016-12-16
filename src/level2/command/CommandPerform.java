@@ -6,6 +6,7 @@ import level2.interpreter.BfckContainer;
 import level2.reader.BfReader;
 import level2.reader.ImageReader;
 import level2.reader.InstructionReader;
+import level2.reader.ModulableReader;
 
 public class CommandPerform {
     private BfckContainer container;

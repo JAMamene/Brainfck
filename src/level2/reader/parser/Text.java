@@ -10,9 +10,13 @@ public class Text {
     }
 
     public String nextLine(){
-        if(pointer>=text.length){
-            return null;
+        while(pointer<text.length && text[pointer].equals("")){
+            pointer++;
         }
+        if(pointer>=text.length){
+            return  null;
+        }
+
         return text[pointer++];
     }
 }
