@@ -9,6 +9,7 @@ import level2.interpreter.Memory;
 import level2.procedures.Function;
 import level2.procedures.Procedure;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
@@ -31,6 +32,7 @@ public class ProcedureTest {
 
     }
 
+    @Ignore
     @Test
     public void procedureTest1(){
         List<Executable> instructions = new ArrayList<>();
@@ -50,7 +52,7 @@ public class ProcedureTest {
         byte caseTest2 = bfck.getMemory()[0];
         assertEquals(caseTest2,caseTest1);
     }
-
+    @Ignore
     @Test
     public void functionReturnValueTest(){
         List<Executable> instructions = new ArrayList<>();
@@ -67,6 +69,7 @@ public class ProcedureTest {
         assertEquals(-124,caseTest1);
     }
 
+    @Ignore
     @Test public void functionParamTest(){
         List<Executable> instructions = new ArrayList<>();
         instructions.add(InstructionEnum.LEFT);

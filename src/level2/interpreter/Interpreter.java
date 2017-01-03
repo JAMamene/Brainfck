@@ -11,7 +11,7 @@ import java.util.*;
 
 public class Interpreter {
     protected List<Executable> instructions;
-    protected static int instruction;
+    protected int instruction;
     boolean trace = false;
     private String in;
     private int readId;

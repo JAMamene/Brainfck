@@ -1,0 +1,9 @@
+(Proc salut
+++++
+)
+(Proc test
+----
+)
++++++++++
+salut(0)
+test()

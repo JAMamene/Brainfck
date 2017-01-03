@@ -55,7 +55,7 @@ public class BfckContainer {
         bfck = new MetricsDecorator(bfck,interpreter.getInstructionSize());
     }
     public void toTrace(){
-        bfck = new TraceDecorator(bfck,filename);
+        bfck = new TraceDecorator(bfck,filename,interpreter);
     }
 
     public void writeCode(Languages language, boolean optimize){

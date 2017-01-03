@@ -12,7 +12,7 @@ public abstract class MemoryDecorator implements Memory {
     }
 
     @Override
-    public short getMemoryAt(short index){
+    public byte getMemoryAt(short index){
         return decoratedBfck.getMemoryAt(index);
     }
     @Override

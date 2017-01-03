@@ -67,7 +67,7 @@ public class Bfck implements Memory{
         instruction++;
     }
     @Override
-    public short getMemoryAt(short index) {
+    public byte getMemoryAt(short index) {
         return memory[index];
     } // Only for testing
 

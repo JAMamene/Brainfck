@@ -6,6 +6,7 @@ import level2.interpreter.Memory;
 
 import java.util.List;
 
+import static level2.constants.Sizes.MASK;
 import static level2.constants.Sizes.MAXMEMORYSIZE;
 import static level2.constants.Sizes.PROC_SIZE;
 
@@ -14,7 +15,7 @@ import static level2.constants.Sizes.PROC_SIZE;
  */
 
 public class Procedure implements Parametrized {
-    private byte[] parameters;
+    private short[] parameters;
     private Interpreter procedureInterpreter;
 
     /**
@@ -25,13 +26,13 @@ public class Procedure implements Parametrized {
         procedureInterpreter = new Interpreter(instructions);
     }
 
-    public Procedure(Procedure proc, byte... parameters){
+    public Procedure(Procedure proc, short... parameters){
         this.procedureInterpreter = proc.procedureInterpreter;
         this.parameters = parameters;
     }
 
     @Override
-    public Executable getFunction(byte... parameters){
+    public Executable getFunction(short... parameters){
         return new Procedure(this,parameters);
     }
 
@@ -48,12 +49,13 @@ public class Procedure implements Parametrized {
 
 
         for(int i = 0;i<parameters.length;i++){
-            bfck.setCase(parameters[i]);
+            bfck.setCase(bfck.getMemoryAt(parameters[i]));
             bfck.right();
         }
 
         procedureInterpreter.handle(bfck);
         bfck.setPointer(pointer);
+        interpreter.incrementInstructions();
     }
 
 }

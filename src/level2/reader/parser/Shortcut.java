@@ -38,18 +38,18 @@ public class Shortcut {
         Pattern findDeclaration = Pattern.compile("(.*)\\((([0-9]|,)*)\\)");
         Matcher m = findDeclaration.matcher(name);
         if(m.matches() && executable.containsKey(m.group(1))){
-            return executable.get(m.group(1)).getFunction(toByteArray(m.group(2).split(",")));
+            return executable.get(m.group(1)).getFunction(toShortArray(m.group(2).split(",")));
         }
         return null;
     }
 
-    private byte[] toByteArray(String[] array){
-        byte[] param = new byte[array.length];
-        if(array.length ==1 && array[0].equals("")) return param = new byte[0];
+    private short[] toShortArray(String[] array){
+        short[] param = new short[array.length];
+        if(array.length ==1 && array[0].equals("")) return param = new short[0];
         for(int i = 0;i<array.length;i++){
             try{
                 int num = Integer.parseInt(array[i]);
-                param[i] = (byte) num;
+                param[i] = (short) num;
             } catch(Exception e){
                 throw new ArgumentException("wrong-function-arg");
             }

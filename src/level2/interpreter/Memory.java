@@ -15,7 +15,7 @@ public interface Memory {
     void decrCell();
     void left();
     void right();
-    short getMemoryAt(short index);
+    byte getMemoryAt(short index);
     short getPointer();
     void setCase(byte val);
     String toDebugString();
