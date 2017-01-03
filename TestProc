@@ -6,9 +6,10 @@
 )
 (Func hoy
 >++++++++++++
+salut[]
 )
 +++++++++
-salut(0)
-test()
+salut[]
+test[]
 >
-hoy()
+hoy[]

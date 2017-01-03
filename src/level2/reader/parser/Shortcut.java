@@ -35,7 +35,7 @@ public class Shortcut {
      * @return executable
      */
     public Executable getExecutable(String name){
-        Pattern findDeclaration = Pattern.compile("(.*)\\((([0-9]|,)*)\\)");
+        Pattern findDeclaration = Pattern.compile("(.*)\\[(([0-9]|,)*)]");
         Matcher m = findDeclaration.matcher(name);
         if(m.matches() && executable.containsKey(m.group(1))){
             return executable.get(m.group(1)).getFunction(toShortArray(m.group(2).split(",")));
