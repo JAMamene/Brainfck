@@ -13,18 +13,26 @@ import static level2.constants.Sizes.PROC_SIZE;
  * Handle functions with or without parameters
  * The returned value is stored in the cell where the function was called
  */
-public class Function implements Executable {
-    private byte[] parameters;
+public class Function implements Parametrized {
+    private short[] parameters;
     private Interpreter functionInterpreter;
 
     /**
      * Method used when a procedure is declared in a Bf program
      * @param instructions the list of instructions done by the procedure
-     * @param parameters the list of parameters (values)
      */
-    public Function(List<Executable> instructions, byte... parameters){
+    public Function(List<Executable> instructions){
         functionInterpreter = new Interpreter(instructions);
         this.parameters = parameters;
+    }
+
+    public Function(Function function, short... parameters){
+        functionInterpreter = function.functionInterpreter;
+        this.parameters = parameters;
+    }
+
+    public Executable getFunction(short... parameters){
+        return new Function(this,parameters);
     }
 
     /**
@@ -39,7 +47,7 @@ public class Function implements Executable {
         bfck.setPointer((short) size);
 
         for(int i = 0;i<parameters.length;i++){
-            bfck.setCase(parameters[i]);
+            bfck.setCase(bfck.getMemoryAt(parameters[i]));
             bfck.right();
         }
 
@@ -48,6 +56,7 @@ public class Function implements Executable {
         byte returnValue = bfck.getCell();
         bfck.setPointer(pointer); // we go back to the cell where the function was called
         bfck.setCase(returnValue); // we store the return value
+        interpreter.incrementInstructions();
     }
 
 }

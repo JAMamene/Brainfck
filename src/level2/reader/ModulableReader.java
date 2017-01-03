@@ -4,6 +4,7 @@ import level2.constants.Executable;
 import level2.constants.InstructionEnum;
 import level2.exceptions.FileException;
 import level2.exceptions.SyntaxException;
+import level2.procedures.Function;
 import level2.procedures.Procedure;
 import level2.reader.parser.Parse;
 import level2.reader.parser.Shortcut;
@@ -108,6 +109,10 @@ public class ModulableReader implements BfReader {
 
     public void addProc(String name,String instruction){
         shortcut.addProcedure(name,new Procedure(toExecutable(instruction)));
+    }
+
+    public void addFunc(String name,String instruction){
+        shortcut.addProcedure(name,new Function(toExecutable(instruction)));
     }
 }
 

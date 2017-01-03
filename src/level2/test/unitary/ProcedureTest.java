@@ -77,10 +77,10 @@ public class ProcedureTest {
         instructions.add(InstructionEnum.INCR);
         byte param1 = 5;
         byte param2 = 6;
-        Function function = new Function(instructions,param1,param2);
+        //Function function = new Function(instructions,param1,param2);
         List<Executable> func = new ArrayList<>();
-        func.add(function);
-        init(func);
+        //func.add(function);
+        //init(func);
         interpreter.handle(bfck);
         int functionPointer = Sizes.MAXMEMORYSIZE.get()-Sizes.PROC_SIZE.get();
         byte caseTest1 = bfck.getMemory()[functionPointer];

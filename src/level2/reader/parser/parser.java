@@ -47,7 +47,22 @@ public enum parser implements Parse {
                 }
 
             }
+        }
+    },
+    FUNC{
+        @Override
+        public void parse(ModulableReader res){
+            Pattern findFuncDef = Pattern.compile("Func (.*)\\n([\\S\\s]*)\\n\\)[\\S\\s]*");
+            String[] proc = res.getText().split("\\(");
+            for(int i =0;i<proc.length;i++){ //each segment is parsed
+                Matcher m = findFuncDef.matcher(proc[i]);
+                if(m.matches()) {
+                    res.addFunc(m.group(1),m.group(2));
+                }
+
+            }
             res.replaceText("\\(Proc (.|\\n)*\\n\\)","");
+            res.replaceText("\\(Func (.|\\n)*\\n\\)","");
         }
     };
 

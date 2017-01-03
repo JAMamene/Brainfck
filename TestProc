@@ -4,6 +4,11 @@
 (Proc test
 ----
 )
+(Func hoy
+>++++++++++++
+)
 +++++++++
 salut(0)
 test()
+>
+hoy()
