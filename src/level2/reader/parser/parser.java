@@ -9,31 +9,48 @@ public enum parser implements Parse {
     COMMENT{
         @Override
         public void parse(ModulableReader res){
-            res.replaceText("#(.*)","");
+            res.replaceText(" *#(.*)","");
         }
     },
     SPACE{
         @Override
         public void parse(ModulableReader res){
-            res.replaceText(" ","");
+            res.replaceText("^ *","");
+            res.replaceText("\n *","\n");
         }
     },
     MACRO{
         @Override
         public void parse(ModulableReader res){
-            Pattern findMacroDef = Pattern.compile("(.*)\\n([\\S\\s]*)\\n}[\\S\\s]*");
-            String[] macro = res.getText().split("\\{");
-            for(int i =0;i<macro.length;i++){
+            Pattern findMacroDef = Pattern.compile(" (.*)\\n([\\S\\s]*)\\n}[\\S\\s]*"); //pattern to get the macro and his definition
+            String[] macro = res.getText().split("\\{"); //splitting at '{' to get only one macro definition per segment
+            for(int i =0;i<macro.length;i++){ //each segment is parsed
                 Matcher m = findMacroDef.matcher(macro[i]);
                 if(m.matches()) {
-                    parser.MACRO.replaceMacro(res, m.group(1), m.group(2));
-                    macro = res.getText().split("\\{");
+                    parser.MACRO.replaceMacro(res, m.group(1), m.group(2)); //to treat case of multiple macro call
+                    macro = res.getText().split("\\{"); //macro is redefinied to "refresh" his content
                 }
 
             }
-            res.replaceText("\\{(.|\\n)*}","");
+            res.replaceText("\\{(.|\\n)*}",""); //erase all the macro definition
+        }
+    },
+    PROC{
+        @Override
+        public void parse(ModulableReader res){
+            Pattern findProcDef = Pattern.compile("Proc (.*)\\n([\\S\\s]*)\\n\\)[\\S\\s]*");
+            String[] proc = res.getText().split("\\(");
+            for(int i =0;i<proc.length;i++){ //each segment is parsed
+                Matcher m = findProcDef.matcher(proc[i]);
+                if(m.matches()) {
+                    res.addProc(m.group(1),m.group(2));
+                }
+
+            }
+            res.replaceText("\\(Proc (.|\\n)*\\n\\)","");
         }
     };
+
     private void replaceMacro(ModulableReader res,String name,String content){
         Pattern findMacroUseWithParameter = Pattern.compile("(.|\\n)*"+name+"%([0-9]*)(.|\\n)*");
         Matcher m = findMacroUseWithParameter.matcher(res.getText());

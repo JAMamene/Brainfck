@@ -13,18 +13,26 @@ import static level2.constants.Sizes.PROC_SIZE;
  * Handle procedures with or without parameters
  */
 
-public class Procedure implements Executable {
+public class Procedure implements Parametrized {
     private byte[] parameters;
     private Interpreter procedureInterpreter;
 
     /**
      * Method used when a procedure is declared in a Bf program
      * @param instructions the list of instructions done by the procedure
-     * @param parameters the list of parameters (values)
      */
-    public Procedure(List<Executable> instructions, byte... parameters){
+    public Procedure(List<Executable> instructions){
         procedureInterpreter = new Interpreter(instructions);
+    }
+
+    public Procedure(Procedure proc, byte... parameters){
+        this.procedureInterpreter = proc.procedureInterpreter;
         this.parameters = parameters;
+    }
+
+    @Override
+    public Executable getFunction(byte... parameters){
+        return new Procedure(this,parameters);
     }
 
     /**

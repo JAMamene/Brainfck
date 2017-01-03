@@ -26,7 +26,7 @@ public class CommandPerform {
         if ("bmp".equals(arg.getFileExtension())) {
             reader = new ImageReader();
         } else {
-            reader = new InstructionReader();
+            reader = new ModulableReader();
         }
         container = new BfckContainer(reader.readFile(arg.getFileName()), arg.getFileName(), arg.getIn(), arg.getOut());
     }

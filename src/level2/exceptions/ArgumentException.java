@@ -21,6 +21,8 @@ public class ArgumentException extends RuntimeException {
             case "missing-arg":
                 System.err.println("Error : Option code must be used with one of the following argument : " + Arrays.toString(Languages.values()));
                 break;
+            case "wrong-function-arg":
+                System.err.println("Error : wrong function argument provided");
         }
         System.exit(5);
     }

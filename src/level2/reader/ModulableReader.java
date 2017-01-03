@@ -4,7 +4,9 @@ import level2.constants.Executable;
 import level2.constants.InstructionEnum;
 import level2.exceptions.FileException;
 import level2.exceptions.SyntaxException;
+import level2.procedures.Procedure;
 import level2.reader.parser.Parse;
+import level2.reader.parser.Shortcut;
 import level2.reader.parser.Text;
 import level2.reader.parser.parser;
 
@@ -18,9 +20,11 @@ import java.util.stream.Stream;
 public class ModulableReader implements BfReader {
     private String text;
     private int charId = 0;
+    private Shortcut shortcut;
 
     public List<Executable> readFile(String filename) {
         try {
+            shortcut= new Shortcut();
             FileReader fr = new FileReader(filename);
             BufferedReader br = new BufferedReader(fr);
             StringBuilder res = new StringBuilder();
@@ -74,6 +78,11 @@ public class ModulableReader implements BfReader {
                 charId++;
                 continue;
             }
+            if((exec = shortcut.getExecutable(res)) != null){
+                instructions.add(exec);
+                charId++;
+                continue;
+            }
             //throw new SyntaxException("unknown-char", res, charId);
         }
         return instructions;
@@ -95,6 +104,10 @@ public class ModulableReader implements BfReader {
             }
         }
         return null;
+    }
+
+    public void addProc(String name,String instruction){
+        shortcut.addProcedure(name,new Procedure(toExecutable(instruction)));
     }
 }
 
