@@ -1,15 +1,16 @@
 package level4.reader;
 
-import level4.instructions.Executable;
-import level4.instructions.InstructionEnum;
+
 import level4.exceptions.FileException;
 import level4.exceptions.SyntaxException;
-import level4.utils.Function;
-import level4.utils.Procedure;
+import level4.instructions.Executable;
+import level4.instructions.InstructionEnum;
 import level4.reader.parser.Parse;
 import level4.reader.parser.Shortcut;
 import level4.reader.parser.Text;
 import level4.reader.parser.parser;
+import level4.utils.Function;
+import level4.utils.Procedure;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -25,7 +26,7 @@ public class ModulableReader implements BfReader {
 
     public List<Executable> readFile(String filename) {
         try {
-            shortcut = new Shortcut();
+            shortcut= new Shortcut();
             FileReader fr = new FileReader(filename);
             BufferedReader br = new BufferedReader(fr);
             StringBuilder res = new StringBuilder();
@@ -46,7 +47,7 @@ public class ModulableReader implements BfReader {
     }
 
     public void parse() {
-        for (Parse p : parser.values()) {
+        for(Parse p : parser.values()){
             p.parse(this);
         }
     }
@@ -55,8 +56,8 @@ public class ModulableReader implements BfReader {
         return text;
     }
 
-    public void replaceText(String regex, String replacement) {
-        text = text.replaceAll(regex, replacement);
+    public void replaceText(String regex,String replacement){
+        text = text.replaceAll(regex,replacement);
     }
 
     public List<Executable> toExecutable(String res) {
@@ -66,16 +67,16 @@ public class ModulableReader implements BfReader {
         List<Executable> execs;
         while ((res = text.nextLine()) != null) {
 
-            if ((execs = findShortInstructions(res)) != null) {
+            if((execs = findShortInstructions(res)) != null){
                 instructions.addAll(execs);
                 continue;
             }
-            if ((exec = findLongInstructions(res)) != null) {
+            if((exec = findLongInstructions(res)) != null){
                 instructions.add(exec);
                 charId++;
                 continue;
             }
-            if ((exec = shortcut.getExecutable(res)) != null) {
+            if((exec = shortcut.getExecutable(res)) != null){
                 instructions.add(exec);
                 charId++;
                 continue;
@@ -87,22 +88,25 @@ public class ModulableReader implements BfReader {
 
     private List<Executable> findShortInstructions(String res) {
         List<Executable> instructions = new ArrayList<>();
-        for (int i = 0; i < res.length(); i++) {
-
+        Executable exec;
+        if(findShort(res.charAt(0)) == null) return null;
+        for(int i = 0;i<res.length();i++){
+            if((exec = findShort(res.charAt(i))) == null) throw new SyntaxException("unknown-char", res, charId);
+            instructions.add(exec);
         }
         return instructions;
     }
 
-    private Executable findShort(char res) {
-        for (InstructionEnum instruction : InstructionEnum.values()) {
-            if (res == instruction.getShortcut()) {
+    private Executable findShort(char res){
+        for(InstructionEnum instruction : InstructionEnum.values()){
+            if(res == instruction.getShortcut()){
                 return instruction;
             }
         }
         return null;
     }
 
-    public Executable findLongInstructions(String res) {
+    private Executable findLongInstructions(String res) {
         for (InstructionEnum instruction : InstructionEnum.values()) {
             if (instruction.toString().equals(res)) {
                 return instruction;
@@ -111,14 +115,12 @@ public class ModulableReader implements BfReader {
         return null;
     }
 
-    public void addProc(String name, String instruction) {
-        shortcut.addProcedure(name, new Procedure(toExecutable(instruction)));
+    public void addProc(String name,String instruction){
+        shortcut.addProcedure(name,new Procedure(toExecutable(instruction)));
     }
 
-    public void addFunc(String name, String instruction) {
-        shortcut.addProcedure(name, new Function(toExecutable(instruction)));
+    public void addFunc(String name,String instruction){
+        shortcut.addProcedure(name,new Function(toExecutable(instruction)));
     }
 }
-
-
 
