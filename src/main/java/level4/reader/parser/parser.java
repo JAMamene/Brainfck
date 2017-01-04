@@ -17,12 +17,14 @@ public enum parser implements Parse {
         public void parse(ModulableReader res) {
             res.replaceText("^ *", "");
             res.replaceText("\n *", "\n");
+            res.replaceText("\t","");
+            res.replaceText(" *\n","\n");
         }
     },
     MACRO {
         @Override
         public void parse(ModulableReader res) {
-            Pattern findMacroDef = Pattern.compile(" (.*)\\n([\\S\\s]*)\\n}[\\S\\s]*"); //pattern to get the utils and his definition
+            Pattern findMacroDef = Pattern.compile(" (.*)\\n([\\S\\s]*\\n)}[\\S\\s]*"); //pattern to get the utils and his definition
             String[] macro = res.getText().split("\\{"); //splitting at '{' to get only one utils definition per segment
             for (int i = 0; i < macro.length; i++) { //each segment is parsed
                 Matcher m = findMacroDef.matcher(macro[i]);
