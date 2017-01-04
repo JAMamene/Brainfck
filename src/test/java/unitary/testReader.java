@@ -2,7 +2,6 @@ package unitary;
 
 import level4.instructions.Executable;
 import level4.reader.BfReader;
-import level4.reader.InstructionReader;
 import level4.reader.ModulableReader;
 import org.junit.Rule;
 import org.junit.rules.TemporaryFolder;
