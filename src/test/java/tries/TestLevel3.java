@@ -2,6 +2,8 @@ package tries;
 
 import level4.command.CommandPerform;
 import level4.constants.Metrics;
+import level4.exceptions.FileException;
+import level4.exceptions.SyntaxException;
 import level4.interpreter.Memory;
 import org.junit.Test;
 import org.junit.contrib.java.lang.system.ExpectedSystemExit;
@@ -86,11 +88,10 @@ public class TestLevel3 {
     @org.junit.Test
     public void tests15_2() {
         String[] args = {"-p", PATH + "TestEmptyMacro"}; // empty utils, should work anyway
+        exception.expect(SyntaxException.class); //Should throw wrongfile exception
+        exit.expectSystemExitWithStatus(4); // should terminate the program with exit code 3
         perf = new CommandPerform(args); //will perform the actions needed
         perf.performAll();
-        bfck = perf.getContainer().getBfck();
-        assertEquals(2 - MASK.get(), bfck.getMemoryAt((short) 0)); // checks if memory matches expected output
-        assertEquals(1 - MASK.get(), bfck.getMemoryAt((short) 1));
     }
 
     @org.junit.Test

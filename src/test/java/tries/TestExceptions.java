@@ -162,8 +162,6 @@ public class TestExceptions {
     @org.junit.Test
     public void testInvalidMacro() {
         String[] args = {"-p", PATH + "TestMacroError"}; // Wrong syntax for utils
-        exception.expect(SyntaxException.class); //Should throw wrongfile exception
-        exit.expectSystemExitWithStatus(4); // should terminate the program with exit code 4
         perf = new CommandPerform(args); //will perform the actions needed
         perf.performAll();
     }
@@ -171,8 +169,6 @@ public class TestExceptions {
     @org.junit.Test
     public void testInvalidMacroArg() {
         String[] args = {"-p", PATH + "TestMacroInvalidArg"}; // Wrong syntax for utils
-        exception.expect(SyntaxException.class); //Should throw wrongfile exception
-        exit.expectSystemExitWithStatus(4); // should terminate the program with exit code 4
         perf = new CommandPerform(args); //will perform the actions needed
         perf.performAll();
     }
