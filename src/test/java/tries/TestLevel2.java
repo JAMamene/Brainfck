@@ -175,7 +175,7 @@ public class TestLevel2 {
 
     @org.junit.Test
     public void tests9_5() {
-        String[] args = {"-p", "TestMultiInput", "-i", "ITestMultiInput"}; // ITestInput contains 34;
+        String[] args = {"-p", PATH + "TestMultiInput", "-i", PATH + "ITestMultiInput"}; // ITestInput contains 34;
         perf = new CommandPerform(args); //will perform the actions needed
         perf.performAll();
         bfck = perf.getContainer().getBfck();
