@@ -63,16 +63,12 @@ public class ModulableReader implements BfReader {
         List<Executable> instructions = new ArrayList<>();
         Text text = new Text(res);
         Executable exec;
+        List<Executable> execs;
         while ((res = text.nextLine()) != null) {
 
-            for (int i = 0; i < res.length(); i++) {
-
-                if( (exec = findShortInstructions(res.charAt(i))) != null){
-                    instructions.add(exec);
-                    charId++;
-                    continue;
-                }
-                break;
+            if((execs = findShortInstructions(res)) != null){
+                instructions.addAll(execs);
+                continue;
             }
             if((exec = findLongInstructions(res)) != null){
                 instructions.add(exec);
@@ -84,14 +80,22 @@ public class ModulableReader implements BfReader {
                 charId++;
                 continue;
             }
-            //throw new SyntaxException("unknown-char", res, charId);
+            throw new SyntaxException("unknown-char", res, charId);
         }
         return instructions;
     }
 
-    private Executable findShortInstructions(char res) {
-        for (InstructionEnum instruction : InstructionEnum.values()) {
-            if (instruction.getShortcut() == res) {
+    private List<Executable> findShortInstructions(String res) {
+        List<Executable> instructions = new ArrayList<>();
+        for(int i = 0;i<res.length();i++){
+
+        }
+        return instructions;
+    }
+
+    private Executable findShort(char res){
+        for(InstructionEnum instruction : InstructionEnum.values()){
+            if(res == instruction.getShortcut()){
                 return instruction;
             }
         }
