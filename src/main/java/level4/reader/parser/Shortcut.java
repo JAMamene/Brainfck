@@ -29,7 +29,7 @@ public class Shortcut {
     /**
      * return the procedure called by name
      *
-     * @param name call of the procedure (i.e. procedureExample(5,9)
+     * @param name call of the procedure (i.e. procedureExample[5,9]
      * @return executable
      */
     public Executable getExecutable(String name) {
