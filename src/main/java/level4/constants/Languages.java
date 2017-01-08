@@ -108,6 +108,56 @@ public enum Languages {
         }
     },
 
+    pascal(
+            "program Bf\n\n" +
+
+                    "type\n" +
+                    "TMem :array[1..30000] of integer;\n" +
+                    "TMemPtr :^TMem;\n\n" +
+
+                    "var\n" +
+                    "index :integer;\n" +
+                    "mem :TMemPtr;\n\n" +
+
+                    "begin\n" +
+
+                    "\tnew(mem);\n" +
+                    "\tmem^[1] := 0;\n"+
+                    "\tfor index := 1 to 30000 do\n"+
+                    "\t\tmem^[index] := 0;",
+
+
+            "\tfor index:=0 to 30000 do\n" +
+                    "\tbegin\n"+
+                    "\t\tif mem[i] <> 0 then\n" +
+                    "\t\t\twrite(i,mem[i]);\n" +
+                    "\t\tdispose(mem);\n" +
+                    "\tend\n" +
+                    "end\n",
+
+            "\t",
+
+            ".pascal",
+
+            "^mem:=;",
+            "^mem := ^-1;",
+            "mem := mem-1;",
+            "mem := mem+1;",
+            "read(mem);",
+            "write(^mem);",
+            "while ^mem != NIL do",
+            "begin\nend\n",
+            "^mem = ",
+            "^mem := ^mem + ",
+            "^mem := ^mem - ",
+            "mem := mem - ",
+            "mem := ^mem + ") {
+        @Override
+        public String getHelper(String progName) {
+            return progName + ".pascal";
+        }
+    },
+
 
     js(
             "function Bfck() {\n" +
