@@ -40,7 +40,7 @@ public enum parser implements Parse {
     PROC {
         @Override
         public void parse(ModulableReader res) {
-            Pattern findProcDef = Pattern.compile("Proc (.*)\\n([\\S\\s]*)\\n\\)[\\S\\s]*");
+            Pattern findProcDef = Pattern.compile("Proc (.*)\\n([\\S\\s]*\\n)\\)[\\S\\s]*");
             String[] proc = res.getText().split("\\(");
             for (int i = 0; i < proc.length; i++) { //each segment is parsed
                 Matcher m = findProcDef.matcher(proc[i]);

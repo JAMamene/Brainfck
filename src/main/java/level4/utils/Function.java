@@ -4,6 +4,7 @@ import level4.instructions.Executable;
 import level4.interpreter.Interpreter;
 import level4.interpreter.Memory;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static level4.constants.Sizes.MAXMEMORYSIZE;
@@ -24,7 +25,7 @@ public class Function implements Parametrized {
      */
     public Function(List<Executable> instructions) {
         functionInterpreter = new Interpreter(instructions);
-        this.parameters = parameters;
+        this.parameters = new short[0] ;
     }
 
     public Function(Function function, short... parameters) {
@@ -59,6 +60,13 @@ public class Function implements Parametrized {
         bfck.setPointer(pointer); // we go back to the cell where the function was called
         bfck.setCase(returnValue); // we store the return value
         interpreter.incrementInstructions();
+    }
+
+    @Override
+    public boolean equals(Object func){
+        if(!(func instanceof Function))return false;
+        return Arrays.equals(((Function) func).parameters,this.parameters) &&
+                this.functionInterpreter.getInstructions().equals(((Function) func).functionInterpreter.getInstructions());
     }
 
 }

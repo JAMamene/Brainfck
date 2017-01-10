@@ -1,15 +1,19 @@
 package unitary;
 
 import level4.instructions.Executable;
+import level4.instructions.InstructionEnum;
 import level4.reader.BfReader;
 import level4.reader.ModulableReader;
+import level4.utils.Function;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -141,5 +145,93 @@ public class testReader {
                 "INCR\r");
         assertEquals(instructions2, instructions); // assert if the instructions are as expected
     }
+    @Test
+    public void testFunction(){
+        List<Executable> instruction = new ArrayList<>();
+        instruction.add(InstructionEnum.INCR);
+        instruction.add(InstructionEnum.DECR);
+        instruction.add(InstructionEnum.INCR);
+        instruction.add(InstructionEnum.DECR);
+        instruction.add(InstructionEnum.INCR);
+        instruction.add(InstructionEnum.INCR);
+        instruction.add(InstructionEnum.DECR);
+        instruction.add(InstructionEnum.DECR);
+        Function test = new Function(instruction);
+        List<Executable> instructions = testInstructionReader("(Func salut\n" +
+                "INCR\n" +
+                "DECR\n" +
+                "INCR\n" +
+                "DECR\n" +
+                "++\n" +
+                "--\n" +
+                ")\n" +
+                "salut[]");
+        assertEquals(test,instructions.get(0));
+    }
 
+    @Test
+    public void testMultiFunc(){
+        List<Executable> instructions = testInstructionReader("(Func Test\n" +
+                "INCR\n" +
+                "INCR\n" +
+                "JUMP\n" +
+                "BACK\n" +
+                ")\n" +
+                "\n" +
+                "(Func salut\n" +
+                "INCR\n" +
+                "DECR\n" +
+                "INCR\n" +
+                "DECR\n" +
+                "++\n" +
+                "--\n" +
+                "Test[]\n" +
+                ")\n" +
+                "salut[]");
+        List<Executable> test1 = new ArrayList<>();
+        test1.add(InstructionEnum.INCR);
+        test1.add(InstructionEnum.INCR);
+        test1.add(InstructionEnum.JUMP);
+        test1.add(InstructionEnum.BACK);
+        Function Test1 = new Function(test1);
+        List<Executable> instruction = new ArrayList<>();
+        instruction.add(InstructionEnum.INCR);
+        instruction.add(InstructionEnum.DECR);
+        instruction.add(InstructionEnum.INCR);
+        instruction.add(InstructionEnum.DECR);
+        instruction.add(InstructionEnum.INCR);
+        instruction.add(InstructionEnum.INCR);
+        instruction.add(InstructionEnum.DECR);
+        instruction.add(InstructionEnum.DECR);
+        instruction.add(Test1);
+        Function test = new Function(instruction);
+        assertEquals(test,instructions.get(0));
+    }
+    @Test
+    public void TestMacroFunction(){
+        instructions = testInstructionReader("{ HELLO\n" +
+                "INCR\n" +
+                "DECR\n" +
+                "INCR\n" +
+                "DECR\n" +
+                "}\n" +
+                "\n" +
+                "(Func salut\n" +
+                "HELLO\n" +
+                "++\n" +
+                "--\n" +
+                ")\n" +
+                "salut[]");
+        List<Executable> instruction = new ArrayList<>();
+        instruction.add(InstructionEnum.INCR);
+        instruction.add(InstructionEnum.DECR);
+        instruction.add(InstructionEnum.INCR);
+        instruction.add(InstructionEnum.DECR);
+        instruction.add(InstructionEnum.INCR);
+        instruction.add(InstructionEnum.INCR);
+        instruction.add(InstructionEnum.DECR);
+        instruction.add(InstructionEnum.DECR);
+        Function test = new Function(instruction);
+        assertEquals(test,instructions.get(0));
+    }
 }

@@ -137,11 +137,11 @@ public class Interpreter {
         this.trace = true;
     }
 
-    public int getProgSize() {
+    public int getInstructionSize() {
         return instructions.size();
     }
 
-    public int getInstructionSize() {
-        return instructions.size();
+    public List<Executable> getInstructions(){
+        return instructions;
     }
 }
