@@ -4,6 +4,7 @@ import level4.instructions.Executable;
 import level4.interpreter.Interpreter;
 import level4.interpreter.Memory;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static level4.constants.Sizes.MAXMEMORYSIZE;
@@ -24,6 +25,7 @@ public class Procedure implements Parametrized {
      */
     public Procedure(List<Executable> instructions) {
         procedureInterpreter = new Interpreter(instructions);
+        parameters = new short[0];
     }
 
     public Procedure(Procedure proc, short... parameters) {
@@ -57,6 +59,13 @@ public class Procedure implements Parametrized {
         procedureInterpreter.handle(bfck);
         bfck.setPointer(pointer);
         interpreter.incrementInstructions();
+    }
+
+    @Override
+    public boolean equals(Object proc){
+        return proc instanceof Procedure &&
+                Arrays.equals(((Procedure) proc).parameters,this.parameters) &&
+                this.procedureInterpreter.getInstructions().equals(((Procedure) proc).procedureInterpreter.getInstructions());
     }
 
 }

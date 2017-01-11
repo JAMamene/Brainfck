@@ -64,8 +64,8 @@ public class Function implements Parametrized {
 
     @Override
     public boolean equals(Object func){
-        if(!(func instanceof Function))return false;
-        return Arrays.equals(((Function) func).parameters,this.parameters) &&
+        return func instanceof Function &&
+                Arrays.equals(((Function) func).parameters,this.parameters) &&
                 this.functionInterpreter.getInstructions().equals(((Function) func).functionInterpreter.getInstructions());
     }
 

@@ -5,6 +5,7 @@ import level4.instructions.InstructionEnum;
 import level4.reader.BfReader;
 import level4.reader.ModulableReader;
 import level4.utils.Function;
+import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -233,5 +234,15 @@ public class testReader {
         instruction.add(InstructionEnum.DECR);
         Function test = new Function(instruction);
         assertEquals(test,instructions.get(0));
+    }
+    @Test
+    public void declarationOrder(){
+        instructions = testInstructionReader("salut[]\n" +
+                "(Func salut\n" +
+                "++\n" +
+                ")");
+        List<Executable> instru = Arrays.asList(INCR,INCR);
+        Function test = new Function(instru);
+        assertEquals(instructions.get(0),test);
     }
 }

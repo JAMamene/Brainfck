@@ -41,6 +41,13 @@ public class Shortcut {
         return null;
     }
 
+    /**
+     * convert a String array into short array
+     * private because the array have to be parsable to short
+     * here it is ensure by the regexp
+     * @param array
+     * @return
+     */
     private short[] toShortArray(String[] array) {
         short[] param = new short[array.length];
         if (array.length == 1 && array[0].equals("")) return param = new short[0];
