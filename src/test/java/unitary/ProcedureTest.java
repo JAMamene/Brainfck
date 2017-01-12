@@ -13,8 +13,12 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import static level4.instructions.InstructionEnum.INCR;
+import static level4.instructions.InstructionEnum.LEFT;
+import static level4.instructions.InstructionEnum.RIGHT;
 import static org.junit.Assert.assertEquals;
 
 public class ProcedureTest {
@@ -33,14 +37,13 @@ public class ProcedureTest {
 
     }
 
-    @Ignore
     @Test
     public void procedureTest1() {
         List<Executable> instructions = new ArrayList<>();
-        instructions.add(InstructionEnum.INCR);
-        instructions.add(InstructionEnum.INCR);
-        instructions.add(InstructionEnum.INCR);
-        instructions.add(InstructionEnum.INCR);
+        instructions.add(INCR);
+        instructions.add(INCR);
+        instructions.add(INCR);
+        instructions.add(INCR);
         Procedure procedure = new Procedure(instructions);
         List<Executable> proc = new ArrayList<>();
         proc.add(procedure);
@@ -54,13 +57,12 @@ public class ProcedureTest {
         assertEquals(caseTest2, caseTest1);
     }
 
-    @Ignore
     @Test
     public void functionReturnValueTest() {
         List<Executable> instructions = new ArrayList<>();
-        instructions.add(InstructionEnum.INCR);
-        instructions.add(InstructionEnum.INCR);
-        instructions.add(InstructionEnum.INCR);
+        instructions.add(INCR);
+        instructions.add(INCR);
+        instructions.add(INCR);
         Function function = new Function(instructions);
         List<Executable> func = new ArrayList<>();
         func.add(function);
@@ -71,23 +73,21 @@ public class ProcedureTest {
         assertEquals(-124, caseTest1);
     }
 
-    @Ignore
     @Test
     public void functionParamTest() {
         List<Executable> instructions = new ArrayList<>();
-        instructions.add(InstructionEnum.LEFT);
-        instructions.add(InstructionEnum.LEFT);
-        instructions.add(InstructionEnum.INCR);
-        byte param1 = 5;
-        byte param2 = 6;
-        //Function function = new Function(instructions,param1,param2);
-        List<Executable> func = new ArrayList<>();
-        //func.add(function);
-        //init(func);
+        instructions.add(LEFT);
+        instructions.add(LEFT);
+        instructions.add(INCR);
+        short param1 = 0;
+        short param2 = 1;
+        Function function = new Function(instructions);
+        function = new Function(function,param1,param2);
+        List<Executable> func = Arrays.asList(INCR,INCR,INCR,INCR,INCR,RIGHT,function);
+        init(func);
         interpreter.handle(bfck);
-        int functionPointer = Sizes.MAXMEMORYSIZE.get() - Sizes.PROC_SIZE.get();
-        byte caseTest1 = bfck.getMemory()[functionPointer];
+        byte caseTest1 = bfck.getMemory()[1];
 
-        assertEquals(param1 + 1, caseTest1);
+        assertEquals(6, caseTest1+Sizes.MASK.get());
     }
 }
