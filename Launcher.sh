@@ -6,9 +6,9 @@ rm -r bin
 rm Bfck
 rm $1.jar
 mkdir bin
-javac -d bin src/*/*/*.java
+javac -d bin src/main/java/level4/*/.java
 cd bin
-jar cf ../$1.jar */*/*.class
+jar cf ../$1.jar */*/*/*.class
 cd ..
 touch Bfck
 chmod u+x Bfck

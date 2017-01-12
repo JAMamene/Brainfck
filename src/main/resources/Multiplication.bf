@@ -4,7 +4,7 @@
 <[-]
 <[-]
 <[-]
->>
+>>>>
 [                                    #Tant que case 0 différent de 0
         >                                #Passe à 1
         [                                #Tant que 1 différent de 0
@@ -23,7 +23,5 @@
 +++++ #case 0 : 5
 >
 ++++++ #case 1 : 6
->
-++++++++++ #case 2 : 10
 >
 Multiplication[0,1]
