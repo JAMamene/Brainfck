@@ -5,7 +5,7 @@ import level4.constants.Metrics;
 import level4.interpreter.BfckContainer;
 import level4.reader.BfReader;
 import level4.reader.ImageReader;
-import level4.reader.ModulableReader;
+import level4.reader.InstructionReader;
 
 public class CommandPerform {
     private BfckContainer container;
@@ -25,7 +25,7 @@ public class CommandPerform {
         if ("bmp".equals(arg.getFileExtension())) {
             reader = new ImageReader();
         } else {
-            reader = new ModulableReader();
+            reader = new InstructionReader();
         }
         container = new BfckContainer(reader.readFile(arg.getFileName()), arg.getFileName(), arg.getIn(), arg.getOut());
     }

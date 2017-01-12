@@ -1,6 +1,6 @@
 package level4.reader.parser;
 
-import level4.reader.ModulableReader;
+import level4.reader.InstructionReader;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -8,13 +8,13 @@ import java.util.regex.Pattern;
 public enum parser implements Parse {
     COMMENT {
         @Override
-        public void parse(ModulableReader res) {
+        public void parse(InstructionReader res) {
             res.replaceText(" *#(.*)", "");
         }
     },
     SPACE {
         @Override
-        public void parse(ModulableReader res) {
+        public void parse(InstructionReader res) {
             res.replaceText("^ *", "");
             res.replaceText("\n *", "\n");
             res.replaceText("\t","");
@@ -23,7 +23,7 @@ public enum parser implements Parse {
     },
     MACRO {
         @Override
-        public void parse(ModulableReader res) {
+        public void parse(InstructionReader res) {
             Pattern findMacroDef = Pattern.compile(" (.*)\\n([\\S\\s]*\\n)}[\\S\\s]*"); //pattern to get the utils and his definition
             String[] macro = res.getText().split("\\{"); //splitting at '{' to get only one utils definition per segment
             for (int i = 0; i < macro.length; i++) { //each segment is parsed
@@ -39,7 +39,7 @@ public enum parser implements Parse {
     },
     PROC {
         @Override
-        public void parse(ModulableReader res) {
+        public void parse(InstructionReader res) {
             Pattern findProcDef = Pattern.compile("Proc (.*)\\n([\\S\\s]*\\n)\\)[\\S\\s]*");
             String[] proc = res.getText().split("\\(");
             for (int i = 0; i < proc.length; i++) { //each segment is parsed
@@ -53,7 +53,7 @@ public enum parser implements Parse {
     },
     FUNC {
         @Override
-        public void parse(ModulableReader res) {
+        public void parse(InstructionReader res) {
             Pattern findFuncDef = Pattern.compile("Func (.*)\\n([\\S\\s]*)\\n\\)[\\S\\s]*");
             String[] proc = res.getText().split("\\(");
             for (int i = 0; i < proc.length; i++) { //each segment is parsed
@@ -76,7 +76,7 @@ public enum parser implements Parse {
         return res.toString();
     }
 
-    private void replaceMacro(ModulableReader res, String name, String content) {
+    private void replaceMacro(InstructionReader res, String name, String content) {
         Pattern findMacroUseWithParameter = Pattern.compile("(.|\\n)*" + name + "%([0-9]*)(.|\\n)*");
         Matcher m = findMacroUseWithParameter.matcher(res.getText());
         while (m.matches()) {

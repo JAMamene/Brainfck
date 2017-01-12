@@ -42,10 +42,6 @@ public class BfckContainer {
         writer.WriteFile(interpreter.getVisualisableInstructions(), "");
     }
 
-    public void setTrace() {
-        interpreter.setTrace();
-    }
-
     public void translate() {
         writer = new ImageWriter();
         writer.WriteFile(interpreter.getVisualisableInstructions(), filename);

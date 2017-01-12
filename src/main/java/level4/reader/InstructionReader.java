@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ModulableReader implements BfReader {
+public class InstructionReader implements BfReader {
     private String text;
     private int charId = 0;
     private Shortcut shortcut;

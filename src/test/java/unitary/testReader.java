@@ -3,9 +3,8 @@ package unitary;
 import level4.instructions.Executable;
 import level4.instructions.InstructionEnum;
 import level4.reader.BfReader;
-import level4.reader.ModulableReader;
+import level4.reader.InstructionReader;
 import level4.utils.Function;
-import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -42,7 +41,7 @@ public class testReader {
 
     private List<Executable> testInstructionReader(String context) {
         createAndFillFile(context);
-        BfReader reader = new ModulableReader();
+        BfReader reader = new InstructionReader();
         return reader.readFile(folder.getRoot().toString() + "\\tmp");
     }
 
