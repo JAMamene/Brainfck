@@ -41,3 +41,18 @@ example
 +++  
 INCR  
 }
+
+**Arguments :** 
+
+-p + the brainfuck file you want to interpret,   
+-i + the input file you want to use for in,   
+-o + the output file you want to use for out,   
+--rewrite to print to the standard output your program in short syntax,  
+--translate to get an image representation of you program,   
+--check to only check if the program is well formed   
+--showMetrics to print metrics of the program   
+--trace to create log  
+--code (java, c) [optimize] to translate the brainfuck code in the appropriate language  
+and with optimization if you specify the option  
+
+Launcher.sh used to build project before usage of maven 

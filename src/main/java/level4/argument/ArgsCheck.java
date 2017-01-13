@@ -124,12 +124,4 @@ public class ArgsCheck {
     String getCurrentArg() {
         return args[pointer];
     }
-
-    public List<Command> getPassiveActions() {
-        return passiveActions;
-    }
-
-    public List<Command> getStoppingActions() {
-        return stoppingActions;
-    }
 }
